@@ -1,0 +1,9 @@
+{
+    "DATABASE": {
+        "server": "carepoint-dev",
+        "port": 1433,
+        "user": "SMD\\svc.carepoint-repl",
+        "passwd": "aNxs5#B85Ut5D#F6twupfDy#btFxt7YlraciD51Q",
+        "odbc_driver": "SQL+Server+Native+Client+10.0"
+    }
+}

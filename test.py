@@ -18,3 +18,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
+from setuptools import Command
+
+
+class Tests(Command):
+    
+    TEST_RESULTS = '_results'
+    user_options = [] #< For Command API compatibility
+    
+    def initialize_options(self, ):
+        pass
+    
+    def finalize_options(self, ):
+        pass
+    
+    def run(self, ):
+        ''' Perform imports inside run to avoid errors before installs '''
+        
+        from xmlrunner import XMLTestRunner
+        from unittest import TestLoader
+        from os import path
+        
+        loader = TestLoader()
+        tests = loader.discover('.', 'test_*.py')
+        t = XMLTestRunner(verbosity=1, output=self.TEST_RESULTS)
+        t.run(tests)

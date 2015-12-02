@@ -18,6 +18,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from json import loads
+from os import path
 
-from sqlalchemy.ext.declarative import declarative_base
-Base = declarative_base()
+
+class Settings(object):
+    ''' App settings files in a nifty obj '''
+    def __new__(self, ):
+        '''
+        Override object generation to load and output JSON settings
+        @return obj Loaded settings
+        '''
+        current_dir = path.dirname(path.abspath(__file__))
+        with open(path.join(current_dir, 'settings.json'), 'r') as fh:
+            return loads(fh.read())
