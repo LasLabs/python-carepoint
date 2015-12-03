@@ -19,18 +19,25 @@
 #
 ##############################################################################
 
-from setuptools import setup
-from setuptools import find_packages
-from tests import Tests
+from sqlalchemy import create_engine
+from carepoint.conf.settings import Settings
+from . import Db, Meta
 
 
-PACKAGE_NAME = 'carepoint'
-VERSION = '0.0.0.2'
-
-
-setup(
-    name=PACKAGE_NAME,
-    version=VERSION,
-    packages=find_packages(exclude=('tests', )),
-    cmdclass={'test': Tests},
-)
+class Carepoint(object):
+    ''' Base CarePoint db connector object '''
+    __metaclass__ = Meta
+    
+    def __init__(self, server, user, passwd):
+        
+        self.settings = Settings()
+        params = {
+            'user': user,
+            'passwd': passwd,
+            'server': server,
+            'db': 'cph',
+        }
+        #   @TODO: Lazy load, once other dbs needed
+        self.dbs = {
+            'cph': Db(**params)
+        }

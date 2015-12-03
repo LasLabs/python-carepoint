@@ -19,18 +19,5 @@
 #
 ##############################################################################
 
-from setuptools import setup
-from setuptools import find_packages
-from tests import Tests
-
-
-PACKAGE_NAME = 'carepoint'
-VERSION = '0.0.0.2'
-
-
-setup(
-    name=PACKAGE_NAME,
-    version=VERSION,
-    packages=find_packages(exclude=('tests', )),
-    cmdclass={'test': Tests},
-)
+from sqlalchemy.ext.declarative import declarative_base
+Base = declarative_base()
