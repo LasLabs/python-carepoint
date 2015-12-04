@@ -20,24 +20,26 @@
 ##############################################################################
 
 from sqlalchemy import create_engine
-from carepoint.conf.settings import Settings
-from . import Db, Meta
+from ..conf.settings import Settings
+from .db import Db
+from .meta import Meta
 
 
 class Carepoint(object):
     ''' Base CarePoint db connector object '''
     __metaclass__ = Meta
-    
-    def __init__(self, server, user, passwd):
-        
-        self.settings = Settings()
-        params = {
-            'user': user,
-            'passwd': passwd,
-            'server': server,
-            'db': 'cph',
-        }
-        #   @TODO: Lazy load, once other dbs needed
-        self.dbs = {
-            'cph': Db(**params)
-        }
+    # 
+    # def __init__(self, server, user, passwd):
+    #     
+    #     super(Carepoint, self).__init__()
+    #     self.settings = Settings()
+    #     params = {
+    #         'user': user,
+    #         'passwd': passwd,
+    #         'server': server,
+    #         'db': 'cph',
+    #     }
+    #     #   @TODO: Lazy load, once other dbs needed
+    #     self.dbs = {
+    #         'cph': Db(**params)
+    #     }

@@ -19,18 +19,21 @@
 #
 ##############################################################################
 
+
 class Struct(dict):
     '''
     Subclass dict, re-implement __getitem__ to scan for models
     if a requested key is missing
     '''
+    
     def __init__(self, cls, *args, **kwargs):
         '''
-        Init, set mount to PlugPyMount master instance
-        @param  PlugPyMount cls
+        Init, set mount to Carepoint master instance
+        @param  Carepoint cls
         '''
         self.mount = cls
-        super(Struct, self).__init__(*args,**kwargs)
+        self.iter_refresh = False
+        super(Struct, self).__init__(*args, **kwargs)
 
     def __getitem__(self, key, retry=True, default=False):
         ''' Re-implement __getitem__ to scan for models if key missing  '''
@@ -49,7 +52,7 @@ class Struct(dict):
                     )
                 )
 
-    def set_iter_refresh(self, refresh=True):
+    def set_iter_refresh(self, refresh=True, ):
         '''
         Toggle flag to search for new models before iteration
         @param  bool    refresh     Whether to refresh before iteration
@@ -60,37 +63,37 @@ class Struct(dict):
         if self.iter_refresh:
             self.mount.find_models()
 
-    def __iter__(self):
+    def __iter__(self, ):
         ''' Reimplement __iter__ to allow for optional model refresh   '''
         self.__refresh_models__()
         return super(Struct, self).__iter__()
 
-    def values(self):
+    def values(self, ):
         ''' Reimplement values to allow for optional model refresh   '''
         self.__refresh_models__()
         return super(Struct, self).values()
 
-    def keys(self):
+    def keys(self, ):
         ''' Reimplement keys to allow for optional model refresh   '''
         self.__refresh_models__()
         return super(Struct, self).keys()
 
-    def items(self):
+    def items(self, ):
         ''' Reimplement items to allow for optional model refresh   '''
         self.__refresh_models__()
         return super(Struct, self).items()
 
-    def itervalues(self):
+    def itervalues(self, ):
         ''' Reimplement itervalues to allow for optional model refresh   '''
         self.__refresh_models__()
         return super(Struct, self).itervalues()
 
-    def iterkeys(self):
+    def iterkeys(self, ):
         ''' Reimplement iterkeys to allow for optional model refresh   '''
         self.__refresh_models__()
         return super(Struct, self).iterkeys()
 
-    def iteritems(self):
+    def iteritems(self, ):
         ''' Reimplement iteritems to allow for optional model refresh   '''
         self.__refresh_models__()
         return super(Struct, self).iteritems()

@@ -19,7 +19,8 @@
 #
 ##############################################################################
 
-from carepoint import Carepoint
+
+from carepoint.db import Carepoint
 
 
 class TestModel(Carepoint):
