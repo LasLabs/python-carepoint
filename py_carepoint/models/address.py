@@ -26,7 +26,7 @@ from sqlalchemy.orm import relationship, backref
 
 
 class Address(Base):
-    __tablename__ = 'cpmd'
+    __tablename__ = 'csaddr'
     
     addr_id = Column(Integer, primary_key=True)
     parent_addr_id = Column(Integer)

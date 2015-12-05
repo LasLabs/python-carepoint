@@ -34,7 +34,7 @@ class Store(Base):
     store_hours = Column(String)
     store_no = Column(String)
     fed_tax_id = Column(String)
-    erl = Column(String)
+    url = Column(String)
     email = Column(String)
     mgr_cont_id = Column(Integer)
     cont_id = Column(Integer)
