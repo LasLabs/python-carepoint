@@ -41,10 +41,6 @@ class Store(Base):
     carepoint_acct_no = Column(String)
     cmt = Column(Text)
     status_cn = Column(Integer)
-    add_user_id = Column(Integer)
-    add_date = Column(Datetime)
-    chg_user_id = Column(Integer)
-    chg_date = Column(Datetime)
     app_flags = Column(Integer)
     nabp = Column(String)
     medcaid_no = Column(String)
@@ -53,3 +49,13 @@ class Store(Base):
     NPI = Column(String)
     pharmacy_service_type_cn = Column(Integer)
     web_refill_yn = Column(Boolean)
+    add_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
+    add_date = Column(DateTime)
+    chg_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
+    chg_date = Column(DateTime)

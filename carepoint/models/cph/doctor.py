@@ -62,10 +62,6 @@ class Doctor(Base):
     cmt = Column(Text)
     status_cn = Column(Integer)
     conv_code = Column(String)
-    add_user_id = Column(Integer)
-    add_date = Column(Datetime)
-    chg_user_id = Column(Integer)
-    chg_date = Column(Datetime)
     app_flags = Column(Integer)
     timestamp = Column(Datetime)
     state_issued_id = Column(String)
@@ -73,7 +69,10 @@ class Doctor(Base):
     medicaid_restricted_yn = Column(Boolean)
     fac_id = Column(Integer)
     C2Restricted_yn = Column(Boolean)
-    co_md_id = Column(Integer)
+    co_md_id = Column(
+        Integer,
+        ForeignKey('cpmd.md_id'),
+    )
     do_not_refer = Column(Integer)
     deceased_yn = Column(Boolean)
     C0restricted_yn = Column(Boolean)
@@ -83,3 +82,13 @@ class Doctor(Base):
     study_drugs_yn = Column(Boolean)
     tracking_cn = Column(Integer)
     CTP_no = Column(String)
+    add_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
+    add_date = Column(DateTime)
+    chg_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
+    chg_date = Column(DateTime)

@@ -29,7 +29,10 @@ class Address(Base):
     __tablename__ = 'csaddr'
     
     addr_id = Column(Integer, primary_key=True)
-    parent_addr_id = Column(Integer)
+    parent_addr_id = Column(
+        Integer,
+        ForeignKey('csaddr.addr_id'),
+    )
     inherited_yn = Column(Boolean)
     owner_type_cn = Column(Integer)
     alt_name = Column(String)
@@ -45,8 +48,13 @@ class Address(Base):
     anote = Column(String)
     app_flags = Column(Integer)
     timestmp = Column(Datetime)
-    add_date = Column(Datetime)
-    add_user_id = Column(Integer)
-    chg_date = Column(Datetime)
-    chg_user_id = Column(Integer)
-    
+    add_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
+    add_date = Column(DateTime)
+    chg_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
+    chg_date = Column(DateTime)

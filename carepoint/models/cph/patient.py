@@ -91,16 +91,6 @@ class Patient(CarepointDbBase):
     status_cn = Column(Integer)
     facility_pat_yn = Column(Boolean)
     conv_code = Column(String)
-    add_user_id = Column(
-        Integer,
-        ForeignKey('csuser.user_id'),
-    )
-    add_date = Column(DateTime)
-    chg_user_id = Column(
-        Integer,
-        ForeignKey('csuser.user_id'),
-    )
-    chg_date = Column(DateTime)
     app_flags = Column(Integer)
     timestmp = Column(DateTime)
     comp_cn = Column(Integer)
@@ -135,3 +125,13 @@ class Patient(CarepointDbBase):
     rx_priority_default_cn = Column(Integer)
     ship_cn = Column(Integer)
     residence_cn = Column(Integer)
+    add_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
+    add_date = Column(DateTime)
+    chg_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
+    chg_date = Column(DateTime)

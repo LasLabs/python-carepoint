@@ -63,15 +63,23 @@ class Item(Base):
     AVG_UNIT_COST = Column(Numeric)
     location = Column(String)
     item_id = Column(Integer, primary_key=True)
-    store_id = Column(Integer)
-    chg_user_id = Column(Integer)
-    chg_date = Column(Datetime)
-    add_date = Column(Datetime)
-    add_user_id = Column(Integer)
+    store_id = Column(
+        Integer,
+        ForeignKey('csstore.store_id'),
+    )
     chemical_id = Column(Integer)
     allocated = Column(Numeric)
     machine_id = Column(Integer)
     special_pkg_ind_cn = Column(Integer)
     refrig_cn = Column(Integer)
     order_multiples_of = Column(Integer)
-    
+    add_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
+    add_date = Column(DateTime)
+    chg_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
+    chg_date = Column(DateTime)
