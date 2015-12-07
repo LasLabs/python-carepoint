@@ -24,8 +24,6 @@ from carepoint.db import Carepoint
 
 
 class TestModel(Carepoint):
-    initialized = False
-    def __init__(self):
-        self.initialized = True
+    @classmethod
     def run(self):
         return True

@@ -39,7 +39,7 @@ class Meta(type):
     
     def register_model(cls, model):
         ''' Registration logic + append to models struct '''
-        cls.models[model.__class__.__name__] = model
+        cls.models[model.__name__] = model
     
     @staticmethod
     def register_model_dir(model_path):
