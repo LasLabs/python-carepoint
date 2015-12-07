@@ -51,11 +51,17 @@ class User(Base):
     license_no = Column(String)
     license_state_cd = Column(String)
     status_cn = Column(Integer)
-    add_user_id = Column(Integer)
-    add_date = Column(Datetime)
-    chg_user_id = Column(Integer)
-    chg_date = Column(Datetime)
     app_flags = Column(Integer)
     timestmp = Column(Datetime)
     must_change_password_yn = Column(Integer)
     password_date = Column(Datetime)
+    add_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
+    add_date = Column(DateTime)
+    chg_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
+    chg_date = Column(DateTime)

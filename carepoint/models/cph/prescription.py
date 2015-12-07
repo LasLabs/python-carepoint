@@ -31,9 +31,18 @@ class Prescription(Base):
     rx_id = Column(Integer, primary_key=True)
     script_no = Column(String)
     old_script_no = Column(String)
-    pat_id = Column(Integer)
-    store_id = Column(Integer)
-    md_id = Column(Integer)
+    pat_id = Column(
+        Integer,
+        ForeignKey('cppat.pat_id'),
+    )
+    store_id = Column(
+        Integer,
+        ForeignKey('csstore.store_id'),    
+    )
+    md_id = Column(
+        Integer,
+        ForeignKey('cpmd.md_id'),
+    )
     ndc = Column(String)
     gcn_seqno = Column(Integer)
     mfg = Column(String)
@@ -62,7 +71,10 @@ class Prescription(Base):
     daw_yn = Column(Boolean)
     refills_orig = Column(Numeric)
     refills_left = Column(Numeric)
-    last_rxdisp_id = Column(Integer)
+    last_rxdisp_id = Column(
+        Integer,
+        ForeignKey('cprx_disp.rxdisp_id'),    
+    )
     last_refill_qty = Column(Numeric)
     last_refill_date = Column(Datetime)
     refill_date = Column(Datetime)
@@ -94,10 +106,6 @@ class Prescription(Base):
     doseage_multiplier = Column(Numeric)
     df = Column(String)
     uu = Column(String)
-    add_date = Column(Datetime)
-    add_user_id = Column(Integer)
-    chg_date = Column(Datetime)
-    chg_user_id = Column(Integer)
     app_flags = Column(Integer)
     timestmp = Column(Datetime)
     sched2_no = Column(String)
@@ -126,5 +134,18 @@ class Prescription(Base):
     edit_locked_yn = Column(Boolean)
     locked_yn = Column(Boolean)
     locked_id = Column(Integer)
-    locked_user_id = Column(Integer)
+    locked_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
     daw_rx_cn = Column(Integer)
+    add_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
+    add_date = Column(DateTime)
+    chg_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
+    chg_date = Column(DateTime)

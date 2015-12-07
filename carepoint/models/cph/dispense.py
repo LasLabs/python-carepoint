@@ -28,8 +28,14 @@ from sqlalchemy.orm import relationship, backref
 class Dispense(Base):
     __tablename__ = 'cprx_disp'
     
-    rx_id = Column(Integer)
-    store_id = Column(Integer)
+    rx_id = Column(
+        Integer,
+        ForeignKey('cprx.rx_id'),
+    )
+    store_id = Column(
+        Integer,
+        ForeignKey('csstore.store_id'),
+    )
     disp_ndc = Column(String)
     disp_drug_name = Column(String)
     prod_expire_date = Column(Datetime)
@@ -71,10 +77,6 @@ class Dispense(Base):
     pat_loc_cn = Column(Integer)
     billing_units = Column(String)
     price_table_id = Column(Integer)
-    add_date = Column(Datetime)
-    add_user_id = Column(Integer)
-    chg_date = Column(Datetime)
-    chg_user_id = Column(Integer)
     app_flags = Column(Integer)
     timestmp = Column(Datetime)
     price_meth_cn = Column(Integer)
@@ -120,3 +122,13 @@ class Dispense(Base):
     rx_priority_default_cn = Column(Integer)
     ship_cn = Column(Integer)
     residence_cn = Column(Integer)
+    add_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
+    add_date = Column(DateTime)
+    chg_user_id = Column(
+        Integer,
+        ForeignKey('csuser.user_id'),
+    )
+    chg_date = Column(DateTime)
