@@ -19,39 +19,23 @@
 #
 ##############################################################################
 
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
-from py_carepoint.conf.settings import Settings
 
 
-class Carepoint(object):
-    ''' Base CarePoint db connector object '''
+class Db(object):
+    ''' Base db connector object '''
     
     ODBC_DRIVER = 'SQL+Server+Native+Client+10.0'
     
-    def __init__(self, server, user, passwd):
-        self.Base = declaritive_base()
+    def __new__(self, server, user, passwd, db, port=1433, drv=ODBC_DRIVER):
+        
         params = {
             'usr': user,
             'pass': passwd,
             'srv': server,
-            'driver': self.ODBC_DRIVER,
+            'driver': drv,
+            'db': db,
         }
         dsn = 'mssql+pyodbc://%(usr)s:%(pass)s@%(srv)s/%(db)?driver%(drv)s'
         
-        params['db'] = 'cph'
-        self.cph = create_engine(dsn % params)
-        
-        # params['db'] = 'grx_master'
-        # self.grx_master = create_engine(dsn % params)
-        # 
-        # params['db'] = 'medicaid'
-        # self.medicaid = create_engine(dsn % params)
-        # 
-        # params['db'] = 'CpERx'
-        # self.cp_e_rx = create_engine(dsn % params)
-
-settings = Settings()
-carepoint = CarePoint(
-    **settings.DATABASE
-)
+        return create_engine(dsn % params)

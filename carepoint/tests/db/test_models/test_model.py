@@ -19,18 +19,11 @@
 #
 ##############################################################################
 
-from setuptools import setup
-from setuptools import find_packages
-from tests import Tests
+
+from carepoint.db import Carepoint
 
 
-PACKAGE_NAME = 'carepoint'
-VERSION = '0.0.0.2'
-
-
-setup(
-    name=PACKAGE_NAME,
-    version=VERSION,
-    packages=find_packages(exclude=('tests', )),
-    cmdclass={'test': Tests},
-)
+class TestModel(Carepoint):
+    @classmethod
+    def run(self):
+        return True

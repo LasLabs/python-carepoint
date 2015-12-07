@@ -1,2 +1,4 @@
-pyodbc
+#pyodbc
 sqlalchemy
+xmlrunner
+mock
