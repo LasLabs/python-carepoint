@@ -19,14 +19,15 @@
 #
 ##############################################################################
 
-from .base import Base
+from carepoint import Carepoint
 from sqlalchemy import (Column, Integer, String, DateTime, Boolean,
                         ForeignKey, Text, SmallInteger)
 from sqlalchemy.orm import relationship, backref
 
 
-class Store(Base):
-    __tablename__ = 'csstore'
+class Store(Carepoint.BASE):
+    __table__ = 'csstore'
+    __db__ = 'cph'
     
     store_id = Column(Integer, primary_key=True)
     store_type_cn = Column(Integer)

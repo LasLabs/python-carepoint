@@ -19,14 +19,15 @@
 #
 ##############################################################################
 
-from .base import Base
+from carepoint import Carepoint
 from sqlalchemy import (Column, Integer, String, DateTime, Boolean,
                         ForeignKey, Text, SmallInteger)
 from sqlalchemy.orm import relationship, backref
 
 
-class Prescription(Base):
-    __tablename__ = 'cprx'
+class Prescription(Carepoint.BASE):
+    __table__ = 'cprx'
+    __db__ = 'cph'
     
     rx_id = Column(Integer, primary_key=True)
     script_no = Column(String)

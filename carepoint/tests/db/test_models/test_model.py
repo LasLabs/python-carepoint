@@ -20,10 +20,8 @@
 ##############################################################################
 
 
-from carepoint.db import Carepoint
-
-
-class TestModel(Carepoint):
+class TestModel(object):
+    __table__ = '__test__'
     @classmethod
     def run(self):
         return True

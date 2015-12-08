@@ -19,15 +19,15 @@
 #
 ##############################################################################
 
-from carepoint import CarepointDbBase
+from carepoint import Carepoint
 from sqlalchemy import (Column, Integer, String, DateTime, Boolean,
                         ForeignKey, Text, SmallInteger)
 from sqlalchemy.orm import relationship, backref
 
 
-class Patient(CarepointDbBase):
-    __dbname__ = 'cph'
-    __tablename__ = 'cppat'
+class Patient(Carepoint.BASE):
+    __db__ = 'cph'
+    __table__ = 'cppat'
     
     pat_id = Column(Integer, primary_key=True)
     cmt_id = Column(Integer)

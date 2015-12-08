@@ -19,14 +19,15 @@
 #
 ##############################################################################
 
-from .base import Base
+from carepoint import Carepoint
 from sqlalchemy import (Column, Integer, String, DateTime, Boolean,
                         ForeignKey, Text, SmallInteger)
 from sqlalchemy.orm import relationship, backref
 
 
-class Item(Base):
-    __tablename__ = 'item'
+class Item(Carepoint.BASE):
+    __table__ = 'item'
+    __db__ = 'cph'
     
     ITEMMSTR = Column(String)
     DESCR = Column(String)

@@ -19,8 +19,5 @@
 #
 ##############################################################################
 
-from .base import Base
 from .carepoint import Carepoint
-from .meta import Meta
-from .struct import Struct
 from .db import Db

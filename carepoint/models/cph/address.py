@@ -19,14 +19,15 @@
 #
 ##############################################################################
 
-from .base import Base
+from carepoint import Carepoint
 from sqlalchemy import (Column, Integer, String, DateTime, Boolean,
                         ForeignKey, Text, SmallInteger)
 from sqlalchemy.orm import relationship, backref
 
 
-class Address(Base):
-    __tablename__ = 'csaddr'
+class Address(Carepoint.BASE):
+    __table__ = 'csaddr'
+    __db__ = 'cph'
     
     addr_id = Column(Integer, primary_key=True)
     parent_addr_id = Column(
