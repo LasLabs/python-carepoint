@@ -25,7 +25,7 @@ import mock
 from carepoint import Carepoint
 
 
-class ModelPluginTest(unittest.TestCase):
+class CarepointTest(unittest.TestCase):
     
     MODEL_DIR = os.path.join(os.path.dirname(__file__), 'test_models')
 

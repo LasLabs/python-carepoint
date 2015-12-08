@@ -19,29 +19,23 @@
 #
 ##############################################################################
 
-from sqlalchemy import create_engine
+import os
+import unittest
+import mock
+from carepoint.tests.db.db import test_db
+from carepoint.models.cph.address import Address
 
 
-class Db(object):
-    ''' Base db connector object '''
+class ModelCphAddressTest(unittest.TestCase):
+
+    def setUp(self, ):
+        self.engine = test_db
+        self.db = Address
     
-    ODBC_DRIVER = 'SQL+Server+Native+Client+10.0'
-    SQLITE = 'sqlite'
-    
-    def __new__(self, server=None, user=None, passwd=None,
-                db=None, port=1433, drv=ODBC_DRIVER, ):
-        
-        if drv != self.SQLITE:
-            params = {
-                'usr': user,
-                'pass': passwd,
-                'srv': server,
-                'driver': drv,
-                'db': db,
-            }
-            dsn = 'mssql+pyodbc://%(usr)s:%(pass)s@%(srv)s/%(db)?driver%(drv)s'
-            
-            return create_engine(dsn % params)
+    def test_primary_key(self, ):
+        result = getattr(self.db, addr_id, None)
+        self.assertNotEqual(result, None)
 
-        else:
-            return create_engine('%s://' % self.SQLITE)
+
+if __name__ == '__main__':
+    unittest.main()

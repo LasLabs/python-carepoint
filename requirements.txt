@@ -2,3 +2,4 @@
 sqlalchemy
 xmlrunner
 mock
+pysqlite

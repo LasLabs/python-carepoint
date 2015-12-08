@@ -18,30 +18,3 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from sqlalchemy import create_engine
-
-
-class Db(object):
-    ''' Base db connector object '''
-    
-    ODBC_DRIVER = 'SQL+Server+Native+Client+10.0'
-    SQLITE = 'sqlite'
-    
-    def __new__(self, server=None, user=None, passwd=None,
-                db=None, port=1433, drv=ODBC_DRIVER, ):
-        
-        if drv != self.SQLITE:
-            params = {
-                'usr': user,
-                'pass': passwd,
-                'srv': server,
-                'driver': drv,
-                'db': db,
-            }
-            dsn = 'mssql+pyodbc://%(usr)s:%(pass)s@%(srv)s/%(db)?driver%(drv)s'
-            
-            return create_engine(dsn % params)
-
-        else:
-            return create_engine('%s://' % self.SQLITE)
