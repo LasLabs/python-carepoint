@@ -19,4 +19,4 @@
 #
 ##############################################################################
 
-from carepoint.db import Carepoint, Base, Meta, Struct
+from carepoint.db import Carepoint

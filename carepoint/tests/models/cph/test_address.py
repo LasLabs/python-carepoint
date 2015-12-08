@@ -19,5 +19,19 @@
 #
 ##############################################################################
 
-from sqlalchemy.ext.declarative import declarative_base
-Base = declarative_base()
+import os
+import unittest
+import mock
+from sqlalchemy.schema import Table
+from carepoint.tests.db.db import DatabaseTest
+from carepoint.models.cph.address import Address
+
+
+class ModelCphAddressTest(DatabaseTest):
+
+    def test_table_initialization(self, ):
+        self.assertIsInstance(Address.__table__, Table)
+
+
+if __name__ == '__main__':
+    unittest.main()

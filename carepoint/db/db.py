@@ -26,16 +26,22 @@ class Db(object):
     ''' Base db connector object '''
     
     ODBC_DRIVER = 'SQL+Server+Native+Client+10.0'
+    SQLITE = 'sqlite'
     
-    def __new__(self, server, user, passwd, db, port=1433, drv=ODBC_DRIVER):
+    def __new__(self, server=None, user=None, passwd=None,
+                db=None, port=1433, drv=ODBC_DRIVER, ):
         
-        params = {
-            'usr': user,
-            'pass': passwd,
-            'srv': server,
-            'driver': drv,
-            'db': db,
-        }
-        dsn = 'mssql+pyodbc://%(usr)s:%(pass)s@%(srv)s/%(db)?driver%(drv)s'
-        
-        return create_engine(dsn % params)
+        if drv != self.SQLITE:
+            params = {
+                'usr': user,
+                'pass': passwd,
+                'srv': server,
+                'driver': drv,
+                'db': db,
+            }
+            dsn = 'mssql+pyodbc://%(usr)s:%(pass)s@%(srv)s/%(db)?driver%(drv)s'
+            
+            return create_engine(dsn % params)
+
+        else:
+            return create_engine('%s://' % self.SQLITE)

@@ -19,14 +19,15 @@
 #
 ##############################################################################
 
-from .base import Base
+from carepoint import Carepoint
 from sqlalchemy import (Column, Integer, String, DateTime, Boolean,
                         ForeignKey, Text, SmallInteger)
 from sqlalchemy.orm import relationship, backref
 
 
-class Dispense(Base):
+class Dispense(Carepoint.BASE):
     __tablename__ = 'cprx_disp'
+    __dbname__ = 'cph'
     
     rx_id = Column(
         Integer,

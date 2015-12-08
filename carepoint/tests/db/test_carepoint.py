@@ -22,118 +22,124 @@
 import os
 import unittest
 import mock
-from carepoint.db import *
+from carepoint import Carepoint
 
 
-class ModelPluginTest(unittest.TestCase):
+class CarepointTest(unittest.TestCase):
     
     MODEL_DIR = os.path.join(os.path.dirname(__file__), 'test_models')
 
-    def setUp(self, ):
-        Carepoint.register_model_dir(self.MODEL_DIR)
-
     @mock.patch('carepoint.db.carepoint.Db')
     @mock.patch('carepoint.db.carepoint.Settings')
-    def init_carepoint(self, cp_args, settings_mock, db_mock, ):
+    def setUp(self, settings_mock, db_mock):
         self.cp_args = {
             'user': 'User',
             'passwd': 'Passwd',
             'server': 'Server',
         }
-        self.cp_args.update(cp_args)
         cp = Carepoint(**self.cp_args)
-        return cp, settings_mock, db_mock
+        cp.register_model_dir(self.MODEL_DIR)
+        self.carepoint = cp
+        self.settings_mock = settings_mock
+        self.db_mock = db_mock
 
     def test_cph_db_init(self, ):
-        carepoint, settings_mock, db_mock = self.init_carepoint({})
         self.cp_args['db'] = 'cph'
-        db_mock.assert_called_once_with(**self.cp_args)
+        self.db_mock.assert_called_once_with(**self.cp_args)
         
     def test_cph_db_assign(self, ):
-        carepoint, settings_mock, db_mock = self.init_carepoint({})
-        carepoint.dbs['cph'] = db_mock
+        self.carepoint.dbs['cph'] = self.db_mock
         
     def test_cph_settings_init(self, ):
-        carepoint, settings_mock, db_mock = self.init_carepoint({})
-        settings_mock.assert_called_once_with()
+        self.settings_mock.assert_called_once_with()
 
     def test_non_dir(self, ):
         ''' Test to make sure that an EnvironmentError is raised with an invalid model dir '''
         with self.assertRaises(EnvironmentError):
-            Carepoint.register_model_dir(
-                os.path.join(self.MODEL_DIR, 'not_a_dir')
-            )
+            self.carepoint.register_model_dir(os.path.join(self.MODEL_DIR, 'not_a_dir'))
 
-    def test_model_import(self, ):
+    def test_model_import_getitem(self, ):
         ''' Test if model is correctly initialized '''
-        self.assertIn('TestModel', Carepoint.models) #< Verify import
+        self.carepoint.find_models()
+        result = self.carepoint.get('TestModel', None)
+        self.assertNotEqual(result, None)
+        
+    def test_model_import_getattr(self, ):
+        ''' Test if model is correctly initialized '''
+        self.carepoint.find_models()
+        result = getattr(self.carepoint, 'TestModel', None)
+        self.assertIn('TestModel', self.carepoint)
         
     def test_model_methods(self, ):
         ''' Test if model is correctly initialized '''
-        model_obj = Carepoint.models['TestModel']
+        self.carepoint.set_iter_refresh()
+        model_obj = self.carepoint['TestModel']
         self.assertTrue(model_obj.run()) #< classmethods are exposed
 
-    #   @TODO: Figure out how to test the empty init. Destroy the metaclass?
-    #
-    # def test_iter_init_empty(self, ):
-    #     for i in Carepoint.models:
-    #         print "MODEL - %s " % i
-    #     self.assertEqual(len([i for i in Carepoint.models]), 0)
-    # 
-    # def test_values_init_empty(self, ):
-    #     self.assertEqual(len(Carepoint.models.values()), 0)
-    # 
-    # def test_keys_init_empty(self, ):
-    #     self.assertEqual(len(Carepoint.models.keys()), 0)
-    # 
-    # def test_items_init_empty(self, ):
-    #     self.assertEqual(len(Carepoint.models.items()), 0)
-    # 
-    # def test_iteritems_init_empty(self, ):
-    #     self.assertEqual(len([i for i in Carepoint.models.iteritems()]), 0)
-    # 
-    # def test_itervalues_init_empty(self, ):
-    #     self.assertEqual(len([i for i in Carepoint.models.itervalues()]), 0)
-    # 
-    # def test_iterkeys_init_empty(self, ):
-    #     self.assertEqual(len([i for i in Carepoint.models.iterkeys()]), 0)
+    def test_iter_init_empty(self, ):
+        self.assertEqual(len([i for i in self.carepoint]), 0)
+    
+    def test_values_init_empty(self, ):
+        self.assertEqual(len(self.carepoint.values()), 0)
+    
+    def test_keys_init_empty(self, ):
+        self.assertEqual(len(self.carepoint.keys()), 0)
+    
+    def test_items_init_empty(self, ):
+        self.assertEqual(len(self.carepoint.items()), 0)
+    
+    def test_iteritems_init_empty(self, ):
+        self.assertEqual(len([i for i in self.carepoint.iteritems()]), 0)
+    
+    def test_itervalues_init_empty(self, ):
+        self.assertEqual(len([i for i in self.carepoint.itervalues()]), 0)
+    
+    def test_iterkeys_init_empty(self, ):
+        self.assertEqual(len([i for i in self.carepoint.iterkeys()]), 0)
 
     def test_set_iter_refresh(self, ):
-        Carepoint.models.set_iter_refresh()
-        self.assertTrue(Carepoint.models.iter_refresh)
+        self.carepoint.set_iter_refresh()
+        self.assertTrue(self.carepoint.iter_refresh)
 
     def test_iter_after_refresh(self, ):
-        Carepoint.models.set_iter_refresh()
-        self.assertEqual(len([i for i in Carepoint.models]), 1)
+        self.carepoint.set_iter_refresh()
+        self.assertEqual(len([i for i in self.carepoint]), 1)
 
     def test_values_after_refresh(self, ):
-        Carepoint.models.set_iter_refresh()
-        self.assertEqual(len(Carepoint.models.values()), 1)
+        self.carepoint.set_iter_refresh()
+        self.assertEqual(len(self.carepoint.values()), 1)
 
     def test_keys_after_refresh(self, ):
-        Carepoint.models.set_iter_refresh()
-        self.assertEqual(len(Carepoint.models.keys()), 1)
+        self.carepoint.set_iter_refresh()
+        self.assertEqual(len(self.carepoint.keys()), 1)
 
     def test_items_after_refresh(self, ):
-        Carepoint.models.set_iter_refresh()
-        self.assertEqual(len(Carepoint.models.items()), 1)
+        self.carepoint.set_iter_refresh()
+        self.assertEqual(len(self.carepoint.items()), 1)
 
     def test_iteritems_after_refresh(self, ):
-        Carepoint.models.set_iter_refresh()
-        self.assertEqual(len([i for i in Carepoint.models.iteritems()]), 1)
+        self.carepoint.set_iter_refresh()
+        self.assertEqual(len([i for i in self.carepoint.iteritems()]), 1)
 
     def test_itervalues_after_refresh(self, ):
-        Carepoint.models.set_iter_refresh()
-        self.assertEqual(len([i for i in Carepoint.models.itervalues()]), 1)
+        self.carepoint.set_iter_refresh()
+        self.assertEqual(len([i for i in self.carepoint.itervalues()]), 1)
 
     def test_iterkeys_after_refresh(self, ):
-        Carepoint.models.set_iter_refresh()
-        self.assertEqual(len([i for i in Carepoint.models.iterkeys()]), 1)
+        self.carepoint.set_iter_refresh()
+        self.assertEqual(len([i for i in self.carepoint.iterkeys()]), 1)
 
-    def test_wrong_model(self, ):
+    def test_wrong_model_getitem(self, ):
         ''' Test to verify that a KeyError is raised for invalid model name '''
         with self.assertRaises(KeyError):
-            Carepoint.models['ThisIsNotAModelThatExists'] #< Fake
+            self.carepoint.set_iter_refresh()
+            self.carepoint['ThisIsNotAModelThatExists']
+            
+    def test_wrong_model_getattr(self, ):
+        ''' Test to verify that a KeyError is raised for invalid model name '''
+        with self.assertRaises(AttributeError):
+            self.carepoint.set_iter_refresh()
+            self.carepoint.ThisIsNotAModelThatExists
 
 
 if __name__ == '__main__':
