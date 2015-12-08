@@ -24,6 +24,7 @@ import imp
 import inspect
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 from ..conf.settings import Settings
 from .db import Db
 
@@ -53,8 +54,30 @@ class Carepoint(dict):
         }
         #   @TODO: Lazy load, once other dbs needed
         self.dbs = {
-            'cph': Db(**params)
+            'cph': Db(**params),
         }
+        self.env = {
+            'cph': sessionmaker(bind=self.dbs['cph']),
+        }
+    
+    def __get_session(self, model_obj, ):
+        return self.env[record_id.__db__]()
+        
+    def search(self, model_obj, domain, ):
+        raise NotImplemented()
+    
+    def create(self, model_obj, vals, ):
+        session = self.__get_session(model_obj)
+        record = model_obj(**vals)
+        session.add(record_id)
+        session.commit()
+        return record
+
+    def update(self, model_obj, record_id, vals, ):
+        session = self.__get_session(model_obj)
+        session.query(model_obj).get(record_id).update(vals)
+        session.commit()
+        return session
 
     def __getitem__(self, key, retry=True, default=False):
         ''' Re-implement __getitem__ to scan for models if key missing  '''
