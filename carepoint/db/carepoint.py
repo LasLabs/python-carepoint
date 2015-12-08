@@ -59,7 +59,7 @@ class Carepoint(dict):
         self.env = {
             'cph': sessionmaker(bind=self.dbs['cph']),
         }
-    
+
     def __get_session(self, model_obj, ):
         return self.env[record_id.__db__]()
         
@@ -78,6 +78,16 @@ class Carepoint(dict):
         session.query(model_obj).get(record_id).update(vals)
         session.commit()
         return session
+
+    def __getattr__(self, key, ):
+        ''' Re-implement __getattr__ to use __getitem__ if attr not found '''
+        try:
+            return super(Carepoint, self).__getattr__(key)
+        except AttributeError:
+            try:
+                self.__getitem__(key)
+            except KeyError:
+                raise AttributeError()
 
     def __getitem__(self, key, retry=True, default=False):
         ''' Re-implement __getitem__ to scan for models if key missing  '''
@@ -160,26 +170,26 @@ class Carepoint(dict):
         if model_path is not None and not os.path.isdir(model_path):
             raise EnvironmentError('%s is not a directory' % model_path)
         
-        # for dir_name, subdirs, files in os.walk(model_path):
-        #     
-        #     parent_module = dir_name.replace(model_path, '')
-        #     parent_module = parent_module.replace(os.path.sep, '.')
-        #     
-        for file_ in os.listdir(model_path):
-            if file_.endswith('.py') and file_ != '__init__.py':
-                module = file_[:-3] #< Strip extension
-                mod_obj = globals().get(module)
-                if mod_obj is None:
-                    f, filename, desc = imp.find_module(
-                        module, [model_path]
-                    )
-                    mod_obj = imp.load_module(
-                        module, f, filename, desc
-                    )
-                    cls = [m for m in dir(mod_obj) if not m.startswith('__')]
-                    for model_cls in cls:
-                        model_obj = getattr(mod_obj, model_cls)
-                        if hasattr(model_obj, '__table__'):
-                            if not hasattr(model_obj, '__db__'):
-                                model_obj.__db__ = self.DEFAULT_DB
-                            self.register_model(model_obj)
+        for dir_name, subdirs, files in os.walk(model_path):
+            
+            parent_module = dir_name.replace(model_path, '')
+            parent_module = parent_module.replace(os.path.sep, '.')
+            
+            for file_ in files:
+                if file_.endswith('.py') and file_ != '__init__.py':
+                    module = file_[:-3] #< Strip extension
+                    mod_obj = globals().get(module)
+                    if mod_obj is None:
+                        f, filename, desc = imp.find_module(
+                            module, [model_path]
+                        )
+                        mod_obj = imp.load_module(
+                            module, f, filename, desc
+                        )
+                        cls = [m for m in dir(mod_obj) if not m.startswith('__')]
+                        for model_cls in cls:
+                            model_obj = getattr(mod_obj, model_cls)
+                            if hasattr(model_obj, '__table__'):
+                                if not hasattr(model_obj, '__db__'):
+                                    model_obj.__db__ = self.DEFAULT_DB
+                                self.register_model(model_obj)

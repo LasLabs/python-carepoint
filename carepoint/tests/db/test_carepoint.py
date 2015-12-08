@@ -58,10 +58,17 @@ class ModelPluginTest(unittest.TestCase):
         with self.assertRaises(EnvironmentError):
             self.carepoint.register_model_dir(os.path.join(self.MODEL_DIR, 'not_a_dir'))
 
-    def test_model_import(self, ):
+    def test_model_import_getitem(self, ):
         ''' Test if model is correctly initialized '''
         self.carepoint.find_models()
-        self.assertIn('TestModel', self.carepoint) #< Verify import
+        result = self.carepoint.get('TestModel', None)
+        self.assertNotEqual(result, None)
+        
+    def test_model_import_getattr(self, ):
+        ''' Test if model is correctly initialized '''
+        self.carepoint.find_models()
+        result = getattr(self.carepoint, 'TestModel', None)
+        self.assertIn('TestModel', self.carepoint)
         
     def test_model_methods(self, ):
         ''' Test if model is correctly initialized '''
@@ -122,11 +129,17 @@ class ModelPluginTest(unittest.TestCase):
         self.carepoint.set_iter_refresh()
         self.assertEqual(len([i for i in self.carepoint.iterkeys()]), 1)
 
-    def test_wrong_model(self, ):
+    def test_wrong_model_getitem(self, ):
         ''' Test to verify that a KeyError is raised for invalid model name '''
         with self.assertRaises(KeyError):
             self.carepoint.set_iter_refresh()
-            self.carepoint['ThisIsNotAModelThatExists'] #< Fake
+            self.carepoint['ThisIsNotAModelThatExists']
+            
+    def test_wrong_model_getattr(self, ):
+        ''' Test to verify that a KeyError is raised for invalid model name '''
+        with self.assertRaises(AttributeError):
+            self.carepoint.set_iter_refresh()
+            self.carepoint.ThisIsNotAModelThatExists
 
 
 if __name__ == '__main__':
