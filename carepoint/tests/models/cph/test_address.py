@@ -22,14 +22,15 @@
 import os
 import unittest
 import mock
+from sqlalchemy.schema import Table
 from carepoint.tests.db.db import DatabaseTest
 from carepoint.models.cph.address import Address
 
 
 class ModelCphAddressTest(DatabaseTest):
 
-    def test_primary_key(self, ):
-        print Address.__table__
+    def test_table_initialization(self, ):
+        self.assertIsInstance(Address.__table__, Table)
 
 
 if __name__ == '__main__':
