@@ -22,19 +22,14 @@
 import os
 import unittest
 import mock
-from carepoint.tests.db.db import test_db
+from carepoint.tests.db.db import DatabaseTest
 from carepoint.models.cph.address import Address
 
 
-class ModelCphAddressTest(unittest.TestCase):
+class ModelCphAddressTest(DatabaseTest):
 
-    def setUp(self, ):
-        self.engine = test_db
-        self.db = Address
-    
     def test_primary_key(self, ):
-        result = getattr(self.db, addr_id, None)
-        self.assertNotEqual(result, None)
+        print Address.__table__
 
 
 if __name__ == '__main__':

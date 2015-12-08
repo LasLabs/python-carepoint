@@ -26,8 +26,8 @@ from sqlalchemy.orm import relationship, backref
 
 
 class Item(Carepoint.BASE):
-    __table__ = 'item'
-    __db__ = 'cph'
+    __tablename__ = 'item'
+    __dbname__ = 'cph'
     
     ITEMMSTR = Column(String)
     DESCR = Column(String)

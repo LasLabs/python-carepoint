@@ -26,8 +26,8 @@ from sqlalchemy.orm import relationship, backref
 
 
 class Prescription(Carepoint.BASE):
-    __table__ = 'cprx'
-    __db__ = 'cph'
+    __tablename__ = 'cprx'
+    __dbname__ = 'cph'
     
     rx_id = Column(Integer, primary_key=True)
     script_no = Column(String)

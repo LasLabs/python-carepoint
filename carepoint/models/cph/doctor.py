@@ -26,8 +26,8 @@ from sqlalchemy.orm import relationship, backref
 
 
 class Doctor(Carepoint.BASE):
-    __table__ = 'cpmd'
-    __db__ = 'cph'
+    __tablename__ = 'cpmd'
+    __dbname__ = 'cph'
     
     md_id = Column(Integer, primary_key=True)
     lname = Column(String)

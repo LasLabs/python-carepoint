@@ -61,7 +61,7 @@ class Carepoint(dict):
         }
 
     def __get_session(self, model_obj, ):
-        return self.env[record_id.__db__]()
+        return self.env[record_id.__dbname__]()
         
     def search(self, model_obj, domain, ):
         raise NotImplemented()
@@ -189,7 +189,7 @@ class Carepoint(dict):
                         cls = [m for m in dir(mod_obj) if not m.startswith('__')]
                         for model_cls in cls:
                             model_obj = getattr(mod_obj, model_cls)
-                            if hasattr(model_obj, '__table__'):
-                                if not hasattr(model_obj, '__db__'):
-                                    model_obj.__db__ = self.DEFAULT_DB
+                            if hasattr(model_obj, '__tablename__'):
+                                if not hasattr(model_obj, '__dbname__'):
+                                    model_obj.__dbname__ = self.DEFAULT_DB
                                 self.register_model(model_obj)
