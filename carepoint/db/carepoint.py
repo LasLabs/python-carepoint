@@ -59,9 +59,15 @@ class Carepoint(dict):
         self.env = {
             'cph': sessionmaker(bind=self.dbs['cph']),
         }
+        self.sessions = {}
 
     def __get_session(self, model_obj, ):
-        return self.env[record_id.__dbname__]()
+        try:
+            return self.sessions[record_id.__dbname__]
+        except KeyError:
+            session = self.env[record_id.__dbname__]()
+            self.sessions[record_id.__dbname__] = session
+            return session
 
     def read(self, model_obj, record_id, attributes=None, ):
         """
