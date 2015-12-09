@@ -63,10 +63,28 @@ class Carepoint(dict):
     def __get_session(self, model_obj, ):
         return self.env[record_id.__dbname__]()
         
-    def search(self, model_obj, domain, ):
-        raise NotImplemented()
+    def search(self, model_obj, filters=None, ):
+        """
+        Search table by filters and return records
+        :param model_obj: Table class to search
+        :type model_name: :class:`sqlalchemy.schema.Table`
+        :param filters: Filters to apply to search
+        :type filters: dict or None
+        :rtype: :class:`sqlalchemy.engine.ResultProxy`
+        """
+        if filters is None:
+            filters = {}
+        return self.carepoint.query(model_obj).filter_by(**filters)
     
     def create(self, model_obj, vals, ):
+        """
+        Wrapper to create a record in Carepoint
+        :param model_obj: Table class to create with
+        :type model_name: :class:`sqlalchemy.schema.Table`
+        :param vals: Data to create record with
+        :type vals: dict
+        :rtype: :class:`sqlalchemy.ext.declarative.Declarative`
+        """
         session = self.__get_session(model_obj)
         record = model_obj(**vals)
         session.add(record_id)
@@ -74,10 +92,36 @@ class Carepoint(dict):
         return record
 
     def update(self, model_obj, record_id, vals, ):
+        """
+        Wrapper to update a record in Carepoint
+        :param model_obj: Table class to update
+        :type model_name: :class:`sqlalchemy.schema.Table`
+        :param record_id: Id of record to manipulate
+        :type record_id: int
+        :param vals: Data to create record with
+        :type vals: dict
+        :rtype: :class:`sqlalchemy.ext.declarative.Declarative`
+        """
         session = self.__get_session(model_obj)
         session.query(model_obj).get(record_id).update(vals)
         session.commit()
         return session
+    
+    def delete(self, model_obj, record_id, ):
+        """
+        Wrapper to delete a record in Carepoint
+        :param model_obj: Table class to update
+        :type model_name: :class:`sqlalchemy.schema.Table`
+        :param record_id: Id of record to manipulate
+        :type record_id: int
+        :rtype: bool
+        """
+        session = self.__get_session(model_obj)
+        result_obj = session.query(model_obj).get(record_id)
+        assert result_obj.count() == 1
+        session.delete(result_obj)
+        session.commit()
+        return True
 
     def __getattr__(self, key, ):
         ''' Re-implement __getattr__ to use __getitem__ if attr not found '''
