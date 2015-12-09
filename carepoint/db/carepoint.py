@@ -62,12 +62,26 @@ class Carepoint(dict):
 
     def __get_session(self, model_obj, ):
         return self.env[record_id.__dbname__]()
-        
+
+    def read(self, model_obj, record_id, attributes=None, ):
+        """
+        Get record by id and return the object
+        :param model_obj: Table class to search
+        :type model_obj: :class:`sqlalchemy.schema.Table`
+        :param record_id: Id of record to manipulate
+        :param attributes: Attributes to rcv from db. None for *
+        :type attributes: list or None
+        :rtype: :class:`sqlalchemy.engine.ResultProxy`
+        """
+        if attributes is not None:
+            raise NotImplementedError('Read attributes not implemented')
+        return self.carepoint.query(model_obj).get(record_id)
+
     def search(self, model_obj, filters=None, ):
         """
         Search table by filters and return records
         :param model_obj: Table class to search
-        :type model_name: :class:`sqlalchemy.schema.Table`
+        :type model_obj: :class:`sqlalchemy.schema.Table`
         :param filters: Filters to apply to search
         :type filters: dict or None
         :rtype: :class:`sqlalchemy.engine.ResultProxy`
@@ -80,7 +94,7 @@ class Carepoint(dict):
         """
         Wrapper to create a record in Carepoint
         :param model_obj: Table class to create with
-        :type model_name: :class:`sqlalchemy.schema.Table`
+        :type model_obj: :class:`sqlalchemy.schema.Table`
         :param vals: Data to create record with
         :type vals: dict
         :rtype: :class:`sqlalchemy.ext.declarative.Declarative`
@@ -95,7 +109,7 @@ class Carepoint(dict):
         """
         Wrapper to update a record in Carepoint
         :param model_obj: Table class to update
-        :type model_name: :class:`sqlalchemy.schema.Table`
+        :type model_obj: :class:`sqlalchemy.schema.Table`
         :param record_id: Id of record to manipulate
         :type record_id: int
         :param vals: Data to create record with
@@ -111,7 +125,7 @@ class Carepoint(dict):
         """
         Wrapper to delete a record in Carepoint
         :param model_obj: Table class to update
-        :type model_name: :class:`sqlalchemy.schema.Table`
+        :type model_obj: :class:`sqlalchemy.schema.Table`
         :param record_id: Id of record to manipulate
         :type record_id: int
         :rtype: bool
