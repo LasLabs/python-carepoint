@@ -24,13 +24,13 @@ import unittest
 import mock
 from sqlalchemy.schema import Table
 from carepoint.tests.db.db import DatabaseTest
-from carepoint.models.cph.address import Address
+from carepoint.models.cph.store import Store
 
 
-class TestModelsCphAddress(DatabaseTest):
+class TestModelsCphStore(DatabaseTest):
 
     def test_table_initialization(self, ):
-        self.assertIsInstance(Address.__table__, Table)
+        self.assertIsInstance(Store.__table__, Table)
 
 
 if __name__ == '__main__':

@@ -45,7 +45,7 @@ class Store(Carepoint.BASE):
     app_flags = Column(Integer)
     nabp = Column(String)
     medcaid_no = Column(String)
-    timestamp = Column(Datetime)
+    timestamp = Column(DateTime)
     region_id = Column(Integer)
     NPI = Column(String)
     pharmacy_service_type_cn = Column(Integer)
