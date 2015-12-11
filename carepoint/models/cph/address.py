@@ -20,17 +20,15 @@
 ##############################################################################
 
 from carepoint import Carepoint
-from carepoint.models.cph.user import User
-from sqlalchemy import (
-    Column,
-    Integer,
-    String,
-    DateTime,
-    Boolean,
-    ForeignKey,
-    Text,
-    SmallInteger
-)
+from .user import User
+from sqlalchemy import (Column,
+                        Integer,
+                        String,
+                        DateTime,
+                        Boolean,
+                        ForeignKey,
+                        Text,
+                        SmallInteger)
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -44,7 +42,7 @@ class Address(Carepoint.BASE):
     addr_id = Column(Integer, primary_key=True)
     parent_addr_id = Column(
         Integer,
-        ForeignKey(Address.addr_id),
+        ForeignKey('csaddr.addr_id'),
     )
     inherited_yn = Column(Boolean)
     owner_type_cn = Column(Integer)
@@ -60,7 +58,7 @@ class Address(Carepoint.BASE):
     mailing_yn = Column(Boolean)
     anote = Column(String)
     app_flags = Column(Integer)
-    timestmp = Column(Datetime)
+    timestmp = Column(DateTime)
     add_user_id = Column(
         Integer,
         ForeignKey(User.user_id),

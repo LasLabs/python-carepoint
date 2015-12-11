@@ -20,8 +20,16 @@
 ##############################################################################
 
 from carepoint import Carepoint
-from sqlalchemy import (Column, Integer, String, DateTime, Boolean,
-                        ForeignKey, Text, SmallInteger, Float, Numeric)
+from sqlalchemy import (Column,
+                        Integer,
+                        String,
+                        DateTime,
+                        Boolean,
+                        ForeignKey,
+                        Numeric,
+                        Float,
+                        Text,
+                        SmallInteger)
 from sqlalchemy.orm import relationship, backref
 
 
