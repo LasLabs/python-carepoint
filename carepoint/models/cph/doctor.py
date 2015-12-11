@@ -20,8 +20,14 @@
 ##############################################################################
 
 from carepoint import Carepoint
-from sqlalchemy import (Column, Integer, String, DateTime, Boolean,
-                        ForeignKey, Text, SmallInteger)
+from sqlalchemy import (Column,
+                        Integer,
+                        String,
+                        DateTime,
+                        Boolean,
+                        ForeignKey,
+                        Text,
+                        SmallInteger)
 from sqlalchemy.orm import relationship, backref
 
 
@@ -64,7 +70,7 @@ class Doctor(Carepoint.BASE):
     status_cn = Column(Integer)
     conv_code = Column(String)
     app_flags = Column(Integer)
-    timestamp = Column(Datetime)
+    timestamp = Column(DateTime)
     state_issued_id = Column(String)
     sname = Column(String)
     medicaid_restricted_yn = Column(Boolean)

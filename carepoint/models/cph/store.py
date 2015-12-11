@@ -20,8 +20,14 @@
 ##############################################################################
 
 from carepoint import Carepoint
-from sqlalchemy import (Column, Integer, String, DateTime, Boolean,
-                        ForeignKey, Text, SmallInteger)
+from sqlalchemy import (Column,
+                        Integer,
+                        String,
+                        DateTime,
+                        Boolean,
+                        ForeignKey,
+                        Text,
+                        SmallInteger)
 from sqlalchemy.orm import relationship, backref
 
 
@@ -45,7 +51,7 @@ class Store(Carepoint.BASE):
     app_flags = Column(Integer)
     nabp = Column(String)
     medcaid_no = Column(String)
-    timestamp = Column(Datetime)
+    timestamp = Column(DateTime)
     region_id = Column(Integer)
     NPI = Column(String)
     pharmacy_service_type_cn = Column(Integer)

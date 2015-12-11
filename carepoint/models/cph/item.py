@@ -20,8 +20,16 @@
 ##############################################################################
 
 from carepoint import Carepoint
-from sqlalchemy import (Column, Integer, String, DateTime, Boolean,
-                        ForeignKey, Text, SmallInteger)
+from sqlalchemy import (Column,
+                        Integer,
+                        String,
+                        DateTime,
+                        Boolean,
+                        ForeignKey,
+                        Numeric,
+                        Float,
+                        Text,
+                        SmallInteger)
 from sqlalchemy.orm import relationship, backref
 
 
@@ -41,11 +49,11 @@ class Item(Carepoint.BASE):
     VENDOR = Column(String)
     COST = Column(Numeric)
     INQTY = Column(Numeric)
-    INDATE = Column(Datetime)
+    INDATE = Column(DateTime)
     OUTQTY = Column(Numeric)
-    OUTDATE = Column(Datetime)
+    OUTDATE = Column(DateTime)
     ADJQTY = Column(Numeric)
-    ADJDATE = Column(Datetime)
+    ADJDATE = Column(DateTime)
     MTD_ISSUE = Column(Numeric)
     MTD_RCPTS = Column(Numeric)
     MTD_ADJ = Column(Numeric)

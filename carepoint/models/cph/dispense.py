@@ -20,8 +20,15 @@
 ##############################################################################
 
 from carepoint import Carepoint
-from sqlalchemy import (Column, Integer, String, DateTime, Boolean,
-                        ForeignKey, Text, SmallInteger)
+from sqlalchemy import (Column,
+                        Integer,
+                        String,
+                        DateTime,
+                        Boolean,
+                        ForeignKey,
+                        Numeric,
+                        Text,
+                        SmallInteger)
 from sqlalchemy.orm import relationship, backref
 
 
@@ -39,13 +46,13 @@ class Dispense(Carepoint.BASE):
     )
     disp_ndc = Column(String)
     disp_drug_name = Column(String)
-    prod_expire_date = Column(Datetime)
+    prod_expire_date = Column(DateTime)
     mfg = Column(String)
     orig_mfg = Column(String)
     pkg_size = Column(Numeric)
     rxdisp_id = Column(Integer, primary_key=True)
     fill_no = Column(Integer)
-    dispense_date = Column(Datetime)
+    dispense_date = Column(DateTime)
     dispense_qty = Column(Numeric)
     disp_days_supply = Column(Numeric)
     sig_text = Column(String)
@@ -79,7 +86,7 @@ class Dispense(Carepoint.BASE):
     billing_units = Column(String)
     price_table_id = Column(Integer)
     app_flags = Column(Integer)
-    timestmp = Column(Datetime)
+    timestmp = Column(DateTime)
     price_meth_cn = Column(Integer)
     uu = Column(String)
     p_tbl_override_yn = Column(Boolean)
@@ -108,17 +115,17 @@ class Dispense(Carepoint.BASE):
     resp_party_id = Column(Integer)
     auto_refill_cn = Column(Integer)
     fill_yn = Column(Boolean)
-    fill_stop_date = Column(Datetime)
-    fill_resume_date = Column(Datetime)
+    fill_stop_date = Column(DateTime)
+    fill_resume_date = Column(DateTime)
     fill_stop_reason_cn = Column(Integer)
     fill_stop_user_id = Column(Integer)
-    registration_date = Column(Datetime)
+    registration_date = Column(DateTime)
     anonymous_yn = Column(Boolean)
     market_yn = Column(Boolean)
     representative = Column(String)
-    discharge_date = Column(Datetime)
+    discharge_date = Column(DateTime)
     do_not_resuscitate_yn = Column(Boolean)
-    discharge_exp_date = Column(Datetime)
+    discharge_exp_date = Column(DateTime)
     pat_loc_cn = Column(Integer)
     rx_priority_default_cn = Column(Integer)
     ship_cn = Column(Integer)

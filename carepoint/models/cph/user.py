@@ -20,8 +20,14 @@
 ##############################################################################
 
 from carepoint import Carepoint
-from sqlalchemy import (Column, Integer, String, DateTime, Boolean,
-                        ForeignKey, Text, SmallInteger)
+from sqlalchemy import (Column,
+                        Integer,
+                        String,
+                        DateTime,
+                        Boolean,
+                        ForeignKey,
+                        Text,
+                        SmallInteger)
 from sqlalchemy.orm import relationship, backref
 
 
@@ -43,7 +49,7 @@ class User(Carepoint.BASE):
     anote = Column(String)
     employee_no = Column(String)
     ssn = Column(String)
-    last_login_time = Column(Datetime)
+    last_login_date = Column(DateTime)
     email = Column(String)
     db_password = Column(String)
     es_password = Column(String)
@@ -53,9 +59,9 @@ class User(Carepoint.BASE):
     license_state_cd = Column(String)
     status_cn = Column(Integer)
     app_flags = Column(Integer)
-    timestmp = Column(Datetime)
+    timestmp = Column(DateTime)
     must_change_password_yn = Column(Integer)
-    password_date = Column(Datetime)
+    password_date = Column(DateTime)
     add_user_id = Column(
         Integer,
         ForeignKey('csuser.user_id'),
