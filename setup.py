@@ -33,4 +33,11 @@ setup(
     version=VERSION,
     packages=find_packages(exclude=('tests', )),
     cmdclass={'test': Tests},
+    install_requires=[
+        #'pyodbc',
+        'pysqlite',
+        'sqlalchemy',
+        'xmlrunner',
+        'mock',
+    ]
 )
