@@ -28,7 +28,8 @@ from sqlalchemy import (Column,
                         Boolean,
                         ForeignKey,
                         Text,
-                        SmallInteger)
+                        SmallInteger,
+                        )
 from sqlalchemy.ext.declarative import declarative_base
 
 
