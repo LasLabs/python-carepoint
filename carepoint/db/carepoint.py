@@ -23,6 +23,7 @@ import os
 import imp
 import inspect
 import operator
+import logging
 from collections import defaultdict
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -32,6 +33,7 @@ from .db import Db
 
 
 Base = declarative_base()
+_logger = logging.getLogger(__name__)
 
 
 class Carepoint(dict):
@@ -47,7 +49,7 @@ class Carepoint(dict):
         '>=': operator.ge,
         '>': operator.gt,
         '<=': operator.le,
-        '>=': operator.lt,
+        '<': operator.lt,
         '=': operator.eq,
         '==': operator.eq,
     }
@@ -72,12 +74,12 @@ class Carepoint(dict):
         }
         self.sessions = {}
 
-    def __get_session(self, model_obj, ):
+    def _get_session(self, model_obj, ):
         try:
-            return self.sessions[record_id.__dbname__]
+            return self.sessions[model_obj.__dbname__]
         except KeyError:
-            session = self.env[record_id.__dbname__]()
-            self.sessions[record_id.__dbname__] = session
+            session = self.env[model_obj.__dbname__]()
+            self.sessions[model_obj.__dbname__] = session
             return session
 
     def _create_criterion(self, model_obj, col_name, operator, query, ):
@@ -102,16 +104,16 @@ class Carepoint(dict):
             return operator_obj(col_obj, query)
 
         except KeyError:
-            raise NotImplementedError(
-                'Query Operator %s is not supported' % operator,
+            _logger.error(
+                'Query Operator %s is not supported', operator,
             )
+            raise
 
         except AttributeError:
-            raise AttributeError(
-                'Col %s does not exist in model %s' % (
-                    col_name, model_obj
-                )
+            _logger.error(
+                'Col %s does not exist in model %s', col_name, model_obj
             )
+            raise
 
     def _unwrap_filters(self, model_obj, filters=None, ):
         """
@@ -135,7 +137,7 @@ class Carepoint(dict):
                         model_obj, col_name, _operator, _filter
                     ))
 
-            if isinstance(col_filter, str):
+            else:
                 new_filters.append(self._create_criterion(
                     model_obj, col_name, '==', col_filter
                 ))
@@ -154,7 +156,8 @@ class Carepoint(dict):
         """
         if attributes is not None:
             raise NotImplementedError('Read attributes not implemented')
-        return self.carepoint.query(model_obj).get(record_id)
+        session = self._get_session(model_obj)
+        return session.query(model_obj).get(record_id)
 
     def search(self, model_obj, filters=None, ):
         """
@@ -167,7 +170,8 @@ class Carepoint(dict):
         """
         if filters is None:
             filters = {}
-        return self.carepoint.query(model_obj).filter_by(**filters)
+        session = self._get_session(model_obj)
+        return session.query(model_obj).filter_by(**filters)
     
     def create(self, model_obj, vals, ):
         """
@@ -178,11 +182,11 @@ class Carepoint(dict):
         :type vals: dict
         :rtype: :class:`sqlalchemy.ext.declarative.Declarative`
         """
-        session = self.__get_session(model_obj)
-        record = model_obj(**vals)
+        session = self._get_session(model_obj)
+        record_id = model_obj(**vals)
         session.add(record_id)
         session.commit()
-        return record
+        return record_id
 
     def update(self, model_obj, record_id, vals, ):
         """
@@ -195,8 +199,8 @@ class Carepoint(dict):
         :type vals: dict
         :rtype: :class:`sqlalchemy.ext.declarative.Declarative`
         """
-        session = self.__get_session(model_obj)
-        session.query(model_obj).get(record_id).update(vals)
+        session = self._get_session(model_obj)
+        self.read(model_obj, record_id).update(vals)
         session.commit()
         return session
     
@@ -207,11 +211,15 @@ class Carepoint(dict):
         :type model_obj: :class:`sqlalchemy.schema.Table`
         :param record_id: Id of record to manipulate
         :type record_id: int
+        :return: Whether the record was found, and deleted
         :rtype: bool
         """
-        session = self.__get_session(model_obj)
-        result_obj = session.query(model_obj).get(record_id)
-        assert result_obj.count() == 1
+        session = self._get_session(model_obj)
+        result_obj = self.read(model_obj, record_id)
+        result_cnt = result_obj.count()
+        if result_obj.count() == 0:
+            return False
+        assert result_cnt == 1
         session.delete(result_obj)
         session.commit()
         return True
