@@ -22,6 +22,8 @@
 import os
 import imp
 import inspect
+import operator
+from collections import defaultdict
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -40,6 +42,15 @@ class Carepoint(dict):
     
     # Default path to search for models - change with register_model_dir
     model_path = os.path.join(__file__, '..', 'models')
+
+    FILTERS = {
+        '>=': operator.ge,
+        '>': operator.gt,
+        '<=': operator.le,
+        '>=': operator.lt,
+        '=': operator.eq,
+        '==': operator.eq,
+    }
     
     def __init__(self, server, user, passwd, ):
         
@@ -68,6 +79,68 @@ class Carepoint(dict):
             session = self.env[record_id.__dbname__]()
             self.sessions[record_id.__dbname__] = session
             return session
+
+    def _create_criterion(self, model_obj, col_name, operator, query, ):
+        """
+        Create a SQLAlchemy criterion from filter parts
+        :param model_obj: Table class to search
+        :type model_obj: :class:`sqlalchemy.schema.Table`
+        :param col_name: Name of column to query
+        :type col_name: str
+        :param operator: Domain operator to use in query
+        :type operator: str
+        :param query: Text to search for
+        :type query: str
+        :return: SQLAlchemy criterion representing a single WHERE clause
+        :raises NotImplementedError: When query operator is not implemented
+        :raises AttributeError: When col_name does not exist in the model_obj
+        """
+
+        try:
+            col_obj = getattr(model_obj, col_name)
+            operator_obj = self.FILTERS[operator]
+            return operator_obj(col_obj, query)
+
+        except KeyError:
+            raise NotImplementedError(
+                'Query Operator %s is not supported' % operator,
+            )
+
+        except AttributeError:
+            raise AttributeError(
+                'Col %s does not exist in model %s' % (
+                    col_name, model_obj
+                )
+            )
+
+    def _unwrap_filters(self, model_obj, filters=None, ):
+        """
+        Unwrap a dictionary of filters into something usable by SQLAlchemy
+        :param model_obj: Table class to search
+        :type model_obj: :class:`sqlalchemy.schema.Table`
+        :param filters: Filters, keyed by col name
+        :type filters: dict
+        :rtype: list
+        """
+
+        if filters is None:
+            filters = {}
+
+        new_filters = []
+        for col_name, col_filter in filters.items():
+
+            if isinstance(col_filter, dict):
+                for _operator, _filter in col_filter.items():
+                    new_filters.append(self._create_criterion(
+                        model_obj, col_name, _operator, _filter
+                    ))
+
+            if isinstance(col_filter, str):
+                new_filters.append(self._create_criterion(
+                    model_obj, col_name, '==', col_filter
+                ))
+
+        return new_filters
 
     def read(self, model_obj, record_id, attributes=None, ):
         """

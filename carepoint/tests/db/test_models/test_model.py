@@ -22,6 +22,7 @@
 
 class TestModel(object):
     __tablename__ = '__test__'
+    test_attr = 'Test'
     @classmethod
     def run(self):
         return True
