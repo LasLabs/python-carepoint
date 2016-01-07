@@ -37,7 +37,7 @@ _logger = logging.getLogger(__name__)
 
 
 class Carepoint(dict):
-    ''' Base CarePoint db connector object '''
+    """ Base CarePoint db connector object """
     
     BASE = Base
     DEFAULT_DB = 'cph'
@@ -225,7 +225,7 @@ class Carepoint(dict):
         return True
 
     def __getattr__(self, key, ):
-        ''' Re-implement __getattr__ to use __getitem__ if attr not found '''
+        """ Re-implement __getattr__ to use __getitem__ if attr not found """
         try:
             return super(Carepoint, self).__getattr__(key)
         except AttributeError:
@@ -235,7 +235,7 @@ class Carepoint(dict):
                 raise AttributeError()
 
     def __getitem__(self, key, retry=True, default=False):
-        ''' Re-implement __getitem__ to scan for models if key missing  '''
+        """ Re-implement __getitem__ to scan for models if key missing  """
         try:
             return super(Carepoint, self).__getitem__(key)
         except KeyError:
@@ -252,10 +252,11 @@ class Carepoint(dict):
                 )
 
     def set_iter_refresh(self, refresh=True, ):
-        '''
+        """
         Toggle flag to search for new models before iteration
-        @param  bool    refresh     Whether to refresh before iteration
-        '''
+        :param refresh: Whether to refresh before iteration
+        :type refresh: bool
+        """
         self.iter_refresh = refresh
         
     def __refresh_models__(self, ):
@@ -263,53 +264,61 @@ class Carepoint(dict):
             self.find_models()
 
     def __iter__(self, ):
-        ''' Reimplement __iter__ to allow for optional model refresh   '''
+        """ Reimplement __iter__ to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).__iter__()
 
     def values(self, ):
-        ''' Reimplement values to allow for optional model refresh   '''
+        """ Reimplement values to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).values()
 
     def keys(self, ):
-        ''' Reimplement keys to allow for optional model refresh   '''
+        """ Reimplement keys to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).keys()
 
     def items(self, ):
-        ''' Reimplement items to allow for optional model refresh   '''
+        """ Reimplement items to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).items()
 
     def itervalues(self, ):
-        ''' Reimplement itervalues to allow for optional model refresh   '''
+        """ Reimplement itervalues to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).itervalues()
 
     def iterkeys(self, ):
-        ''' Reimplement iterkeys to allow for optional model refresh   '''
+        """ Reimplement iterkeys to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).iterkeys()
 
     def iteritems(self, ):
-        ''' Reimplement iteritems to allow for optional model refresh   '''
+        """ Reimplement iteritems to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).iteritems()
     
-    def register_model(self, model):
-        ''' Registration logic + append to models struct '''
+    def register_model(self, model_obj):
+        """
+        Registration logic + append to models struct
+        :param model_obj: Model object to register
+        :type model_obj: :class:`sqlalchemy.ext.declarative.Declarative`
+        """
         self[model.__name__] = model
     
     def register_model_dir(self, model_path):
-        ''' This function sets the model path to be searched   '''
+        """
+        This function sets the model path to be searched
+        :param model_path: Path of models
+        :type model_path: str
+        """
         if os.path.isdir(model_path):
             self.model_path = model_path
         else:
             raise EnvironmentError('%s is not a directory' % model_path)
 
     def find_models(self, ):
-        ''' Traverse registered model directory and import non-loaded modules  '''
+        """ Traverse registered model directory and import non-loaded modules """
         
         model_path = self.model_path
         if model_path is not None and not os.path.isdir(model_path):
