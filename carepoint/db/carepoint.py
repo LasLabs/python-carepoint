@@ -304,7 +304,7 @@ class Carepoint(dict):
         :param model_obj: Model object to register
         :type model_obj: :class:`sqlalchemy.ext.declarative.Declarative`
         """
-        self[model.__name__] = model
+        self[model.__name__] = model_obj
     
     def register_model_dir(self, model_path):
         """
