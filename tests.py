@@ -24,20 +24,20 @@ from setuptools import Command
 
 class Tests(Command):
     ''' Run test & coverage, save reports as XML '''
-    
+
     MODULE_NAMES = [
         'carepoint',
     ]
     TEST_RESULTS = '_results'
     COVERAGE_RESULTS = 'coverage.xml'
-    user_options = [] # < For Command API compatibility
-    
+    user_options = []  # < For Command API compatibility
+
     def initialize_options(self, ):
         pass
-    
+
     def finalize_options(self, ):
         pass
-    
+
     def run(self, ):
 
         # Perform imports in run to avoid test dependencies in setup
