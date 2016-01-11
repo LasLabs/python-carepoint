@@ -48,16 +48,14 @@ class Tests(Command):
 
         loader = TestLoader()
         tests = loader.discover('.', 'test_*.py')
+        t = XMLTestRunner(verbosity=1, output=self.TEST_RESULTS)
 
         cov = coverage.Coverage(
             omit=['*/tests/', ],
             source=self.MODULE_NAMES,
         )
         cov.start()
-
-        t = XMLTestRunner(verbosity=1, output=self.TEST_RESULTS)
         t.run(tests)
-
         cov.stop()
         cov.save()
         cov.xml_report(outfile=self.COVERAGE_RESULTS)
