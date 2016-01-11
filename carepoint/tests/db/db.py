@@ -21,7 +21,6 @@
 
 import unittest
 from carepoint.db import Db, Carepoint
-from sqlalchemy.engine import create_engine
 from sqlalchemy.orm.session import Session
 
 

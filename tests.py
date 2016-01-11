@@ -44,7 +44,6 @@ class Tests(Command):
         from xmlrunner import XMLTestRunner
         import coverage
         from unittest import TestLoader
-        from os import path
 
         loader = TestLoader()
         tests = loader.discover('.', 'test_*.py')

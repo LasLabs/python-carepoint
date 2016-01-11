@@ -27,8 +27,6 @@ from sqlalchemy import (Column,
                         DateTime,
                         Boolean,
                         ForeignKey,
-                        Text,
-                        SmallInteger,
                         )
 
 

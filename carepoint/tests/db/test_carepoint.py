@@ -63,7 +63,10 @@ class CarepointTest(unittest.TestCase):
         self.settings_mock.assert_called_once_with()
 
     def test_non_dir(self, ):
-        ''' Test to make sure that an EnvironmentError is raised with an invalid model dir '''
+        '''
+        Test to make sure that an EnvironmentError is raised with an
+        invalid model dir
+        '''
         with self.assertRaises(EnvironmentError):
             self.carepoint.register_model_dir(
                 os.path.join(self.MODEL_DIR, 'not_a_dir'))
@@ -77,7 +80,6 @@ class CarepointTest(unittest.TestCase):
     def test_model_import_getattr(self, ):
         ''' Test if model is correctly initialized '''
         self.carepoint.find_models()
-        result = getattr(self.carepoint, 'TestModel', None)
         self.assertIn('TestModel', self.carepoint)
 
     def test_model_methods(self, ):
@@ -94,7 +96,7 @@ class CarepointTest(unittest.TestCase):
     def test_read_throws_not_implemented_error_on_attributes(self, ):
         model_obj = self.__get_model_obj()
         with self.assertRaises(NotImplementedError):
-            with mock.patch.object(self.carepoint, '_get_session') as mk:
+            with mock.patch.object(self.carepoint, '_get_session'):
                 self.carepoint.read(model_obj, 1, [])
 
     def test_read_calls_query_with_model_obj(self, ):
@@ -211,7 +213,7 @@ class CarepointTest(unittest.TestCase):
         model_obj = self.__get_model_obj()
         record_id = 1
         with mock.patch.object(self.carepoint, '_get_session') as mk:
-            with mock.patch.object(self.carepoint, 'read') as read_mk:
+            with mock.patch.object(self.carepoint, 'read'):
                 self.carepoint.update(model_obj, record_id, {})
                 mk.assert_called_once_with(model_obj)
 
@@ -219,7 +221,7 @@ class CarepointTest(unittest.TestCase):
         model_obj = self.__get_model_obj()
         record_id = 1
         vals = {'test': 'Test'}
-        with mock.patch.object(self.carepoint, '_get_session') as mk:
+        with mock.patch.object(self.carepoint, '_get_session'):
             with mock.patch.object(self.carepoint, 'read') as read_mk:
                 self.carepoint.update(model_obj, record_id, vals)
                 read_mk.assert_called_once_with(model_obj, record_id)
@@ -267,7 +269,7 @@ class CarepointTest(unittest.TestCase):
     def test_delete_calls_read_with_model_and_record_id(self, ):
         model_obj = self.__get_model_obj()
         record_id = 1
-        with mock.patch.object(self.carepoint, '_get_session') as mk:
+        with mock.patch.object(self.carepoint, '_get_session'):
             with mock.patch.object(self.carepoint, 'read') as read_mk:
                 read_mk.return_value = read_mk
                 read_mk.count.return_value = 0
@@ -277,7 +279,7 @@ class CarepointTest(unittest.TestCase):
     def test_delete_asserts_result_count_eq_1(self, ):
         model_obj = self.__get_model_obj()
         record_id = 1
-        with mock.patch.object(self.carepoint, '_get_session') as mk:
+        with mock.patch.object(self.carepoint, '_get_session'):
             with mock.patch.object(self.carepoint, 'read') as read_mk:
                 read_mk.return_value = read_mk
                 read_mk.count.return_value = 2
@@ -310,7 +312,7 @@ class CarepointTest(unittest.TestCase):
     def test_delete_returns_false_on_no_records(self, ):
         model_obj = self.__get_model_obj()
         record_id = 1
-        with mock.patch.object(self.carepoint, '_get_session') as mk:
+        with mock.patch.object(self.carepoint, '_get_session'):
             with mock.patch.object(self.carepoint, 'read') as read_mk:
                 read_mk.return_value = read_mk
                 read_mk.count.return_value = 0
@@ -320,7 +322,7 @@ class CarepointTest(unittest.TestCase):
     def test_delete_returns_true_on_delete(self, ):
         model_obj = self.__get_model_obj()
         record_id = 1
-        with mock.patch.object(self.carepoint, '_get_session') as mk:
+        with mock.patch.object(self.carepoint, '_get_session'):
             with mock.patch.object(self.carepoint, 'read') as read_mk:
                 read_mk.return_value = read_mk
                 read_mk.count.return_value = 1
