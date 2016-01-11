@@ -22,6 +22,9 @@
 import os
 import imp
 import inspect
+import operator
+import logging
+from collections import defaultdict
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -30,16 +33,26 @@ from .db import Db
 
 
 Base = declarative_base()
+_logger = logging.getLogger(__name__)
 
 
 class Carepoint(dict):
-    ''' Base CarePoint db connector object '''
+    """ Base CarePoint db connector object """
     
     BASE = Base
     DEFAULT_DB = 'cph'
     
     # Default path to search for models - change with register_model_dir
     model_path = os.path.join(__file__, '..', 'models')
+
+    FILTERS = {
+        '>=': operator.ge,
+        '>': operator.gt,
+        '<=': operator.le,
+        '<': operator.lt,
+        '=': operator.eq,
+        '==': operator.eq,
+    }
     
     def __init__(self, server, user, passwd, ):
         
@@ -61,13 +74,75 @@ class Carepoint(dict):
         }
         self.sessions = {}
 
-    def __get_session(self, model_obj, ):
+    def _get_session(self, model_obj, ):
         try:
-            return self.sessions[record_id.__dbname__]
+            return self.sessions[model_obj.__dbname__]
         except KeyError:
-            session = self.env[record_id.__dbname__]()
-            self.sessions[record_id.__dbname__] = session
+            session = self.env[model_obj.__dbname__]()
+            self.sessions[model_obj.__dbname__] = session
             return session
+
+    def _create_criterion(self, model_obj, col_name, operator, query, ):
+        """
+        Create a SQLAlchemy criterion from filter parts
+        :param model_obj: Table class to search
+        :type model_obj: :class:`sqlalchemy.schema.Table`
+        :param col_name: Name of column to query
+        :type col_name: str
+        :param operator: Domain operator to use in query
+        :type operator: str
+        :param query: Text to search for
+        :type query: str
+        :return: SQLAlchemy criterion representing a single WHERE clause
+        :raises NotImplementedError: When query operator is not implemented
+        :raises AttributeError: When col_name does not exist in the model_obj
+        """
+
+        try:
+            col_obj = getattr(model_obj, col_name)
+            operator_obj = self.FILTERS[operator]
+            return operator_obj(col_obj, query)
+
+        except KeyError:
+            _logger.error(
+                'Query Operator %s is not supported', operator,
+            )
+            raise
+
+        except AttributeError:
+            _logger.error(
+                'Col %s does not exist in model %s', col_name, model_obj
+            )
+            raise
+
+    def _unwrap_filters(self, model_obj, filters=None, ):
+        """
+        Unwrap a dictionary of filters into something usable by SQLAlchemy
+        :param model_obj: Table class to search
+        :type model_obj: :class:`sqlalchemy.schema.Table`
+        :param filters: Filters, keyed by col name
+        :type filters: dict
+        :rtype: list
+        """
+
+        if filters is None:
+            filters = {}
+
+        new_filters = []
+        for col_name, col_filter in filters.items():
+
+            if isinstance(col_filter, dict):
+                for _operator, _filter in col_filter.items():
+                    new_filters.append(self._create_criterion(
+                        model_obj, col_name, _operator, _filter
+                    ))
+
+            else:
+                new_filters.append(self._create_criterion(
+                    model_obj, col_name, '==', col_filter
+                ))
+
+        return new_filters
 
     def read(self, model_obj, record_id, attributes=None, ):
         """
@@ -81,7 +156,8 @@ class Carepoint(dict):
         """
         if attributes is not None:
             raise NotImplementedError('Read attributes not implemented')
-        return self.carepoint.query(model_obj).get(record_id)
+        session = self._get_session(model_obj)
+        return session.query(model_obj).get(record_id)
 
     def search(self, model_obj, filters=None, ):
         """
@@ -94,7 +170,8 @@ class Carepoint(dict):
         """
         if filters is None:
             filters = {}
-        return self.carepoint.query(model_obj).filter_by(**filters)
+        session = self._get_session(model_obj)
+        return session.query(model_obj).filter_by(**filters)
     
     def create(self, model_obj, vals, ):
         """
@@ -105,11 +182,11 @@ class Carepoint(dict):
         :type vals: dict
         :rtype: :class:`sqlalchemy.ext.declarative.Declarative`
         """
-        session = self.__get_session(model_obj)
-        record = model_obj(**vals)
+        session = self._get_session(model_obj)
+        record_id = model_obj(**vals)
         session.add(record_id)
         session.commit()
-        return record
+        return record_id
 
     def update(self, model_obj, record_id, vals, ):
         """
@@ -122,8 +199,8 @@ class Carepoint(dict):
         :type vals: dict
         :rtype: :class:`sqlalchemy.ext.declarative.Declarative`
         """
-        session = self.__get_session(model_obj)
-        session.query(model_obj).get(record_id).update(vals)
+        session = self._get_session(model_obj)
+        self.read(model_obj, record_id).update(vals)
         session.commit()
         return session
     
@@ -134,17 +211,21 @@ class Carepoint(dict):
         :type model_obj: :class:`sqlalchemy.schema.Table`
         :param record_id: Id of record to manipulate
         :type record_id: int
+        :return: Whether the record was found, and deleted
         :rtype: bool
         """
-        session = self.__get_session(model_obj)
-        result_obj = session.query(model_obj).get(record_id)
-        assert result_obj.count() == 1
+        session = self._get_session(model_obj)
+        result_obj = self.read(model_obj, record_id)
+        result_cnt = result_obj.count()
+        if result_obj.count() == 0:
+            return False
+        assert result_cnt == 1
         session.delete(result_obj)
         session.commit()
         return True
 
     def __getattr__(self, key, ):
-        ''' Re-implement __getattr__ to use __getitem__ if attr not found '''
+        """ Re-implement __getattr__ to use __getitem__ if attr not found """
         try:
             return super(Carepoint, self).__getattr__(key)
         except AttributeError:
@@ -154,7 +235,7 @@ class Carepoint(dict):
                 raise AttributeError()
 
     def __getitem__(self, key, retry=True, default=False):
-        ''' Re-implement __getitem__ to scan for models if key missing  '''
+        """ Re-implement __getitem__ to scan for models if key missing  """
         try:
             return super(Carepoint, self).__getitem__(key)
         except KeyError:
@@ -171,10 +252,11 @@ class Carepoint(dict):
                 )
 
     def set_iter_refresh(self, refresh=True, ):
-        '''
+        """
         Toggle flag to search for new models before iteration
-        @param  bool    refresh     Whether to refresh before iteration
-        '''
+        :param refresh: Whether to refresh before iteration
+        :type refresh: bool
+        """
         self.iter_refresh = refresh
         
     def __refresh_models__(self, ):
@@ -182,53 +264,61 @@ class Carepoint(dict):
             self.find_models()
 
     def __iter__(self, ):
-        ''' Reimplement __iter__ to allow for optional model refresh   '''
+        """ Reimplement __iter__ to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).__iter__()
 
     def values(self, ):
-        ''' Reimplement values to allow for optional model refresh   '''
+        """ Reimplement values to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).values()
 
     def keys(self, ):
-        ''' Reimplement keys to allow for optional model refresh   '''
+        """ Reimplement keys to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).keys()
 
     def items(self, ):
-        ''' Reimplement items to allow for optional model refresh   '''
+        """ Reimplement items to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).items()
 
     def itervalues(self, ):
-        ''' Reimplement itervalues to allow for optional model refresh   '''
+        """ Reimplement itervalues to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).itervalues()
 
     def iterkeys(self, ):
-        ''' Reimplement iterkeys to allow for optional model refresh   '''
+        """ Reimplement iterkeys to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).iterkeys()
 
     def iteritems(self, ):
-        ''' Reimplement iteritems to allow for optional model refresh   '''
+        """ Reimplement iteritems to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).iteritems()
     
-    def register_model(self, model):
-        ''' Registration logic + append to models struct '''
-        self[model.__name__] = model
+    def register_model(self, model_obj):
+        """
+        Registration logic + append to models struct
+        :param model_obj: Model object to register
+        :type model_obj: :class:`sqlalchemy.ext.declarative.Declarative`
+        """
+        self[model_obj.__name__] = model_obj
     
     def register_model_dir(self, model_path):
-        ''' This function sets the model path to be searched   '''
+        """
+        This function sets the model path to be searched
+        :param model_path: Path of models
+        :type model_path: str
+        """
         if os.path.isdir(model_path):
             self.model_path = model_path
         else:
             raise EnvironmentError('%s is not a directory' % model_path)
 
     def find_models(self, ):
-        ''' Traverse registered model directory and import non-loaded modules  '''
+        """ Traverse registered model directory and import non-loaded modules """
         
         model_path = self.model_path
         if model_path is not None and not os.path.isdir(model_path):
