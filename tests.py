@@ -24,6 +24,9 @@ from setuptools import Command
 
 class Tests(Command):
     
+    MODULE_NAMES = [
+        'carepoint',
+    ]
     TEST_RESULTS = '_results'
     COVERAGE_RESULTS = 'coverage.xml'
     user_options = [] # < For Command API compatibility
@@ -47,7 +50,8 @@ class Tests(Command):
         tests = loader.discover('.', 'test_*.py')
 
         cov = coverage.Coverage(
-            omit='*/tests/',
+            omit=['*/tests/', ],
+            source=self.MODULE_NAMES,
         )
         cov.start()
 
