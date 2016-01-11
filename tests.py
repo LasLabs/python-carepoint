@@ -25,7 +25,8 @@ from setuptools import Command
 class Tests(Command):
     
     TEST_RESULTS = '_results'
-    user_options = [] #< For Command API compatibility
+    COVERAGE_RESULTS = 'coverage.xml'
+    user_options = [] # < For Command API compatibility
     
     def initialize_options(self, ):
         pass
@@ -34,13 +35,23 @@ class Tests(Command):
         pass
     
     def run(self, ):
-        ''' Perform imports inside run to avoid errors before installs '''
+        ''' Perform imports inside run to avoid errors before installs,
+        then run '''
         
         from xmlrunner import XMLTestRunner
+        import coverage
         from unittest import TestLoader
         from os import path
-        
+
         loader = TestLoader()
         tests = loader.discover('.', 'test_*.py')
+
+        cov = coverage.Coverage()
+        cov.start()
+
         t = XMLTestRunner(verbosity=1, output=self.TEST_RESULTS)
         t.run(tests)
+
+        cov.stop()
+        cov.save()
+        cov.xml_report(outfile=self.COVERAGE_RESULTS)
