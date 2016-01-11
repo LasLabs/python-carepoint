@@ -24,6 +24,7 @@ from os import path
 
 class Settings(object):
     ''' App settings files in a nifty obj '''
+
     def __new__(self, ):
         '''
         Override object generation to load and output JSON settings

@@ -26,7 +26,7 @@ from carepoint import Carepoint
 
 
 class CarepointTest(unittest.TestCase):
-    
+
     MODEL_DIR = os.path.join(os.path.dirname(__file__), 'test_models')
 
     @mock.patch('carepoint.db.carepoint.Db')
@@ -48,42 +48,43 @@ class CarepointTest(unittest.TestCase):
         model_obj = self.carepoint['TestModel']
         return model_obj
 
-    # 
+    #
     # Test Initializations and other core stuff
     #
 
     def test_cph_db_init(self, ):
         self.cp_args['db'] = 'cph'
         self.db_mock.assert_called_once_with(**self.cp_args)
-        
+
     def test_cph_db_assign(self, ):
         self.carepoint.dbs['cph'] = self.db_mock
-        
+
     def test_cph_settings_init(self, ):
         self.settings_mock.assert_called_once_with()
 
     def test_non_dir(self, ):
         ''' Test to make sure that an EnvironmentError is raised with an invalid model dir '''
         with self.assertRaises(EnvironmentError):
-            self.carepoint.register_model_dir(os.path.join(self.MODEL_DIR, 'not_a_dir'))
+            self.carepoint.register_model_dir(
+                os.path.join(self.MODEL_DIR, 'not_a_dir'))
 
     def test_model_import_getitem(self, ):
         ''' Test if model is correctly initialized '''
         self.carepoint.find_models()
         result = self.carepoint.get('TestModel', None)
         self.assertNotEqual(result, None)
-        
+
     def test_model_import_getattr(self, ):
         ''' Test if model is correctly initialized '''
         self.carepoint.find_models()
         result = getattr(self.carepoint, 'TestModel', None)
         self.assertIn('TestModel', self.carepoint)
-        
+
     def test_model_methods(self, ):
         ''' Test if model is correctly initialized '''
         self.carepoint.set_iter_refresh()
         model_obj = self.carepoint['TestModel']
-        self.assertTrue(model_obj.run()) #< classmethods are exposed
+        self.assertTrue(model_obj.run())  # < classmethods are exposed
 
     #
     # Test the database convenience handlers
@@ -222,7 +223,7 @@ class CarepointTest(unittest.TestCase):
             with mock.patch.object(self.carepoint, 'read') as read_mk:
                 self.carepoint.update(model_obj, record_id, vals)
                 read_mk.assert_called_once_with(model_obj, record_id)
-    
+
     def test_update_calls_update_with_vals(self, ):
         model_obj = self.__get_model_obj()
         record_id = 1
@@ -337,7 +338,7 @@ class CarepointTest(unittest.TestCase):
                 self.carepoint.delete(model_obj, record_id)
                 mk.commit.assert_called_once_with()
 
-    # 
+    #
     # Test filter criterion generators
     #
 
@@ -401,14 +402,14 @@ class CarepointTest(unittest.TestCase):
         col_obj = getattr(args[1], args[2])
         with self.assertRaises(KeyError):
             self.carepoint._create_criterion(*args[1:])
-            
+
     def test__create_criterion_raises_attribute_error(self, ):
         args = self.__setup_criterion_test('==')
         args[2] = 'Nope'
         with self.assertRaises(AttributeError):
             self.carepoint._create_criterion(*args[1:])
 
-    # 
+    #
     # Test filter dictionary unwrapping
     #
 
@@ -463,28 +464,28 @@ class CarepointTest(unittest.TestCase):
             self.carepoint._unwrap_filters(model_obj), list
         )
 
-    # 
+    #
     # Test dictionary overrides for model lookups
     #
 
     def test_iter_init_empty(self, ):
         self.assertEqual(len([i for i in self.carepoint]), 0)
-    
+
     def test_values_init_empty(self, ):
         self.assertEqual(len(self.carepoint.values()), 0)
-    
+
     def test_keys_init_empty(self, ):
         self.assertEqual(len(self.carepoint.keys()), 0)
-    
+
     def test_items_init_empty(self, ):
         self.assertEqual(len(self.carepoint.items()), 0)
-    
+
     def test_iteritems_init_empty(self, ):
         self.assertEqual(len([i for i in self.carepoint.iteritems()]), 0)
-    
+
     def test_itervalues_init_empty(self, ):
         self.assertEqual(len([i for i in self.carepoint.itervalues()]), 0)
-    
+
     def test_iterkeys_init_empty(self, ):
         self.assertEqual(len([i for i in self.carepoint.iterkeys()]), 0)
 
@@ -525,7 +526,7 @@ class CarepointTest(unittest.TestCase):
         with self.assertRaises(KeyError):
             self.carepoint.set_iter_refresh()
             self.carepoint['ThisIsNotAModelThatExists']
-            
+
     def test_wrong_model_getattr(self, ):
         ''' Test to verify that a KeyError is raised for invalid model name '''
         with self.assertRaises(AttributeError):

@@ -38,10 +38,10 @@ _logger = logging.getLogger(__name__)
 
 class Carepoint(dict):
     """ Base CarePoint db connector object """
-    
+
     BASE = Base
     DEFAULT_DB = 'cph'
-    
+
     # Default path to search for models - change with register_model_dir
     model_path = os.path.join(__file__, '..', 'models')
 
@@ -53,9 +53,9 @@ class Carepoint(dict):
         '=': operator.eq,
         '==': operator.eq,
     }
-    
+
     def __init__(self, server, user, passwd, ):
-        
+
         super(Carepoint, self).__init__()
         self.settings = Settings()
         self.iter_refresh = False
@@ -172,7 +172,7 @@ class Carepoint(dict):
             filters = {}
         session = self._get_session(model_obj)
         return session.query(model_obj).filter_by(**filters)
-    
+
     def create(self, model_obj, vals, ):
         """
         Wrapper to create a record in Carepoint
@@ -203,7 +203,7 @@ class Carepoint(dict):
         self.read(model_obj, record_id).update(vals)
         session.commit()
         return session
-    
+
     def delete(self, model_obj, record_id, ):
         """
         Wrapper to delete a record in Carepoint
@@ -258,7 +258,7 @@ class Carepoint(dict):
         :type refresh: bool
         """
         self.iter_refresh = refresh
-        
+
     def __refresh_models__(self, ):
         if self.iter_refresh:
             self.find_models()
@@ -297,7 +297,7 @@ class Carepoint(dict):
         """ Reimplement iteritems to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).iteritems()
-    
+
     def register_model(self, model_obj):
         """
         Registration logic + append to models struct
@@ -305,7 +305,7 @@ class Carepoint(dict):
         :type model_obj: :class:`sqlalchemy.ext.declarative.Declarative`
         """
         self[model_obj.__name__] = model_obj
-    
+
     def register_model_dir(self, model_path):
         """
         This function sets the model path to be searched
@@ -319,19 +319,19 @@ class Carepoint(dict):
 
     def find_models(self, ):
         """ Traverse registered model directory and import non-loaded modules """
-        
+
         model_path = self.model_path
         if model_path is not None and not os.path.isdir(model_path):
             raise EnvironmentError('%s is not a directory' % model_path)
-        
+
         for dir_name, subdirs, files in os.walk(model_path):
-            
+
             parent_module = dir_name.replace(model_path, '')
             parent_module = parent_module.replace(os.path.sep, '.')
-            
+
             for file_ in files:
                 if file_.endswith('.py') and file_ != '__init__.py':
-                    module = file_[:-3] #< Strip extension
+                    module = file_[:-3]  # < Strip extension
                     mod_obj = globals().get(module)
                     if mod_obj is None:
                         f, filename, desc = imp.find_module(
@@ -340,7 +340,8 @@ class Carepoint(dict):
                         mod_obj = imp.load_module(
                             module, f, filename, desc
                         )
-                        cls = [m for m in dir(mod_obj) if not m.startswith('__')]
+                        cls = [
+                            m for m in dir(mod_obj) if not m.startswith('__')]
                         for model_cls in cls:
                             model_obj = getattr(mod_obj, model_cls)
                             if hasattr(model_obj, '__tablename__'):

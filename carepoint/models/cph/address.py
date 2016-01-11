@@ -39,7 +39,7 @@ Base = declarative_base()
 class Address(Carepoint.BASE):
     __tablename__ = 'csaddr'
     __dbname__ = 'cph'
-    
+
     addr_id = Column(Integer, primary_key=True)
     parent_addr_id = Column(
         Integer,
