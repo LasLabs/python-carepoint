@@ -29,13 +29,12 @@ from sqlalchemy import (Column,
                         Numeric,
                         Text,
                         SmallInteger)
-from sqlalchemy.orm import relationship, backref
 
 
 class Dispense(Carepoint.BASE):
     __tablename__ = 'cprx_disp'
     __dbname__ = 'cph'
-    
+
     rx_id = Column(
         Integer,
         ForeignKey('cprx.rx_id'),

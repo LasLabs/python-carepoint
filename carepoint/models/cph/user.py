@@ -24,17 +24,15 @@ from sqlalchemy import (Column,
                         Integer,
                         String,
                         DateTime,
-                        Boolean,
                         ForeignKey,
                         Text,
-                        SmallInteger)
-from sqlalchemy.orm import relationship, backref
+                        )
 
 
 class User(Carepoint.BASE):
     __tablename__ = 'csuser'
     __dbname__ = 'cph'
-    
+
     user_id = Column(Integer, primary_key=True)
     user_type_cd = Column(String)
     login_name = Column(String)

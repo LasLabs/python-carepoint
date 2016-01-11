@@ -21,12 +21,11 @@
 
 import unittest
 from carepoint.db import Db, Carepoint
-from sqlalchemy.engine import create_engine
 from sqlalchemy.orm.session import Session
 
 
 class DatabaseTest(unittest.TestCase):
-    
+
     @classmethod
     def setUpClass(cls, ):
         cls.engine = Db(drv=Db.SQLITE)
@@ -39,7 +38,7 @@ class DatabaseTest(unittest.TestCase):
         # cls.transaction.rollback()
         cls.connection.close()
         cls.engine.dispose()
-    
+
     def setUp(self, ):
         self.__transaction = self.connection.begin_nested()
         self.session = Session(self.connection)

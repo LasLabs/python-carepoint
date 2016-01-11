@@ -28,14 +28,13 @@ from sqlalchemy import (Column,
                         ForeignKey,
                         Numeric,
                         Text,
-                        SmallInteger)
-from sqlalchemy.orm import relationship, backref
+                        )
 
 
 class Prescription(Carepoint.BASE):
     __tablename__ = 'cprx'
     __dbname__ = 'cph'
-    
+
     rx_id = Column(Integer, primary_key=True)
     script_no = Column(String)
     old_script_no = Column(String)
@@ -45,7 +44,7 @@ class Prescription(Carepoint.BASE):
     )
     store_id = Column(
         Integer,
-        ForeignKey('csstore.store_id'),    
+        ForeignKey('csstore.store_id'),
     )
     md_id = Column(
         Integer,
@@ -81,7 +80,7 @@ class Prescription(Carepoint.BASE):
     refills_left = Column(Numeric)
     last_rxdisp_id = Column(
         Integer,
-        ForeignKey('cprx_disp.rxdisp_id'),    
+        ForeignKey('cprx_disp.rxdisp_id'),
     )
     last_refill_qty = Column(Numeric)
     last_refill_date = Column(DateTime)

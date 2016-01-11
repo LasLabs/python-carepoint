@@ -20,7 +20,7 @@
 ##############################################################################
 
 from mixer.backend.sqlalchemy import mixer
-from datetime import datetime, date
+from datetime import datetime
 
 
 dt_now = datetime.now()

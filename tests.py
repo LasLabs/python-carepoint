@@ -23,24 +23,38 @@ from setuptools import Command
 
 
 class Tests(Command):
-    
+    ''' Run test & coverage, save reports as XML '''
+
+    MODULE_NAMES = [
+        'carepoint',
+    ]
     TEST_RESULTS = '_results'
-    user_options = [] #< For Command API compatibility
-    
+    COVERAGE_RESULTS = 'coverage.xml'
+    user_options = []  # < For Command API compatibility
+
     def initialize_options(self, ):
         pass
-    
+
     def finalize_options(self, ):
         pass
-    
+
     def run(self, ):
-        ''' Perform imports inside run to avoid errors before installs '''
-        
+
+        # Perform imports in run to avoid test dependencies in setup
         from xmlrunner import XMLTestRunner
+        import coverage
         from unittest import TestLoader
-        from os import path
-        
+
         loader = TestLoader()
         tests = loader.discover('.', 'test_*.py')
         t = XMLTestRunner(verbosity=1, output=self.TEST_RESULTS)
+
+        cov = coverage.Coverage(
+            omit=['*/tests/', 'test_*.py', ],
+            source=self.MODULE_NAMES,
+        )
+        cov.start()
         t.run(tests)
+        cov.stop()
+        cov.save()
+        cov.xml_report(outfile=self.COVERAGE_RESULTS)

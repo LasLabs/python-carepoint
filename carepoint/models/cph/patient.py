@@ -28,13 +28,12 @@ from sqlalchemy import (Column,
                         ForeignKey,
                         Text,
                         SmallInteger)
-from sqlalchemy.orm import relationship, backref
 
 
 class Patient(Carepoint.BASE):
     __dbname__ = 'cph'
     __tablename__ = 'cppat'
-    
+
     pat_id = Column(Integer, primary_key=True)
     cmt_id = Column(Integer)
     pat_status_cn = Column(Integer)

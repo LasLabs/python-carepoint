@@ -27,14 +27,13 @@ from sqlalchemy import (Column,
                         Boolean,
                         ForeignKey,
                         Text,
-                        SmallInteger)
-from sqlalchemy.orm import relationship, backref
+                        )
 
 
 class Store(Carepoint.BASE):
     __tablename__ = 'csstore'
     __dbname__ = 'cph'
-    
+
     store_id = Column(Integer, primary_key=True)
     store_type_cn = Column(Integer)
     name = Column(String)

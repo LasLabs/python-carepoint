@@ -27,19 +27,13 @@ from sqlalchemy import (Column,
                         DateTime,
                         Boolean,
                         ForeignKey,
-                        Text,
-                        SmallInteger,
                         )
-from sqlalchemy.ext.declarative import declarative_base
-
-
-Base = declarative_base()
 
 
 class Address(Carepoint.BASE):
     __tablename__ = 'csaddr'
     __dbname__ = 'cph'
-    
+
     addr_id = Column(Integer, primary_key=True)
     parent_addr_id = Column(
         Integer,

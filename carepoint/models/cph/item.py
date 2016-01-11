@@ -24,19 +24,17 @@ from sqlalchemy import (Column,
                         Integer,
                         String,
                         DateTime,
-                        Boolean,
                         ForeignKey,
                         Numeric,
                         Float,
                         Text,
-                        SmallInteger)
-from sqlalchemy.orm import relationship, backref
+                        )
 
 
 class Item(Carepoint.BASE):
     __tablename__ = 'item'
     __dbname__ = 'cph'
-    
+
     ITEMMSTR = Column(String)
     DESCR = Column(String)
     TAXABLE = Column(String)
