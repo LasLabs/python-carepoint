@@ -23,6 +23,7 @@ from setuptools import Command
 
 
 class Tests(Command):
+    ''' Run test & coverage, save reports as XML '''
     
     MODULE_NAMES = [
         'carepoint',
@@ -38,9 +39,8 @@ class Tests(Command):
         pass
     
     def run(self, ):
-        ''' Perform imports inside run to avoid errors before installs,
-        then run '''
-        
+
+        # Perform imports in run to avoid test dependencies in setup
         from xmlrunner import XMLTestRunner
         import coverage
         from unittest import TestLoader
@@ -51,7 +51,7 @@ class Tests(Command):
         t = XMLTestRunner(verbosity=1, output=self.TEST_RESULTS)
 
         cov = coverage.Coverage(
-            omit=['*/tests/', ],
+            omit=['*/tests/', 'test_*.py', ],
             source=self.MODULE_NAMES,
         )
         cov.start()
