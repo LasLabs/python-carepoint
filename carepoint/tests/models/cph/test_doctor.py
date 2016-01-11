@@ -19,9 +19,7 @@
 #
 ##############################################################################
 
-import os
 import unittest
-import mock
 from sqlalchemy.schema import Table
 from carepoint.tests.db.db import DatabaseTest
 from carepoint.models.cph.doctor import Doctor

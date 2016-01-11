@@ -29,7 +29,6 @@ from sqlalchemy import (Column,
                         Numeric,
                         Text,
                         SmallInteger)
-from sqlalchemy.orm import relationship, backref
 
 
 class Dispense(Carepoint.BASE):

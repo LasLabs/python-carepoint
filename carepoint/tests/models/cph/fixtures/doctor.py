@@ -20,8 +20,9 @@
 ##############################################################################
 
 from mixer.backend.sqlalchemy import mixer
-from datetime import datetime, date
+from datetime import datetime
 
+dt_now = datetime.now()
 __model__ = 'carepoint.models.cph.doctor.Doctor'
 
 doctor_default = mixer.blend(

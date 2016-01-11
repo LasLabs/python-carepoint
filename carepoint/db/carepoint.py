@@ -21,11 +21,8 @@
 
 import os
 import imp
-import inspect
 import operator
 import logging
-from collections import defaultdict
-from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from ..conf.settings import Settings
@@ -318,7 +315,9 @@ class Carepoint(dict):
             raise EnvironmentError('%s is not a directory' % model_path)
 
     def find_models(self, ):
-        """ Traverse registered model directory and import non-loaded modules """
+        """
+        Traverse registered model directory and import non-loaded modules
+        """
 
         model_path = self.model_path
         if model_path is not None and not os.path.isdir(model_path):

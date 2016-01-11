@@ -351,7 +351,6 @@ class CarepointTest(unittest.TestCase):
 
     def test__create_criterion_returns_correct_double_eq(self, ):
         args = self.__setup_criterion_test('==')
-        col_obj = getattr(args[1], args[2])
         self.assertEqual(
             self.carepoint._create_criterion(*args[1:]),
             args[0] == args[-1]
@@ -359,7 +358,6 @@ class CarepointTest(unittest.TestCase):
 
     def test__create_criterion_returns_correct_eq(self, ):
         args = self.__setup_criterion_test('=')
-        col_obj = getattr(args[1], args[2])
         self.assertEqual(
             self.carepoint._create_criterion(*args[1:]),
             args[0] == args[-1]
@@ -367,7 +365,6 @@ class CarepointTest(unittest.TestCase):
 
     def test__create_criterion_returns_correct_lt(self, ):
         args = self.__setup_criterion_test('<')
-        col_obj = getattr(args[1], args[2])
         self.assertEqual(
             self.carepoint._create_criterion(*args[1:]),
             args[0] < args[-1]
@@ -375,7 +372,6 @@ class CarepointTest(unittest.TestCase):
 
     def test__create_criterion_returns_correct_le(self, ):
         args = self.__setup_criterion_test('<=')
-        col_obj = getattr(args[1], args[2])
         self.assertEqual(
             self.carepoint._create_criterion(*args[1:]),
             args[0] <= args[-1]
@@ -383,7 +379,6 @@ class CarepointTest(unittest.TestCase):
 
     def test__create_criterion_returns_correct_gt(self, ):
         args = self.__setup_criterion_test('>')
-        col_obj = getattr(args[1], args[2])
         self.assertEqual(
             self.carepoint._create_criterion(*args[1:]),
             args[0] > args[-1]
@@ -391,7 +386,6 @@ class CarepointTest(unittest.TestCase):
 
     def test__create_criterion_returns_correct_ge(self, ):
         args = self.__setup_criterion_test('>=')
-        col_obj = getattr(args[1], args[2])
         self.assertEqual(
             self.carepoint._create_criterion(*args[1:]),
             args[0] >= args[-1]
@@ -399,7 +393,6 @@ class CarepointTest(unittest.TestCase):
 
     def test__create_criterion_raises_not_implemented_error(self, ):
         args = self.__setup_criterion_test('===')
-        col_obj = getattr(args[1], args[2])
         with self.assertRaises(KeyError):
             self.carepoint._create_criterion(*args[1:])
 

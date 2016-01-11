@@ -27,8 +27,7 @@ from sqlalchemy import (Column,
                         Boolean,
                         ForeignKey,
                         Text,
-                        SmallInteger)
-from sqlalchemy.orm import relationship, backref
+                        )
 
 
 class Store(Carepoint.BASE):

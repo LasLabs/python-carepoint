@@ -28,7 +28,6 @@ from sqlalchemy import (Column,
                         ForeignKey,
                         Text,
                         SmallInteger)
-from sqlalchemy.orm import relationship, backref
 
 
 class Patient(Carepoint.BASE):

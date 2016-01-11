@@ -24,13 +24,11 @@ from sqlalchemy import (Column,
                         Integer,
                         String,
                         DateTime,
-                        Boolean,
                         ForeignKey,
                         Numeric,
                         Float,
                         Text,
-                        SmallInteger)
-from sqlalchemy.orm import relationship, backref
+                        )
 
 
 class Item(Carepoint.BASE):

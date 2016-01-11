@@ -30,10 +30,6 @@ from sqlalchemy import (Column,
                         Text,
                         SmallInteger,
                         )
-from sqlalchemy.ext.declarative import declarative_base
-
-
-Base = declarative_base()
 
 
 class Address(Carepoint.BASE):
