@@ -9,6 +9,7 @@ from datetime import datetime
 dt_now = datetime.now()
 __model__ = 'carepoint.models.cph.item.Item'
 
+
 item_default = mixer.blend(
     __model__,
     ITEMMSTR='ItmeStr',
@@ -59,4 +60,6 @@ item_default = mixer.blend(
     chg_date=dt_now,
 )
 
-item_rnd = lambda cnt: mixer.cycle(cnt).blend(__model__)
+
+def item_rnd(cnt):
+    return mixer.cycle(cnt).blend(__model__)

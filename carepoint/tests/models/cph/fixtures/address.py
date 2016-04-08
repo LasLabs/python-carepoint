@@ -36,4 +36,5 @@ address_default = mixer.blend(
 )
 
 
-addresses_rnd = lambda cnt: mixer.cycle(cnt).blend(__model__)
+def addresses_rnd(cnt):
+    return mixer.cycle(cnt).blend(__model__)

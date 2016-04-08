@@ -9,6 +9,7 @@ from datetime import datetime
 dt_now = datetime.now()
 __model__ = 'carepoint.models.cph.user.User'
 
+
 user_default = mixer.blend(
     __model__,
     user_id=1,
@@ -44,4 +45,6 @@ user_default = mixer.blend(
     chg_date=dt_now,
 )
 
-user_rnd = lambda cnt: mixer.cycle(cnt).blend(__model__)
+
+def user_rnd(cnt):
+    return mixer.cycle(cnt).blend(__model__)

@@ -8,6 +8,7 @@ from datetime import datetime
 dt_now = datetime.now()
 __model__ = 'carepoint.models.cph.dispense.Dispense'
 
+
 dispense_default = mixer.blend(
     __model__,
     rx_id=1,
@@ -123,4 +124,6 @@ dispense_default = mixer.blend(
     chg_date=dt_now,
 )
 
-dispense_rnd = lambda cnt: mixer.cycle(cnt).blend(__model__)
+
+def dispense_rnd(cnt):
+    return mixer.cycle(cnt).blend(__model__)
