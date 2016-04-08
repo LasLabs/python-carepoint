@@ -236,7 +236,7 @@ class Carepoint(dict):
         try:
             return super(Carepoint, self).__getitem__(key)
         except KeyError:
-            if default != False:
+            if default is not False:
                 return default
             elif retry:
                 self.find_models()

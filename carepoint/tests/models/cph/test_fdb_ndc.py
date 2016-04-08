@@ -5,13 +5,13 @@
 import unittest
 from sqlalchemy.schema import Table
 from carepoint.tests.db.db import DatabaseTest
-from carepoint.models.cph.user import User
+from carepoint.models.cph.fdb_ndc import FdbNdc
 
 
-class TestModelsCphUser(DatabaseTest):
+class TestModelsCphFdbNdc(DatabaseTest):
 
     def test_table_initialization(self, ):
-        self.assertIsInstance(User.__table__, Table)
+        self.assertIsInstance(FdbNdc.__table__, Table)
 
 
 if __name__ == '__main__':
