@@ -1,31 +1,15 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Dave Lasley <dave@laslabs.com>
-#    Copyright: 2015 LasLabs, Inc [https://laslabs.com]
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2016-TODAY LasLabs Inc.
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from sqlalchemy import create_engine
+from urllib import quote_plus as urlquote
 
 
 class Db(object):
     ''' Base db connector object '''
 
-    ODBC_DRIVER = 'SQL+Server+Native+Client+10.0'
+    ODBC_DRIVER = 'FreeTDS&TDS_VERSION=8.0'
     SQLITE = 'sqlite'
 
     def __new__(self, server=None, user=None, passwd=None,
@@ -33,15 +17,15 @@ class Db(object):
 
         if drv != self.SQLITE:
             params = {
-                'usr': user,
-                'pass': passwd,
+                'usr': urlquote(user),
+                'pass': urlquote(passwd),
                 'srv': server,
-                'driver': drv,
+                'drv': drv,
                 'db': db,
+                'prt': port,
             }
-            dsn = 'mssql+pyodbc://%(usr)s:%(pass)s@%(srv)s/%(db)?driver%(drv)s'
-
-            return create_engine(dsn % params)
+            dsn = 'mssql+pyodbc://{usr}:{pass}@{srv}:{prt}/{db}?driver={drv}'
+            return create_engine(dsn.format(**params))
 
         else:
             return create_engine('%s://' % self.SQLITE)

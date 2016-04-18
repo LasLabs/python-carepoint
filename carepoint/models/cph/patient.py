@@ -53,7 +53,7 @@ class Patient(Carepoint.BASE):
     )
     edu_level_cn = Column(Integer)
     ethnicity_cd = Column(String)
-    maritial_status_cd = Column(String)
+    marital_status_cd = Column(String)
     religion_cn = Column(Integer)
     name_spouse = Column(String)
     primary_lang_cd = Column(String)

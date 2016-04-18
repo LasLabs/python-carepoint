@@ -13,8 +13,7 @@ class CarepointTest(unittest.TestCase):
     MODEL_DIR = os.path.join(os.path.dirname(__file__), 'test_models')
 
     @mock.patch('carepoint.db.carepoint.Db')
-    @mock.patch('carepoint.db.carepoint.Settings')
-    def setUp(self, settings_mock, db_mock):
+    def setUp(self, db_mock):
         self.cp_args = {
             'user': 'User',
             'passwd': 'Passwd',
@@ -23,7 +22,6 @@ class CarepointTest(unittest.TestCase):
         cp = Carepoint(**self.cp_args)
         cp.register_model_dir(self.MODEL_DIR)
         self.carepoint = cp
-        self.settings_mock = settings_mock
         self.db_mock = db_mock
 
     def __get_model_obj(self, ):
@@ -41,9 +39,6 @@ class CarepointTest(unittest.TestCase):
 
     def test_cph_db_assign(self, ):
         self.carepoint.dbs['cph'] = self.db_mock
-
-    def test_cph_settings_init(self, ):
-        self.settings_mock.assert_called_once_with()
 
     def test_non_dir(self, ):
         '''

@@ -47,7 +47,7 @@ class Dispense(Carepoint.BASE):
     disp_mac = Column(Numeric)
     disp_ful = Column(Numeric)
     disp_udef = Column(Numeric)
-    tech_initals = Column(String)
+    tech_initials = Column(String)
     rph_initials = Column(String)
     cnsl_initials = Column(String)
     icd9 = Column(String)

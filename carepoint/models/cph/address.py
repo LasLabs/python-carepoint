@@ -3,7 +3,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from carepoint import Carepoint
-from .user import User
 from sqlalchemy import (Column,
                         Integer,
                         String,
@@ -39,11 +38,11 @@ class Address(Carepoint.BASE):
     timestmp = Column(DateTime)
     add_user_id = Column(
         Integer,
-        ForeignKey(User.user_id),
+        ForeignKey('csuser.user_id'),
     )
     add_date = Column(DateTime)
     chg_user_id = Column(
         Integer,
-        ForeignKey(User.user_id),
+        ForeignKey('csuser.user_id'),
     )
     chg_date = Column(DateTime)

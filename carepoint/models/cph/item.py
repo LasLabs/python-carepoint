@@ -43,7 +43,7 @@ class Item(Carepoint.BASE):
     IMAX = Column(Numeric)
     UPCCODE = Column(String)
     POSLOC = Column(String)
-    VENDITEMMO = Column(String)
+    VENDITEMNO = Column(String)
     EXCLUDE = Column(String)
     NDC = Column(String)
     SKU = Column(String)

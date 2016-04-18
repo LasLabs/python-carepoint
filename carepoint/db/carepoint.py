@@ -1,36 +1,17 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Dave Lasley <dave@laslabs.com>
-#    Copyright: 2015 LasLabs, Inc [https://laslabs.com]
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2016-TODAY LasLabs Inc.
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import os
 import imp
 import operator
-import logging
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from ..conf.settings import Settings
 from .db import Db
 
-
 Base = declarative_base()
-_logger = logging.getLogger(__name__)
+
+import pdb
 
 
 class Carepoint(dict):
@@ -40,7 +21,7 @@ class Carepoint(dict):
     DEFAULT_DB = 'cph'
 
     # Default path to search for models - change with register_model_dir
-    model_path = os.path.join(__file__, '..', 'models')
+    model_path = os.path.join(os.path.dirname(__file__), '..', 'models')
 
     FILTERS = {
         '>=': operator.ge,
@@ -54,7 +35,6 @@ class Carepoint(dict):
     def __init__(self, server, user, passwd, ):
 
         super(Carepoint, self).__init__()
-        self.settings = Settings()
         self.iter_refresh = False
         params = {
             'user': user,
@@ -80,8 +60,7 @@ class Carepoint(dict):
             return session
 
     def _create_criterion(self, model_obj, col_name, operator, query, ):
-        """
-        Create a SQLAlchemy criterion from filter parts
+        """ Create a SQLAlchemy criterion from filter parts
         :param model_obj: Table class to search
         :type model_obj: :class:`sqlalchemy.schema.Table`
         :param col_name: Name of column to query
@@ -101,20 +80,13 @@ class Carepoint(dict):
             return operator_obj(col_obj, query)
 
         except KeyError:
-            _logger.error(
-                'Query Operator %s is not supported', operator,
-            )
             raise
 
         except AttributeError:
-            _logger.error(
-                'Col %s does not exist in model %s', col_name, model_obj
-            )
             raise
 
     def _unwrap_filters(self, model_obj, filters=None, ):
-        """
-        Unwrap a dictionary of filters into something usable by SQLAlchemy
+        """ Unwrap a dictionary of filters into something usable by SQLAlchemy
         :param model_obj: Table class to search
         :type model_obj: :class:`sqlalchemy.schema.Table`
         :param filters: Filters, keyed by col name
@@ -142,8 +114,7 @@ class Carepoint(dict):
         return new_filters
 
     def read(self, model_obj, record_id, attributes=None, ):
-        """
-        Get record by id and return the object
+        """ Get record by id and return the object
         :param model_obj: Table class to search
         :type model_obj: :class:`sqlalchemy.schema.Table`
         :param record_id: Id of record to manipulate
@@ -157,8 +128,7 @@ class Carepoint(dict):
         return session.query(model_obj).get(record_id)
 
     def search(self, model_obj, filters=None, ):
-        """
-        Search table by filters and return records
+        """ Search table by filters and return records
         :param model_obj: Table class to search
         :type model_obj: :class:`sqlalchemy.schema.Table`
         :param filters: Filters to apply to search
@@ -171,8 +141,7 @@ class Carepoint(dict):
         return session.query(model_obj).filter_by(**filters)
 
     def create(self, model_obj, vals, ):
-        """
-        Wrapper to create a record in Carepoint
+        """ Wrapper to create a record in Carepoint
         :param model_obj: Table class to create with
         :type model_obj: :class:`sqlalchemy.schema.Table`
         :param vals: Data to create record with
@@ -186,8 +155,7 @@ class Carepoint(dict):
         return record_id
 
     def update(self, model_obj, record_id, vals, ):
-        """
-        Wrapper to update a record in Carepoint
+        """ Wrapper to update a record in Carepoint
         :param model_obj: Table class to update
         :type model_obj: :class:`sqlalchemy.schema.Table`
         :param record_id: Id of record to manipulate
@@ -202,8 +170,7 @@ class Carepoint(dict):
         return session
 
     def delete(self, model_obj, record_id, ):
-        """
-        Wrapper to delete a record in Carepoint
+        """ Wrapper to delete a record in Carepoint
         :param model_obj: Table class to update
         :type model_obj: :class:`sqlalchemy.schema.Table`
         :param record_id: Id of record to manipulate
@@ -249,8 +216,7 @@ class Carepoint(dict):
                 )
 
     def set_iter_refresh(self, refresh=True, ):
-        """
-        Toggle flag to search for new models before iteration
+        """ Toggle flag to search for new models before iteration
         :param refresh: Whether to refresh before iteration
         :type refresh: bool
         """
@@ -296,16 +262,14 @@ class Carepoint(dict):
         return super(Carepoint, self).iteritems()
 
     def register_model(self, model_obj):
-        """
-        Registration logic + append to models struct
+        """ Registration logic + append to models struct
         :param model_obj: Model object to register
         :type model_obj: :class:`sqlalchemy.ext.declarative.Declarative`
         """
         self[model_obj.__name__] = model_obj
 
     def register_model_dir(self, model_path):
-        """
-        This function sets the model path to be searched
+        """ This function sets the model path to be searched
         :param model_path: Path of models
         :type model_path: str
         """
@@ -314,33 +278,39 @@ class Carepoint(dict):
         else:
             raise EnvironmentError('%s is not a directory' % model_path)
 
-    def find_models(self, ):
-        """
-        Traverse registered model directory and import non-loaded modules
+    def find_models(self, model_path=None):
+        """ Traverse registered model directory and import non-loaded modules
         """
 
-        model_path = self.model_path
+        if model_path is None:
+            model_path = self.model_path
+
         if model_path is not None and not os.path.isdir(model_path):
             raise EnvironmentError('%s is not a directory' % model_path)
 
         for dir_name, subdirs, files in os.walk(model_path):
 
+            if dir_name.startswith('__'):
+                continue
+            dir_name = os.path.abspath(dir_name)
             parent_module = dir_name.replace(model_path, '')
             parent_module = parent_module.replace(os.path.sep, '.')
 
             for file_ in files:
                 if file_.endswith('.py') and file_ != '__init__.py':
-                    module = file_[:-3]  # < Strip extension
+                    module = file_[:-3]
                     mod_obj = globals().get(module)
                     if mod_obj is None:
+                        #pdb.set_trace()
                         f, filename, desc = imp.find_module(
-                            module, [model_path]
+                            module, [dir_name]
                         )
                         mod_obj = imp.load_module(
                             module, f, filename, desc
                         )
                         cls = [
-                            m for m in dir(mod_obj) if not m.startswith('__')]
+                            m for m in dir(mod_obj) if not m.startswith('__')
+                        ]
                         for model_cls in cls:
                             model_obj = getattr(mod_obj, model_cls)
                             if hasattr(model_obj, '__tablename__'):

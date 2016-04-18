@@ -52,7 +52,7 @@ class Doctor(Carepoint.BASE):
     status_cn = Column(Integer)
     conv_code = Column(String)
     app_flags = Column(Integer)
-    timestamp = Column(DateTime)
+    timestmp = Column(DateTime)
     state_issued_id = Column(String)
     sname = Column(String)
     medicaid_restricted_yn = Column(Boolean)
