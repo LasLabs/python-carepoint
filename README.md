@@ -1,5 +1,5 @@
 [![Build Status](https://api.travis-ci.org/laslabs/Python-Carepoint.svg?branch=release%2F0.1)](https://travis-ci.org/laslabs/Python-Carepoint)
-[![Coverage Status](https://coveralls.io/repos/laslabs/Python-Carepoint/badge.png?branch=release%2F0.1)](https://coveralls.io/r/laslabs/Python-Carepoint)
+[![Coverage Status](https://coveralls.io/repos/laslabs/Python-Carepoint/badge.svg?branch=release%2F0.1)](https://coveralls.io/r/laslabs/Python-Carepoint)
 
 Python CarePoint Library
 ========================
