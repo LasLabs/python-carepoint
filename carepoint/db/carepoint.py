@@ -7,6 +7,7 @@ import imp
 import operator
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.inspection import inspect
 from .db import Db
 
 Base = declarative_base()
@@ -187,6 +188,15 @@ class Carepoint(dict):
         session.delete(result_obj)
         session.commit()
         return True
+
+    def get_pks(self, model_obj):
+        """ Return the Primary keys in the model
+        :param model_obj: Table class to update
+        :type model_obj: :class:`sqlalchemy.schema.Table`
+        :return: Tuple of primary key name strings
+        :rtype: tuple
+        """
+        return tuple(k.name for k in inspect(model_obj).primary_key)
 
     def __getattr__(self, key, ):
         """ Re-implement __getattr__ to use __getitem__ if attr not found """
