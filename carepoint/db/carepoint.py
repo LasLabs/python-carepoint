@@ -139,7 +139,8 @@ class Carepoint(dict):
         if filters is None:
             filters = {}
         session = self._get_session(model_obj)
-        return session.query(model_obj).filter_by(**filters)
+        filters = self._unwrap_filters(model_obj, filters)
+        return session.query(model_obj).filter(*filters)
 
     def create(self, model_obj, vals, ):
         """ Wrapper to create a record in Carepoint
@@ -310,7 +311,8 @@ class Carepoint(dict):
                 if file_.endswith('.py') and file_ != '__init__.py':
                     module = file_[:-3]
                     mod_obj = globals().get(module)
-                    if mod_obj is None and not self.get(module, False):
+                    sup = super(Carepoint, self)
+                    if mod_obj is None:
                         #pdb.set_trace()
                         f, filename, desc = imp.find_module(
                             module, [dir_name]
