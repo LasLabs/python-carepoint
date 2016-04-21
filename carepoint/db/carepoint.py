@@ -310,7 +310,7 @@ class Carepoint(dict):
                 if file_.endswith('.py') and file_ != '__init__.py':
                     module = file_[:-3]
                     mod_obj = globals().get(module)
-                    if mod_obj is None:
+                    if mod_obj is None and not self.get(module, False):
                         #pdb.set_trace()
                         f, filename, desc = imp.find_module(
                             module, [dir_name]
