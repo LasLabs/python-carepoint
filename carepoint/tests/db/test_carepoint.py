@@ -108,20 +108,22 @@ class CarepointTest(unittest.TestCase):
     # Search
     def test_search_calls_query_with_model_obj(self, ):
         model_obj = self.__get_model_obj()
-        filters = {'test': 'Test'}
+        filters = {'test_col': 'Test'}
         with mock.patch.object(self.carepoint, '_get_session') as mk:
             mk.return_value = mk
             self.carepoint.search(model_obj, filters)
             mk.query.assert_called_once_with(model_obj)
 
-    def test_search_calls_filter_by_with_filters(self, ):
+    def test_search_calls_filter_with_filters(self, ):
         model_obj = self.__get_model_obj()
-        filters = {'test': 'Test'}
+        filters = {'test_col': 'Test'}
         with mock.patch.object(self.carepoint, '_get_session') as mk:
             mk.return_value = mk
             mk.query.return_value = query_mk = mock.MagicMock()
             self.carepoint.search(model_obj, filters)
-            query_mk.filter_by.assert_called_once_with(**filters)
+            query_mk.filter.assert_called_once_with(
+                *self.carepoint._unwrap_filters(model_obj, filters)
+            )
 
     def test_search_calls_filter_when_no_filters(self, ):
         model_obj = self.__get_model_obj()
@@ -129,11 +131,11 @@ class CarepointTest(unittest.TestCase):
             mk.return_value = mk
             mk.query.return_value = query_mk = mock.MagicMock()
             self.carepoint.search(model_obj)
-            query_mk.filter_by.assert_called_once_with(**{})
+            query_mk.filter.assert_called_once_with(**{})
 
     def test_search_returns_response(self, ):
         model_obj = self.__get_model_obj()
-        filters = {'test': 'Test'}
+        filters = {'test_col': 'Test'}
         expect = 'Response'
         with mock.patch.object(self.carepoint, '_get_session') as mk:
             mk.return_value = mk
@@ -152,7 +154,7 @@ class CarepointTest(unittest.TestCase):
 
     def test_create_initializes_new_model_obj_with_vals(self, ):
         model_obj = mock.MagicMock()
-        vals = {'test': 'Test'}
+        vals = {'test_col': 'Test'}
         with mock.patch.object(self.carepoint, '_get_session') as mk:
             mk.return_value = mk
             self.carepoint.create(model_obj, vals)
@@ -162,7 +164,7 @@ class CarepointTest(unittest.TestCase):
         model_obj = mock.MagicMock()
         response_expect = 'ResponseExpect'
         model_obj.return_value = response_expect
-        vals = {'test': 'Test'}
+        vals = {'test_col': 'Test'}
         with mock.patch.object(self.carepoint, '_get_session') as mk:
             mk.return_value = mk
             self.carepoint.create(model_obj, vals)
@@ -170,7 +172,7 @@ class CarepointTest(unittest.TestCase):
 
     def test_create_calls_commit_on_session(self, ):
         model_obj = mock.MagicMock()
-        vals = {'test': 'Test'}
+        vals = {'test_col': 'Test'}
         with mock.patch.object(self.carepoint, '_get_session') as mk:
             mk.return_value = mk
             self.carepoint.create(model_obj, vals)
@@ -180,7 +182,7 @@ class CarepointTest(unittest.TestCase):
         model_obj = mock.MagicMock()
         response_expect = 'ResponseExpect'
         model_obj.return_value = response_expect
-        vals = {'test': 'Test'}
+        vals = {'test_col': 'Test'}
         with mock.patch.object(self.carepoint, '_get_session') as mk:
             mk.return_value = mk
             response = self.carepoint.create(model_obj, vals)
@@ -198,7 +200,7 @@ class CarepointTest(unittest.TestCase):
     def test_update_calls_read_with_model_and_record_id(self, ):
         model_obj = self.__get_model_obj()
         record_id = 1
-        vals = {'test': 'Test'}
+        vals = {'test_col': 'Test'}
         with mock.patch.object(self.carepoint, '_get_session'):
             with mock.patch.object(self.carepoint, 'read') as read_mk:
                 self.carepoint.update(model_obj, record_id, vals)
@@ -207,7 +209,7 @@ class CarepointTest(unittest.TestCase):
     def test_update_calls_update_with_vals(self, ):
         model_obj = self.__get_model_obj()
         record_id = 1
-        vals = {'test': 'Test'}
+        vals = {'test_col': 'Test'}
         with mock.patch.object(self.carepoint, '_get_session') as mk:
             mk.return_value = mk
             mk.query.return_value = query_mk = mock.MagicMock()
@@ -218,7 +220,7 @@ class CarepointTest(unittest.TestCase):
     def test_update_calls_commit_on_session(self, ):
         model_obj = mock.MagicMock()
         record_id = 1
-        vals = {'test': 'Test'}
+        vals = {'test_col': 'Test'}
         with mock.patch.object(self.carepoint, '_get_session') as mk:
             mk.return_value = mk
             self.carepoint.update(model_obj, record_id, vals)
@@ -227,7 +229,7 @@ class CarepointTest(unittest.TestCase):
     def test_update_returns_session(self, ):
         model_obj = mock.MagicMock()
         record_id = 1
-        vals = {'test': 'Test'}
+        vals = {'test_col': 'Test'}
         with mock.patch.object(self.carepoint, '_get_session') as mk:
             mk.return_value = mk
             response = self.carepoint.update(model_obj, record_id, vals)

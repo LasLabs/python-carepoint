@@ -12,8 +12,6 @@ from .db import Db
 
 Base = declarative_base()
 
-import pdb
-
 
 class Carepoint(dict):
     """ Base CarePoint db connector object """
@@ -43,7 +41,7 @@ class Carepoint(dict):
             'server': server,
             'db': 'cph',
         }
-        #   @TODO: Lazy load, once other dbs needed
+        # @TODO: Lazy load, once other dbs needed
         self.dbs = {
             'cph': Db(**params),
         }
@@ -311,9 +309,7 @@ class Carepoint(dict):
                 if file_.endswith('.py') and file_ != '__init__.py':
                     module = file_[:-3]
                     mod_obj = globals().get(module)
-                    sup = super(Carepoint, self)
                     if mod_obj is None:
-                        #pdb.set_trace()
                         f, filename, desc = imp.find_module(
                             module, [dir_name]
                         )
