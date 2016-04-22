@@ -6,11 +6,11 @@ from mixer.backend.sqlalchemy import mixer
 from datetime import datetime
 
 
-dt_now=datetime.now()
-__model__='carepoint.models.cph.fdb_ndc_cs_ext.FdbNdcCsExt'
+dt_now = datetime.now()
+__model__ = 'carepoint.models.cph.fdb_ndc_cs_ext.FdbNdcCsExt'
 
 
-fdb_ndc_cs_ext_default=mixer.blend(
+fdb_ndc_cs_ext_default = mixer.blend(
     __model__,
     ndc='0002032902',
     short_name='An item',
