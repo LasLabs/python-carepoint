@@ -7,6 +7,7 @@ from sqlalchemy import (Column,
                         Integer,
                         String,
                         Boolean,
+                        ForeignKey,
                         )
 
 
@@ -17,8 +18,14 @@ class FdbGcnSeq(Carepoint.BASE):
     gcn_seqno = Column(Integer, primary_key=True)
     hic3 = Column(String)
     hicl_seqno = Column(Integer)
-    gcdf = Column(String)
-    gcrt = Column(String)
+    gcdf = Column(
+        String,
+        ForeignKey('fdrdosed.gcdf'),
+    )
+    gcrt = Column(
+        String,
+        ForeignKey('fdrrouted.gcrt'),
+    )
     str = Column(String)
     gtc = Column(Integer)
     tc = Column(Integer)
