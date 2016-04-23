@@ -31,9 +31,11 @@ class Tests(Command):
         loader = TestLoader()
         tests = loader.discover('.', 'test_*.py')
         t = XMLTestRunner(verbosity=1, output=self.TEST_RESULTS)
-
         cov = coverage.Coverage(
-            omit=['*/tests/', 'test_*.py', ],
+            omit=[
+                '*/tests/*',
+                '*__init__.py',
+            ],
             source=self.MODULE_NAMES,
         )
         cov.start()
