@@ -25,6 +25,8 @@ class Patient(Carepoint.BASE):
     chart_id = Column(String)
     lname = Column(String)
     lname_sdx = Column(String)
+    fname = Column(String)
+    fname_sdx = Column(String)
     mname = Column(String)
     title_lu = Column(String)
     suffix_lu = Column(String)
