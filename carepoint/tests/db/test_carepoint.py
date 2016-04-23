@@ -71,11 +71,6 @@ class CarepointTest(unittest.TestCase):
     #
 
     # Read
-    def test_read_throws_not_implemented_error_on_attributes(self, ):
-        model_obj = self.__get_model_obj()
-        with self.assertRaises(NotImplementedError):
-            with mock.patch.object(self.carepoint, '_get_session'):
-                self.carepoint.read(model_obj, 1, [])
 
     def test_read_calls_query_with_model_obj(self, ):
         model_obj = self.__get_model_obj()

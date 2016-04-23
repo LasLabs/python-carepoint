@@ -31,7 +31,7 @@ class Carepoint(dict):
         '==': operator.eq,
     }
 
-    def __init__(self, server, user, passwd, ):
+    def __init__(self, server, user, passwd):
 
         super(Carepoint, self).__init__()
         self.iter_refresh = False
@@ -50,7 +50,7 @@ class Carepoint(dict):
         }
         self.sessions = {}
 
-    def _get_session(self, model_obj, ):
+    def _get_session(self, model_obj):
         try:
             return self.sessions[model_obj.__dbname__]
         except KeyError:
@@ -58,7 +58,7 @@ class Carepoint(dict):
             self.sessions[model_obj.__dbname__] = session
             return session
 
-    def _create_criterion(self, model_obj, col_name, operator, query, ):
+    def _create_criterion(self, model_obj, col_name, operator, query):
         """ Create a SQLAlchemy criterion from filter parts
         :param model_obj: Table class to search
         :type model_obj: :class:`sqlalchemy.schema.Table`
@@ -84,7 +84,7 @@ class Carepoint(dict):
         except AttributeError:
             raise
 
-    def _unwrap_filters(self, model_obj, filters=None, ):
+    def _unwrap_filters(self, model_obj, filters=None):
         """ Unwrap a dictionary of filters into something usable by SQLAlchemy
         :param model_obj: Table class to search
         :type model_obj: :class:`sqlalchemy.schema.Table`
@@ -112,35 +112,63 @@ class Carepoint(dict):
 
         return new_filters
 
-    def read(self, model_obj, record_id, attributes=None, ):
+    def _create_entities(self, model_obj, cols):
+        """ Return list of entities matching cols
+        :param model_obj: Table class to search
+        :type model_obj: :class:`sqlalchemy.schema.Table`
+        :param cols: List of col names
+        :type cols: list
+        :rtype: list
+        """
+        out = []
+        for col in cols:
+            try:
+                out.append(getattr(model_obj, col))
+            except AttributeError:
+                pass
+        return out
+
+    def read(self, model_obj, record_id, with_entities=None):
         """ Get record by id and return the object
         :param model_obj: Table class to search
         :type model_obj: :class:`sqlalchemy.schema.Table`
         :param record_id: Id of record to manipulate
-        :param attributes: Attributes to rcv from db. None for *
-        :type attributes: list or None
+        :param with_entities: Attributes to rcv from db. None for *
+        :type with_entities: list or None
+        :param with_entities: List of col names to select, None for all
+        :type with_entities: list or None
         :rtype: :class:`sqlalchemy.engine.ResultProxy`
         """
-        if attributes is not None:
-            raise NotImplementedError('Read attributes not implemented')
         session = self._get_session(model_obj)
-        return session.query(model_obj).get(record_id)
+        q = session.query(model_obj).get(record_id)
+        if with_entities:
+            q.with_entities(*self._create_entities(
+                model_obj, with_entities
+            ))
+        return q
 
-    def search(self, model_obj, filters=None, ):
+    def search(self, model_obj, filters=None, with_entities=None):
         """ Search table by filters and return records
         :param model_obj: Table class to search
         :type model_obj: :class:`sqlalchemy.schema.Table`
         :param filters: Filters to apply to search
         :type filters: dict or None
+        :param with_entities: List of col names to select, None for all
+        :type with_entities: list or None
         :rtype: :class:`sqlalchemy.engine.ResultProxy`
         """
         if filters is None:
             filters = {}
         session = self._get_session(model_obj)
         filters = self._unwrap_filters(model_obj, filters)
-        return session.query(model_obj).filter(*filters)
+        q = session.query(model_obj).filter(*filters)
+        if with_entities:
+            q.with_entities(*self._create_entities(
+                model_obj, with_entities
+            ))
+        return q
 
-    def create(self, model_obj, vals, ):
+    def create(self, model_obj, vals):
         """ Wrapper to create a record in Carepoint
         :param model_obj: Table class to create with
         :type model_obj: :class:`sqlalchemy.schema.Table`
@@ -154,7 +182,7 @@ class Carepoint(dict):
         session.commit()
         return record_id
 
-    def update(self, model_obj, record_id, vals, ):
+    def update(self, model_obj, record_id, vals):
         """ Wrapper to update a record in Carepoint
         :param model_obj: Table class to update
         :type model_obj: :class:`sqlalchemy.schema.Table`
@@ -169,7 +197,7 @@ class Carepoint(dict):
         session.commit()
         return session
 
-    def delete(self, model_obj, record_id, ):
+    def delete(self, model_obj, record_id):
         """ Wrapper to delete a record in Carepoint
         :param model_obj: Table class to update
         :type model_obj: :class:`sqlalchemy.schema.Table`
@@ -197,7 +225,7 @@ class Carepoint(dict):
         """
         return tuple(k.name for k in inspect(model_obj).primary_key)
 
-    def __getattr__(self, key, ):
+    def __getattr__(self, key):
         """ Re-implement __getattr__ to use __getitem__ if attr not found """
         try:
             return super(Carepoint, self).__getattr__(key)
@@ -224,48 +252,48 @@ class Carepoint(dict):
                     )
                 )
 
-    def set_iter_refresh(self, refresh=True, ):
+    def set_iter_refresh(self, refresh=True):
         """ Toggle flag to search for new models before iteration
         :param refresh: Whether to refresh before iteration
         :type refresh: bool
         """
         self.iter_refresh = refresh
 
-    def __refresh_models__(self, ):
+    def __refresh_models__(self):
         if self.iter_refresh:
             self.find_models()
 
-    def __iter__(self, ):
+    def __iter__(self):
         """ Reimplement __iter__ to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).__iter__()
 
-    def values(self, ):
+    def values(self):
         """ Reimplement values to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).values()
 
-    def keys(self, ):
+    def keys(self):
         """ Reimplement keys to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).keys()
 
-    def items(self, ):
+    def items(self):
         """ Reimplement items to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).items()
 
-    def itervalues(self, ):
+    def itervalues(self):
         """ Reimplement itervalues to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).itervalues()
 
-    def iterkeys(self, ):
+    def iterkeys(self):
         """ Reimplement iterkeys to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).iterkeys()
 
-    def iteritems(self, ):
+    def iteritems(self):
         """ Reimplement iteritems to allow for optional model refresh """
         self.__refresh_models__()
         return super(Carepoint, self).iteritems()
