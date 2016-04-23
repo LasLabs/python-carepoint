@@ -5,6 +5,7 @@
 from carepoint import Carepoint
 from sqlalchemy import (Column,
                         Boolean,
+                        String,
                         )
 
 
