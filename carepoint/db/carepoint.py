@@ -75,7 +75,7 @@ class Carepoint(dict):
         """ Return URI prefix for SMB share """
         return 'smb://{user}:{passwd}@'.format(**self.smb_creds)
 
-    def _get_file(self, path):
+    def get_file(self, path):
         """ Return a file-like object for the SMB path
 
         Args:
@@ -87,7 +87,7 @@ class Carepoint(dict):
         opener = urllib2.build_opener(SMBHandler)
         return opener.open('%s%s' % (self._smb_prefix, path))
 
-    def _send_file(self, path, file_obj):
+    def send_file(self, path, file_obj):
         """ Send a file-like object to the SMB path
 
         Args:

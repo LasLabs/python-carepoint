@@ -107,14 +107,14 @@ class CarepointTest(unittest.TestCase):
     @mock.patch('carepoint.db.carepoint.urllib2')
     @mock.patch('carepoint.db.carepoint.SMBHandler')
     def test_get_file_builds_opener(self, smb_mk, url_mk):
-        self.carepoint._get_file('expect')
+        self.carepoint.get_file('expect')
         url_mk.build_opener.assert_called_once_with(smb_mk)
 
     @mock.patch('carepoint.db.carepoint.urllib2')
     @mock.patch('carepoint.db.carepoint.SMBHandler')
     def test_get_file_opens_uri(self, smb_mk, url_mk):
         expect = 'Test'
-        self.carepoint._get_file(expect)
+        self.carepoint.get_file(expect)
         url_mk.build_opener().open.assert_called_once_with(
             '%s%s' % (self.carepoint._smb_prefix, expect)
         )
@@ -123,7 +123,7 @@ class CarepointTest(unittest.TestCase):
     @mock.patch('carepoint.db.carepoint.SMBHandler')
     def test_get_file_returns_opened_handler(self, smb_mk, url_mk):
         expect = 'Test'
-        res = self.carepoint._get_file(expect)
+        res = self.carepoint.get_file(expect)
         self.assertEqual(
             url_mk.build_opener().open(), res,
         )
@@ -131,7 +131,7 @@ class CarepointTest(unittest.TestCase):
     @mock.patch('carepoint.db.carepoint.urllib2')
     @mock.patch('carepoint.db.carepoint.SMBHandler')
     def test_send_file_builds_opener(self, smb_mk, url_mk):
-        self.carepoint._send_file('expect', '')
+        self.carepoint.send_file('expect', '')
         url_mk.build_opener.assert_called_once_with(smb_mk)
 
     @mock.patch('carepoint.db.carepoint.urllib2')
@@ -139,7 +139,7 @@ class CarepointTest(unittest.TestCase):
     def test_send_file_sends_file(self, smb_mk, url_mk):
         expect = 'Test'
         data = 'data'
-        self.carepoint._send_file(expect, data)
+        self.carepoint.send_file(expect, data)
         url_mk.build_opener().__enter__().open.assert_called_once_with(
             '%s%s' % (self.carepoint._smb_prefix, expect), data=data,
         )
@@ -147,7 +147,7 @@ class CarepointTest(unittest.TestCase):
     @mock.patch('carepoint.db.carepoint.urllib2')
     @mock.patch('carepoint.db.carepoint.SMBHandler')
     def test_send_file_returns_true(self, smb_mk, url_mk):
-        res = self.carepoint._send_file('expect', '')
+        res = self.carepoint.send_file('expect', '')
         self.assertTrue(res)
 
     #

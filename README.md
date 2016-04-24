@@ -16,6 +16,8 @@ Installation
 
 To install this module, you need to:
 
+* Utilize a system able to access all CarePoint network resources (database, SMB)
+  * This includes things like DNS entries for the NETBIOS names
 * Setup UnixODBC - http://help.interfaceware.com/kb/904
 * Install UnixODBC development headers - `apt-get install unixodbc-dev`
 * Install dependencies - `pip install -r requirements.txt`
@@ -33,6 +35,8 @@ Usage
 
 ### Connect to Database server
 
+    from carepoint import Carepoint
+    
     cp = Carepoint(
         server='127.0.0.1',
         user='test_db_user',
@@ -72,6 +76,14 @@ Usage
     for row in res:
         print row.fname
 
+### Get image using SMB path from database
+
+    cp = Carepoint(**opts)
+    img_rec = cp.search(cp['FdbImg']).first()
+    image_file = cp.get_file(img_rec.IMAGE_PATH)
+    image_data = image_file.read()
+
+
 Known Issues / Road Map
 -----------------------
 
@@ -81,7 +93,8 @@ Known Issues / Road Map
 * Create documentation of models
 * Add some basic validations
 * Create a column type that will retrieve file from SMB path in DB
-* Better SMB support (allow ftimes)
+* Better SMB support (allow ftimes, dir list, caching)
+* FDB images only server from store ID 1 share
 
 Contributors
 ------------
