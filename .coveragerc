@@ -3,7 +3,7 @@
 
 [report]
 include =
-    */carepoint/*
+    carepoint/*
 
 omit =
     */tests/*
