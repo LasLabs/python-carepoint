@@ -5,9 +5,11 @@
 import os
 import imp
 import operator
+import urllib2
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.inspection import inspect
+from smb.SMBHandler import SMBHandler
 from .db import Db
 
 Base = declarative_base()
@@ -31,7 +33,7 @@ class Carepoint(dict):
         '==': operator.eq,
     }
 
-    def __init__(self, server, user, passwd):
+    def __init__(self, server, user, passwd, smb_user=None, smb_passwd=None):
 
         super(Carepoint, self).__init__()
         self.iter_refresh = False
@@ -49,6 +51,16 @@ class Carepoint(dict):
             'cph': sessionmaker(bind=self.dbs['cph']),
         }
         self.sessions = {}
+        if smb_user is None:
+            self.smb_creds = {
+                'user': user,
+                'passwd': passwd,
+            }
+        else:
+            self.smb_creds = {
+                'user': user,
+                'passwd': passwd,
+            }
 
     def _get_session(self, model_obj):
         try:
@@ -58,19 +70,52 @@ class Carepoint(dict):
             self.sessions[model_obj.__dbname__] = session
             return session
 
+    @property
+    def _smb_prefix(self):
+        """ Return URI prefix for SMB share """
+        return 'smb://{user}:{passwd}@'.format(**self.smb_creds)
+
+    def _get_file(self, path):
+        """ Return a file-like object for the SMB path
+
+        Args:
+            path: :type:`str` SMB path to fetch
+
+        Returns:
+            :type:`file` File interface object representing remote resource
+        """
+        opener = urllib2.build_opener(SMBHandler)
+        return opener.open('%s%s' % (self._smb_prefix, path))
+
+    def _send_file(self, path, file_obj):
+        """ Send a file-like object to the SMB path
+
+        Args:
+            path: :type:`str` SMB path to fetch
+            file_obj: :type:`file` File interface object to send to server
+
+        Returns:
+            :type:`bool` Success
+        """
+        with urllib2.build_opener(SMBHandler) as opener:
+            opener.open('%s%s' % (self._smb_prefix, path), data=file_obj)
+        return True
+
     def _create_criterion(self, model_obj, col_name, operator, query):
         """ Create a SQLAlchemy criterion from filter parts
-        :param model_obj: Table class to search
-        :type model_obj: :class:`sqlalchemy.schema.Table`
-        :param col_name: Name of column to query
-        :type col_name: str
-        :param operator: Domain operator to use in query
-        :type operator: str
-        :param query: Text to search for
-        :type query: str
-        :return: SQLAlchemy criterion representing a single WHERE clause
-        :raises NotImplementedError: When query operator is not implemented
-        :raises AttributeError: When col_name does not exist in the model_obj
+
+        Args:
+            model_obj: :class:`sqlalchemy.Table` Table class to search
+            col_name: :type:`str` Name of column to query
+            operator: :type:`str` Domain operator to use in query
+            query: :type:`str` Text to search for
+
+        Returns:
+            SQLAlchemy criterion representing a single WHERE clause
+
+        Raises:
+            NotImplementedError: When query operator is not implemented
+            AttributeError: When col_name does not exist in the model_obj
         """
 
         try:
@@ -87,7 +132,7 @@ class Carepoint(dict):
     def _unwrap_filters(self, model_obj, filters=None):
         """ Unwrap a dictionary of filters into something usable by SQLAlchemy
         :param model_obj: Table class to search
-        :type model_obj: :class:`sqlalchemy.schema.Table`
+        :type model_obj: :class:`sqlalchemy.Table`
         :param filters: Filters, keyed by col name
         :type filters: dict
         :rtype: list
@@ -115,10 +160,10 @@ class Carepoint(dict):
     def _create_entities(self, model_obj, cols):
         """ Return list of entities matching cols
         :param model_obj: Table class to search
-        :type model_obj: :class:`sqlalchemy.schema.Table`
+        :type model_obj: :class:`sqlalchemy.Table`
         :param cols: List of col names
         :type cols: list
-        :rtype: list
+        :rtype: :type:`list` of :class:`sqlalchemy.Column`
         """
         out = []
         for col in cols:
@@ -131,7 +176,7 @@ class Carepoint(dict):
     def read(self, model_obj, record_id, with_entities=None):
         """ Get record by id and return the object
         :param model_obj: Table class to search
-        :type model_obj: :class:`sqlalchemy.schema.Table`
+        :type model_obj: :class:`sqlalchemy.Table`
         :param record_id: Id of record to manipulate
         :param with_entities: Attributes to rcv from db. None for *
         :type with_entities: list or None

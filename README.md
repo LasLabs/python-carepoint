@@ -22,6 +22,12 @@ To install this module, you need to:
 * Install library - `pip install .`
 
 
+Setup
+-----
+
+* Create an Active Directory user 
+
+
 Usage
 -----
 
@@ -71,6 +77,9 @@ Known Issues / Road Map
 
 * More usage samples
 * Test coverage is showing less than what it actually is (carepoint and db modules)
+* A decent amount of models are missing
+* Create documentation of models
+* Image SMB paths are stored in DB, need to write download mechanism
 
 Contributors
 ------------
