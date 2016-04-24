@@ -79,7 +79,9 @@ Known Issues / Road Map
 * Test coverage is showing less than what it actually is (carepoint and db modules)
 * A decent amount of models are missing
 * Create documentation of models
-* Image SMB paths are stored in DB, need to write download mechanism
+* Add some basic validations
+* Create a column type that will retrieve file from SMB path in DB
+* Better SMB support (allow ftimes)
 
 Contributors
 ------------
