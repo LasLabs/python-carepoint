@@ -238,7 +238,9 @@ class Carepoint(dict):
         :rtype: :class:`sqlalchemy.ext.declarative.Declarative`
         """
         session = self._get_session(model_obj)
-        self.read(model_obj, record_id).update(vals)
+        record = self.read(model_obj, record_id)
+        for key, val in vals:
+            setattr(record, key, val)
         session.commit()
         return session
 
