@@ -224,7 +224,7 @@ class Carepoint(dict):
         session = self._get_session(model_obj)
         record_id = model_obj(**vals)
         session.add(record_id)
-        session.commit()
+        self.__commit_session(session)
         return record_id
 
     def update(self, model_obj, record_id, vals):
@@ -241,7 +241,7 @@ class Carepoint(dict):
         record = self.read(model_obj, record_id)
         for key, val in vals.items():
             setattr(record, key, val)
-        session.commit()
+        self.__commit_session(session)
         return session
 
     def delete(self, model_obj, record_id):
@@ -260,7 +260,7 @@ class Carepoint(dict):
             return False
         assert result_cnt == 1
         session.delete(result_obj)
-        session.commit()
+        self.__commit_session(session)
         return True
 
     def get_pks(self, model_obj):
@@ -271,6 +271,13 @@ class Carepoint(dict):
         :rtype: tuple
         """
         return tuple(k.name for k in inspect(model_obj).primary_key)
+
+    def __commit_session(self, session):
+        try:
+            session.commit()
+        except Exception, e:
+            session.rollback()
+            raise
 
     def __getattr__(self, key):
         """ Re-implement __getattr__ to use __getitem__ if attr not found """

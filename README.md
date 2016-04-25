@@ -27,7 +27,11 @@ To install this module, you need to:
 Setup
 -----
 
-* Create an Active Directory user 
+* Create an Active Directory user
+* Give AD user permissions to CarePoint images and data net shares
+* Give AD user read & write permissions on the following databases:
+  * cph
+  * grx_master
 
 
 Usage
