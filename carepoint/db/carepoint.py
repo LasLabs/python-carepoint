@@ -239,7 +239,7 @@ class Carepoint(dict):
         """
         session = self._get_session(model_obj)
         record = self.read(model_obj, record_id)
-        for key, val in vals:
+        for key, val in vals.items():
             setattr(record, key, val)
         session.commit()
         return session
