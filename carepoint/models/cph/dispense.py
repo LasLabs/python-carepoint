@@ -18,6 +18,7 @@ class Dispense(Carepoint.BASE):
     __tablename__ = 'cprx_disp'
     __dbname__ = 'cph'
 
+    rxdisp_id = Column(Integer, primary_key=True)
     rx_id = Column(
         Integer,
         ForeignKey('cprx.rx_id'),
@@ -32,7 +33,6 @@ class Dispense(Carepoint.BASE):
     mfg = Column(String)
     orig_mfg = Column(String)
     pkg_size = Column(Numeric)
-    rxdisp_id = Column(Integer, primary_key=True)
     fill_no = Column(Integer)
     dispense_date = Column(DateTime)
     dispense_qty = Column(Numeric)
