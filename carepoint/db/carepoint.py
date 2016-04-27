@@ -277,7 +277,7 @@ class Carepoint(dict):
             session.commit()
         except Exception, e:
             session.rollback()
-            raise
+            raise e
 
     def __getattr__(self, key):
         """ Re-implement __getattr__ to use __getitem__ if attr not found """

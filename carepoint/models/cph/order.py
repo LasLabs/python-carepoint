@@ -8,8 +8,8 @@ from sqlalchemy import (Column,
                         String,
                         DateTime,
                         ForeignKey,
-                        Text,
-                        Decimal,
+                        Boolean,
+                        Float,
                         )
 
 
@@ -36,7 +36,7 @@ class Order(Carepoint.BASE):
     c2Count = Column(Integer)
     ship_cn = Column(Integer)
     sat_deliv_yn = Column(Boolean)
-    ship_amt = Column(Decimal)
+    ship_amt = Column(Float)
     store_id = Column(
         Integer,
         ForeignKey('csstore.store_id'),
