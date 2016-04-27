@@ -60,7 +60,7 @@ class Dispense(Carepoint.BASE):
     clarification_fill = Column(Integer)
     trip_no = Column(Integer)
     gpi_disp = Column(Integer)
-    label_3pty_yn = Column(Boolean)
+    label_3pty_yn = Column(Integer)
     reject_3pty_yn = Column(Boolean)
     pay_type_cn = Column(Integer)
     price_differs_yn = Column(Boolean)
