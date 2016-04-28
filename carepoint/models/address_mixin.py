@@ -5,13 +5,18 @@
 from sqlalchemy import (Column,
                         Integer,
                         DateTime,
+                        ForeignKey
                         )
 
 
 class AddressMixin(object):
     """ This is a mixin for Address Many2Many bindings """
 
-    addr_id = Column(Integer, primary_key=True)
+    addr_id = Column(
+        Integer,
+        ForeignKey('csaddr.addr_id'),
+        primary_key=True,
+    )
     priority = Column(Integer)
     addr_type_cn = Column(Integer)
     app_flags = Column(Integer)
