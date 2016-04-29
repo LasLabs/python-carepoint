@@ -14,8 +14,8 @@ class FdbNdc(Carepoint.BASE):
     __tablename__ = 'fdrndc'
     __dbname__ = 'cph'
 
-    id = Column(Integer, primary_key=True)
-    ndc = Column(Integer)
+    ndc = Column(String, primary_key=True)
+    id = Column(Integer)
     lblrid = Column(String)
     gcn_seqno = Column(Integer)
     ps = Column(Integer)

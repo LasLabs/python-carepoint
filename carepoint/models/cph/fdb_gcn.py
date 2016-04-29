@@ -6,6 +6,7 @@ from carepoint import Carepoint
 from sqlalchemy import (Column,
                         Integer,
                         Boolean,
+                        String,
                         )
 
 
@@ -14,5 +15,5 @@ class FdbGcn(Carepoint.BASE):
     __dbname__ = 'cph'
 
     gcn_seqno = Column(Integer, primary_key=True)
-    gcn = Column(Integer)
+    gcn = Column(String)
     update_yn = Column(Boolean)
