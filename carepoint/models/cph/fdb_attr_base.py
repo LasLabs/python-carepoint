@@ -10,18 +10,14 @@ from sqlalchemy import (Column,
                         )
 
 
-class FdbAttr(Carepoint.BASE):
-    __tablename__ = 'fdbriptdes'
+class FdbAttrBase(Carepoint.BASE):
+    __tablename__ = 'fdbriptbsc'
     __dbname__ = 'cph'
 
-    IPTDESCID = Column(Integer, primary_key=True)
+    IPTBSCDID = Column(Integer, primary_key=True)
     IPTCATID = Column(
         Integer,
         ForeignKey('fdbriptcat.IPTCATID'),
         primary_key=True,
     )
-    IPTBSCDID = Column(
-        Integer,
-        ForeignKey('fdbriptbsc.IPTBSCDID'),
-    )
-    IPTDESC = Column(String)
+    IPTBSCDESC = Column(String)
