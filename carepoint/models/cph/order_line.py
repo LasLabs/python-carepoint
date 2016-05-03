@@ -20,6 +20,10 @@ class OrderLine(Carepoint.BASE):
         Integer,
         ForeignKey('CsOm.order_id'),
     )
+    rx_id = Column(
+        Integer,
+        ForeignKey('cprx.rx_id'),
+    )
     rxdisp_id = Column(
         Integer,
         ForeignKey('cprx_disp.rxdisp_id'),
