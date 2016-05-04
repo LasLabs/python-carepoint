@@ -1,5 +1,5 @@
 [![Build Status](https://api.travis-ci.org/laslabs/Python-Carepoint.svg?branch=release%2F0.1)](https://travis-ci.org/laslabs/Python-Carepoint)
-[![Coverage Status](https://coveralls.io/repos/laslabs/Python-Carepoint/badge.svg?branch=release%2F0.1)](https://coveralls.io/r/laslabs/Python-Carepoint)
+[![Coverage Status](https://coveralls.io/repos/laslabs/Python-Carepoint/badge.svg?branch=release%2F0.1)](https://coveralls.io/r/laslabs/Python-Carepoint?branch=release%2F0.1)
 
 Python CarePoint Library
 ========================
@@ -27,7 +27,11 @@ To install this module, you need to:
 Setup
 -----
 
-* Create an Active Directory user 
+* Create an Active Directory user
+* Give AD user permissions to CarePoint images and data net shares
+* Give AD user read & write permissions on the following databases:
+  * cph
+  * grx_master
 
 
 Usage

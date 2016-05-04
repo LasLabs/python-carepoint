@@ -4,16 +4,14 @@
 
 from carepoint import Carepoint
 from sqlalchemy import (Column,
-                        Integer,
-                        Boolean,
                         String,
+                        Integer,
                         )
 
 
-class FdbGcn(Carepoint.BASE):
-    __tablename__ = 'fdrgcn'
+class FdbAttrType(Carepoint.BASE):
+    __tablename__ = 'fdbriptcat'
     __dbname__ = 'cph'
 
-    gcn_seqno = Column(Integer, primary_key=True)
-    gcn = Column(String)
-    update_yn = Column(Boolean)
+    IPTCATID = Column(Integer, primary_key=True)
+    IPTCATDESC = Column(String)

@@ -294,7 +294,12 @@ class CarepointTest(unittest.TestCase):
             mk.query.return_value = query_mk = mock.MagicMock()
             query_mk.get.return_value = get_mk = mock.MagicMock()
             self.carepoint.update(model_obj, record_id, vals)
-            get_mk.update.assert_called_once_with(vals)
+            self.assertEqual(
+                vals['test_col'], get_mk.test_col,
+                'Record attribute was not updated. Expect Test, Got %s' % (
+                    get_mk.test_col,
+                )
+            )
 
     def test_update_calls_commit_on_session(self):
         model_obj = mock.MagicMock()

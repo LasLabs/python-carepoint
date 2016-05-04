@@ -3,17 +3,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from carepoint import Carepoint
+from carepoint.models.address_mixin import AddressMixin
 from sqlalchemy import (Column,
                         Integer,
-                        Boolean,
-                        String,
                         )
 
 
-class FdbGcn(Carepoint.BASE):
-    __tablename__ = 'fdrgcn'
+class PatientAddress(AddressMixin, Carepoint.BASE):
     __dbname__ = 'cph'
-
-    gcn_seqno = Column(Integer, primary_key=True)
-    gcn = Column(String)
-    update_yn = Column(Boolean)
+    __tablename__ = 'cppat_addr'
+    pat_id = Column(Integer, primary_key=True)
