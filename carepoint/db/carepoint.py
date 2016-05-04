@@ -13,6 +13,9 @@ from smb.SMBHandler import SMBHandler
 from .db import Db
 
 Base = declarative_base()
+Base.get = lambda s, k, v=None: getattr(s, k, v)
+Base.__getitem__ = lambda s, k, v=None: getattr(s, k, v)
+Base.__setitem__ = lambda s, k, v: setattr(s, k, v)
 
 
 class Carepoint(dict):
