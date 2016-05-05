@@ -98,7 +98,9 @@ Known Issues / Road Map
 * Add some basic validations
 * Create a column type that will retrieve file from SMB path in DB
 * Better SMB support (allow ftimes, dir list, caching)
-* FDB images only server from store ID 1 share
+* FDB images only serve from store ID 1's net share
+* Having to pass the model to the Carepoint object is annoying, objectify the syntax
+
 
 Contributors
 ------------
