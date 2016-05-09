@@ -7,7 +7,6 @@ from sqlalchemy import (Column,
                         Integer,
                         String,
                         DateTime,
-                        Boolean,
                         ForeignKey,
                         Numeric,
                         Text,
@@ -61,9 +60,9 @@ class Dispense(Carepoint.BASE):
     trip_no = Column(Integer)
     gpi_disp = Column(Integer)
     label_3pty_yn = Column(Integer)
-    reject_3pty_yn = Column(Boolean)
+    reject_3pty_yn = Column(Integer)
     pay_type_cn = Column(Integer)
-    price_differs_yn = Column(Boolean)
+    price_differs_yn = Column(Integer)
     pat_loc_cn = Column(Integer)
     billing_units = Column(String)
     price_table_id = Column(Integer)
@@ -71,22 +70,22 @@ class Dispense(Carepoint.BASE):
     timestmp = Column(DateTime)
     price_meth_cn = Column(Integer)
     uu = Column(String)
-    p_tbl_override_yn = Column(Boolean)
+    p_tbl_override_yn = Column(Integer)
     label_id = Column(Integer)
     billing_hold = Column(Integer)
-    post_bal_yn = Column(Boolean)
+    post_bal_yn = Column(Integer)
     inv_no = Column(String)
     disp_qty_delta = Column(Numeric)
-    brand_med_nec_yn = Column(Boolean)
+    brand_med_nec_yn = Column(Integer)
     Other_coverage_cd = Column(Integer)
-    epsdt_yn = Column(Boolean)
+    epsdt_yn = Column(Integer)
     exempt_cd = Column(Integer)
     num_labels = Column(Integer)
     location = Column(String)
     qty_override = Column(Numeric)
     dur_summary = Column(Text)
     cov_overrides = Column(Integer)
-    use_secondary_ins_yn = Column(Boolean)
+    use_secondary_ins_yn = Column(Integer)
     hp_blnRxExtr = Column(SmallInteger)
     item_id = Column(Integer)
     ud_override = Column(String)
