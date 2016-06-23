@@ -15,6 +15,6 @@ class FdbImgId(Carepoint.BASE):
     __dbname__ = 'cph'
 
     IMGUNIQID = Column(Integer, primary_key=True)
-    IMGDFID = Column(Numeric, (5, 0))
+    IMGDFID = Column(Numeric(5, 0))
     IMGNDC = Column(String)
-    IMGMFGID = Column(Numeric, (10, 0))
+    IMGMFGID = Column(Numeric(10, 0))
