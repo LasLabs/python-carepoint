@@ -13,5 +13,5 @@ class FdbImgMfg(Carepoint.BASE):
     __tablename__ = 'fdbrimgmfg'
     __dbname__ = 'cph'
 
-    IMGMFGID = Column(Numeric, (10, 0), primary_key=True)
+    IMGMFGID = Column(Numeric(10, 0), primary_key=True)
     IMGMFGNAME = Column(String)

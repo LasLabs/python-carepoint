@@ -5,7 +5,7 @@
 from carepoint import Carepoint
 from sqlalchemy.orm import relationship
 from sqlalchemy import (Column,
-                        Integer,
+                        String,
                         Numeric,
                         )
 
@@ -14,7 +14,7 @@ class FdbImg(Carepoint.BASE):
     __tablename__ = 'fdbrimgimg'
     __dbname__ = 'cph'
 
-    IMGID = Column(Numeric, (10, 0), primary_key=True)
+    IMGID = Column(Numeric(10, 0), primary_key=True)
     IMGFILENM = Column(String)
     IMAGE_ROOTS = relationship(
         'StoreParam',
