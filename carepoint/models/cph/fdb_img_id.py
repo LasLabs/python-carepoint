@@ -6,6 +6,7 @@ from carepoint import Carepoint
 from sqlalchemy import (Column,
                         String,
                         Integer,
+                        Numeric,
                         )
 
 
@@ -14,6 +15,6 @@ class FdbImgId(Carepoint.BASE):
     __dbname__ = 'cph'
 
     IMGUNIQID = Column(Integer, primary_key=True)
-    IMGDFID = Column(Integer)
+    IMGDFID = Column(Numeric, (5, 0))
     IMGNDC = Column(String)
-    IMGMFGID = Column(Integer)
+    IMGMFGID = Column(Numeric, (10, 0))
