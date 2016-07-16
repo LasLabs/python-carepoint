@@ -36,7 +36,9 @@ class Carepoint(dict):
         '==': operator.eq,
     }
 
-    def __init__(self, server, user, passwd, smb_user=None, smb_passwd=None):
+    def __init__(self, server, user, passwd, smb_user=None, smb_passwd=None,
+                 db_args=None,
+                 ):
 
         super(Carepoint, self).__init__()
         self.iter_refresh = False
@@ -46,6 +48,8 @@ class Carepoint(dict):
             'server': server,
             'db': 'cph',
         }
+        if db_args is not None:
+            params.update(db_args)
         # @TODO: Lazy load, once other dbs needed
         self.dbs = {
             'cph': Db(**params),
