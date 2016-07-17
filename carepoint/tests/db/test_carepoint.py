@@ -310,14 +310,14 @@ class CarepointTest(unittest.TestCase):
             self.carepoint.update(model_obj, record_id, vals)
             mk.commit.assert_called_once_with()
 
-    def test_update_returns_session(self):
+    def test_update_returns_record(self):
         model_obj = mock.MagicMock()
         record_id = 1
         vals = {'test_col': 'Test'}
         with mock.patch.object(self.carepoint, '_get_session') as mk:
             mk.return_value = mk
             response = self.carepoint.update(model_obj, record_id, vals)
-            self.assertEqual(response, mk)
+            self.assertEqual(response, mk.query().get())
 
     # Delete
     def test_delete_calls_get_session_with_model_obj(self):
