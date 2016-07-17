@@ -180,6 +180,30 @@ class Carepoint(dict):
                 pass
         return out
 
+    def _do_queries(self, session, *queries, **kwargs):
+        """ Wrapper method for running any query against the DB safely
+        Will create a transaction, then loop and run `queries` methods
+        :param model_obj: Table class to search
+        :type model_obj: :class:`sqlalchemy.Table`
+        :param queries: Query method(s) to be run in context of transaction
+        :type queries: Methods to be run against db
+        :kwarg no_commit: True to not commit transaction
+        :returns: Query result(s)
+        :rtype: ResultProxy if singleton, else List of ResultProxies
+        """
+        res = []
+        try:
+            for query in queries:
+                res.append(query())
+            if not kwargs.get('no_commit'):
+                session.commit()
+        except:
+            session.rollback()
+            raise
+        if len(res) == 1:
+            return res[0]
+        return res
+
     def read(self, model_obj, record_id, with_entities=None):
         """ Get record by id and return the object
         :param model_obj: Table class to search
@@ -192,12 +216,16 @@ class Carepoint(dict):
         :rtype: :class:`sqlalchemy.engine.ResultProxy`
         """
         session = self._get_session(model_obj)
-        q = session.query(model_obj).get(record_id)
+        res = self._do_queries(
+            session,
+            lambda: session.query(model_obj).get(record_id),
+            no_commit=True,
+        )
         if with_entities:
-            q.with_entities(*self._create_entities(
+            res.with_entities(*self._create_entities(
                 model_obj, with_entities
             ))
-        return q
+        return res
 
     def search(self, model_obj, filters=None, with_entities=None):
         """ Search table by filters and return records
@@ -209,16 +237,19 @@ class Carepoint(dict):
         :type with_entities: list or None
         :rtype: :class:`sqlalchemy.engine.ResultProxy`
         """
+        session = self._get_session(model_obj)
         if filters is None:
             filters = {}
-        session = self._get_session(model_obj)
         filters = self._unwrap_filters(model_obj, filters)
-        q = session.query(model_obj).filter(*filters)
+        res = self._do_queries(
+            session,
+            lambda: session.query(model_obj).filter(*filters),
+        )
         if with_entities:
-            q.with_entities(*self._create_entities(
+            res.with_entities(*self._create_entities(
                 model_obj, with_entities
             ))
-        return q
+        return res
 
     def create(self, model_obj, vals):
         """ Wrapper to create a record in Carepoint
@@ -229,10 +260,13 @@ class Carepoint(dict):
         :rtype: :class:`sqlalchemy.ext.declarative.Declarative`
         """
         session = self._get_session(model_obj)
-        record_id = model_obj(**vals)
-        session.add(record_id)
-        self.__commit_session(session)
-        return record_id
+
+        def __create():
+            record = model_obj(**vals)
+            session.add(record)
+            return record
+
+        return self._do_queries(session, __create)
 
     def update(self, model_obj, record_id, vals):
         """ Wrapper to update a record in Carepoint
@@ -244,12 +278,16 @@ class Carepoint(dict):
         :type vals: dict
         :rtype: :class:`sqlalchemy.ext.declarative.Declarative`
         """
+
         session = self._get_session(model_obj)
-        record = self.read(model_obj, record_id)
-        for key, val in vals.items():
-            setattr(record, key, val)
-        self.__commit_session(session)
-        return session
+
+        def __update():
+            record = self.read(model_obj, record_id)
+            for key, val in vals.items():
+                setattr(record, key, val)
+            return record
+
+        return self._do_queries(session, __update)
 
     def delete(self, model_obj, record_id):
         """ Wrapper to delete a record in Carepoint
@@ -260,15 +298,19 @@ class Carepoint(dict):
         :return: Whether the record was found, and deleted
         :rtype: bool
         """
+
         session = self._get_session(model_obj)
-        result_obj = self.read(model_obj, record_id)
-        result_cnt = result_obj.count()
-        if result_obj.count() == 0:
-            return False
-        assert result_cnt == 1
-        session.delete(result_obj)
-        self.__commit_session(session)
-        return True
+
+        def __delete():
+            record = self.read(model_obj, record_id)
+            result_cnt = record.count()
+            if result_cnt == 0:
+                return False
+            assert result_cnt == 1
+            session.delete(record)
+            return True
+
+        return self._do_queries(session, __delete)
 
     def get_pks(self, model_obj):
         """ Return the Primary keys in the model
@@ -278,13 +320,6 @@ class Carepoint(dict):
         :rtype: tuple
         """
         return tuple(k.name for k in inspect(model_obj).primary_key)
-
-    def __commit_session(self, session):
-        try:
-            session.commit()
-        except Exception, e:
-            session.rollback()
-            raise e
 
     def __getattr__(self, key):
         """ Re-implement __getattr__ to use __getitem__ if attr not found """
