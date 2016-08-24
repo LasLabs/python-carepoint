@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# © 2015-TODAY LasLabs Inc.
+# Copyright 2015-TODAY LasLabs Inc.
 # License MIT (https://opensource.org/licenses/MIT).
 
 import unittest
@@ -13,7 +13,7 @@ class TestDb(unittest.TestCase):
     def setUp(self, ):
         self.params = {
             'usr': 'This is a user',
-            'pass': '23243dsc dxcsdkc ewr239©',
+            'pass': '23243dsc dxcsdkc ewr239Copyright',
             'srv': 'server',
             'drv': 'drv',
             'db': 'db',
