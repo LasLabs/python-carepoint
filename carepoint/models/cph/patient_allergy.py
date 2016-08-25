@@ -7,35 +7,33 @@ from sqlalchemy import (Column,
                         Integer,
                         String,
                         DateTime,
-                        Boolean,
                         ForeignKey,
                         )
 
 
-class Address(Carepoint.BASE):
-    __tablename__ = 'csaddr'
+class PatientDisease(Carepoint.BASE):
+    __tablename__ = 'cppat_dx'
     __dbname__ = 'cph'
 
-    addr_id = Column(Integer, primary_key=True)
-    parent_addr_id = Column(
+    ptalr_id = Column(Integer, primary_key=True)
+    pat_id = Column(
         Integer,
-        ForeignKey('csaddr.addr_id'),
+        ForeignKey('cppat.pat_id'),
     )
-    inherited_yn = Column(Boolean)
-    owner_type_cn = Column(Integer)
-    alt_name = Column(String)
-    addr1 = Column(String)
-    addr2 = Column(String)
-    addr3 = Column(String)
-    city = Column(String)
-    state_cd = Column(String)
-    zip = Column(String)
-    zip_plus4 = Column(String)
-    country_cd = Column(String)
-    mailing_yn = Column(Boolean)
-    anote = Column(String)
+    name = Column(String)
+    hicl_seqno = Column(Integer)
+    hic = Column(Integer)
+    dam_agcsp = Column(Integer)
+    alr_type_cn = Column(Integer)
+    onset_date = Column(DateTime)
+    resolution_status_cn = Column(Integer)
+    resolution_date = Column(DateTime)
+    screen_yn = Column(Integer)
+    cmt = Column(String)
+    status_cn = Column(Integer)
     app_flags = Column(Integer)
     timestmp = Column(DateTime)
+    ncd = Column(String)
     add_user_id = Column(
         Integer,
         ForeignKey('csuser.user_id'),

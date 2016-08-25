@@ -7,37 +7,40 @@ from sqlalchemy import (Column,
                         Integer,
                         String,
                         DateTime,
-                        Boolean,
                         ForeignKey,
                         Text,
                         )
 
 
-class Store(Carepoint.BASE):
-    __tablename__ = 'csstore'
+class PatientDisease(Carepoint.BASE):
+    __tablename__ = 'cppat_dx'
     __dbname__ = 'cph'
 
-    store_id = Column(Integer, primary_key=True)
-    store_type_cn = Column(Integer)
+    ptdx_id = Column(Integer, primary_key=True)
+    pat_id = Column(
+        Integer,
+        ForeignKey('cppat.pat_id'),
+    )
+    fdbdx = Column(String)
+    icd9 = Column(String)
     name = Column(String)
-    store_hours = Column(String)
-    store_no = Column(String)
-    fed_tax_id = Column(String)
-    url = Column(String)
-    email = Column(String)
-    mgr_cont_id = Column(Integer)
-    cont_id = Column(Integer)
-    carepoint_acct_no = Column(String)
+    dx_date = Column(DateTime)
+    caring_md_id = Column(
+        Integer,
+        ForeignKey('cpmd.md_id'),
+    )
+    onset_date = Column(DateTime)
+    resolution_status_cn = Column(Integer)
+    screen_yn = Column(Integer)
+    mar_cmt = Column(Text)
     cmt = Column(Text)
     status_cn = Column(Integer)
     app_flags = Column(Integer)
-    nabp = Column(String)
-    medicaid_no = Column(String)
     timestmp = Column(DateTime)
-    region_id = Column(Integer)
-    NPI = Column(String)
-    pharmacy_service_type_cn = Column(Integer)
-    web_refill_yn = Column(Boolean)
+    primary_yn = Column(Integer)
+    dxid = Column(Integer)
+    icd10 = Column(String)
+    icd10_name = Column(String)
     add_user_id = Column(
         Integer,
         ForeignKey('csuser.user_id'),

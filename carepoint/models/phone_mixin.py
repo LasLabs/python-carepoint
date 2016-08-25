@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# © 2016 LasLabs Inc.
+# Copyright 2016 LasLabs Inc.
 # License MIT (https://opensource.org/licenses/MIT).
 
 from sqlalchemy import (Column,
