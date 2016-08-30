@@ -5,6 +5,11 @@
 from setuptools import Command
 
 
+class FailTestException(Exception):
+    """ It provides a failing build """
+    pass
+
+
 class Tests(Command):
     ''' Run test & coverage, save reports as XML '''
 
@@ -39,7 +44,9 @@ class Tests(Command):
             source=self.MODULE_NAMES,
         )
         cov.start()
-        t.run(tests)
+        res = t.run(tests)
         cov.stop()
         cov.save()
         cov.xml_report(outfile=self.COVERAGE_RESULTS)
+        if not res.wasSuccessful():
+            raise FailTestException()
