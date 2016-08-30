@@ -11,8 +11,8 @@ from sqlalchemy import (Column,
                         )
 
 
-class PatientDisease(Carepoint.BASE):
-    __tablename__ = 'cppat_dx'
+class PatientAllergy(Carepoint.BASE):
+    __tablename__ = 'cppat_alr'
     __dbname__ = 'cph'
 
     ptalr_id = Column(Integer, primary_key=True)
