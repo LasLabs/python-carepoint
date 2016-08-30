@@ -7,6 +7,7 @@ from sqlalchemy import (Column,
                         Integer,
                         String,
                         DateTime,
+                        ForeignKey,
                         )
 
 
@@ -31,7 +32,7 @@ class Vendor(Carepoint.BASE):
     TERMS = Column(String)
     COSTTYPE = Column(Integer)
     compound_vendor_yn = Column(String)
-    POPrefix = Column(string)
+    POPrefix = Column(String)
     po_alpha_align_cn = Column(Integer)
     po_alpha_used = Column(String)
     po_next_id_int = Column(Integer)
