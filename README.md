@@ -101,6 +101,13 @@ Known Issues / Road Map
 * FDB images only serve from store ID 1's net share
 * Having to pass the model to the Carepoint object is annoying, objectify the syntax
 
+Bug Tracker
+-----------
+
+Bugs are tracked on [Github Issues](https://github.com/laslabs/python-carepoint/issues>).
+In case of trouble, please check there if your issue has already been reported.
+If you spotted it first, please help us to smash it by providing a detailed and welcomed feedback.
+
 
 Contributors
 ------------
@@ -115,4 +122,4 @@ Maintainer
 
 This module is maintained by [LasLabs Inc.](https://laslabs.com)
 
-* https://repo.laslabs.com/projects/CP/repos/python-carepoint/
+* https://github.com/laslabs/Python-Carepoint
