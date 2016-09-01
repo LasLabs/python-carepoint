@@ -3,10 +3,13 @@
 # License MIT (https://opensource.org/licenses/MIT).
 
 from carepoint import Carepoint
+from sqlalchemy.types import Enum
 from sqlalchemy import (Column,
                         Integer,
-                        String,
+                        String
                         )
+
+from carepoint.models.state import EnumOrderState
 
 
 class OrderStatus(Carepoint.BASE):
@@ -14,5 +17,7 @@ class OrderStatus(Carepoint.BASE):
     __dbname__ = 'cph'
 
     OmStatus = Column(Integer, primary_key=True)
-    state_cn = Column(Integer)
+    state_cn = Column(
+        Enum(EnumOrderState)
+    )
     descr = Column(String)
