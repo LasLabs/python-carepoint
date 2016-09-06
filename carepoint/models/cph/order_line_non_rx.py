@@ -21,7 +21,10 @@ class OrderLineNonRx(Carepoint.BASE):
         Integer,
         ForeignKey('CsOm.order_id'),
     )
-    org_id = Column(Integer)
+    org_id = Column(
+        Integer,
+        ForeignKey('csorg.org_id'),
+    )
     pat_id = Column(
         Integer,
         ForeignKey('cppat.pat_id'),

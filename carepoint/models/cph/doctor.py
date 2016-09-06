@@ -47,7 +47,10 @@ class Doctor(Carepoint.BASE):
     blue_shield_id = Column(String)
     blue_cross_id = Column(String)
     npi_id = Column(String)
-    practice_org_id = Column(Integer)
+    practice_org_id = Column(
+        Integer,
+        ForeignKey('csorg.org_id'),
+    )
     cmt = Column(Text)
     status_cn = Column(Integer)
     conv_code = Column(String)

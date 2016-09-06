@@ -33,8 +33,14 @@ class AccountActivity(Carepoint.BASE):
         Integer,
         ForeignKey('cprx_disp.rxdisp_id'),
     )
-    org_id = Column(Integer)
-    orig_org_id = Column(Integer)
+    org_id = Column(
+        Integer,
+        ForeignKey('csorg.org_id'),
+    )
+    orig_org_id = Column(
+        Integer,
+        ForeignKey('csorg.org_id'),
+    )
     item_id = Column(
         Integer,
         ForeignKey('item.item_id'),

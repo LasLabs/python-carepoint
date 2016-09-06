@@ -9,7 +9,7 @@ from sqlalchemy import (Column,
                         )
 
 
-class PharmacyAddress(AddressMixin, Carepoint.BASE):
+class OrganizationAddress(AddressMixin, Carepoint.BASE):
     __dbname__ = 'cph'
     __tablename__ = 'csorg_addr'
     org_id = Column(Integer, primary_key=True)

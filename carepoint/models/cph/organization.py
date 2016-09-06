@@ -14,7 +14,7 @@ from sqlalchemy import (Column,
                         )
 
 
-class Pharmacy(Carepoint.BASE):
+class Organization(Carepoint.BASE):
     __dbname__ = 'cph'
     __tablename__ = 'csorg'
 
