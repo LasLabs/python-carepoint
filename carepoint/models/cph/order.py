@@ -3,6 +3,7 @@
 # License MIT (https://opensource.org/licenses/MIT).
 
 from carepoint import Carepoint
+from sqlalchemy.types import Enum
 from sqlalchemy import (Column,
                         Integer,
                         String,
@@ -12,6 +13,8 @@ from sqlalchemy import (Column,
                         Float,
                         )
 
+from carepoint.models.state import EnumOrderState
+
 
 class Order(Carepoint.BASE):
     __tablename__ = 'CsOm'
@@ -20,8 +23,14 @@ class Order(Carepoint.BASE):
     order_id = Column(Integer, primary_key=True)
     acct_id = Column(Integer)
     invoice_nbr = Column(Integer)
-    order_state_cn = Column(Integer)
-    order_status_cn = Column(Integer)
+    order_state_cn = Column(
+        Enum(EnumOrderState),
+        ForeignKey('CsOmStatus.state_cn')
+    )
+    order_status_cn = Column(
+        Integer,
+        ForeignKey('CsOmStatus.OmStatus'),
+    )
     hold_yn = Column(Boolean)
     priority_cn = Column(Integer)
     submit_date = Column(DateTime)

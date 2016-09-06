@@ -1,4 +1,4 @@
-SQLAlchemy>=1.0.11
+SQLAlchemy>=1.1.0b3
 fake-factory>=0.5.3
 funcsigs>=0.4
 mixer>=5.4.1
@@ -9,3 +9,4 @@ six>=1.10.0
 wsgiref>=0.1.2
 xmlrunner>=1.7.7
 pysmb>=1.1.18
+enum34>=1.1.6
