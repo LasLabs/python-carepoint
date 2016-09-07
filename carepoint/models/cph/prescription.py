@@ -68,7 +68,10 @@ class Prescription(Carepoint.BASE):
     last_refill_qty = Column(Numeric)
     last_refill_date = Column(DateTime)
     refill_date = Column(DateTime)
-    src_org_id = Column(Integer)
+    src_org_id = Column(
+        Integer,
+        ForeignKey('csorg.org_id'),
+    )
     cmt = Column(Text)
     exit_state_cn = Column(Integer)
     script_status_cn = Column(Integer)

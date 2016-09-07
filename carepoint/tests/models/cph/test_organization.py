@@ -5,13 +5,13 @@
 import unittest
 from sqlalchemy.schema import Table
 from carepoint.tests.db.db import DatabaseTest
-from carepoint.models.cph.pharmacy import Pharmacy
+from carepoint.models.cph.organization import Organization
 
 
-class TestModelsCphPharmacy(DatabaseTest):
+class TestModelsCphOrganization(DatabaseTest):
 
     def test_table_initialization(self, ):
-        self.assertIsInstance(Pharmacy.__table__, Table)
+        self.assertIsInstance(Organization.__table__, Table)
 
 
 if __name__ == '__main__':
