@@ -5,7 +5,8 @@
 from carepoint import Carepoint
 from sqlalchemy import (Column,
                         DateTime,
-                        Integer,
+                        Numeric,
+                        ForeignKey,
                         )
 
 
@@ -13,7 +14,18 @@ class FdbImgDate(Carepoint.BASE):
     __tablename__ = 'fdbrimguij'
     __dbname__ = 'cph'
 
-    IMGUNIQID = Column(Integer, primary_key=True)
-    IMGSTRTDT = Column(DateTime)
-    IMGSTOPDT = Column(DateTime)
-    IMGID = Column(Integer)
+    IMGUNIQID = Column(
+        Numeric(10, 0),
+        primary_key=True,
+    )
+    IMGSTRTDT = Column(
+        DateTime,
+        primary_key=True,
+    )
+    IMGSTOPDT = Column(
+        DateTime,
+    )
+    IMGID = Column(
+        Numeric(10, 0),
+        ForeignKey('fdbrimgimg.IMGID'),
+    )
