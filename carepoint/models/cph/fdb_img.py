@@ -14,8 +14,13 @@ class FdbImg(Carepoint.BASE):
     __tablename__ = 'fdbrimgimg'
     __dbname__ = 'cph'
 
-    IMGID = Column(Numeric(10, 0), primary_key=True)
-    IMGFILENM = Column(String)
+    IMGID = Column(
+        Numeric(10, 0),
+        primary_key=True,
+    )
+    IMGFILENM = Column(
+        String,
+    )
     IMAGE_ROOTS = relationship(
         'StoreParam',
         primaryjoin=""" and_(
