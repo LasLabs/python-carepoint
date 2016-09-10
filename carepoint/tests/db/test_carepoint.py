@@ -8,6 +8,10 @@ import mock
 from carepoint import Carepoint
 
 
+class EndTestException(Exception):
+    pass
+
+
 class CarepointTest(unittest.TestCase):
 
     MODEL_DIR = os.path.join(os.path.dirname(__file__), 'test_models')
@@ -222,6 +226,65 @@ class CarepointTest(unittest.TestCase):
             query_mk.get.return_value = expect
             response = self.carepoint.read(model_obj, filters)
             self.assertEqual(response, expect)
+
+    # Get Next Sequence
+    def test_get_next_sequence_connect(self):
+        """ It should establish connection to underlying DB """
+        with mock.patch.object(self.carepoint, 'dbs') as dbs:
+            self.carepoint.get_next_sequence(None)
+            dbs['cph'].connect.assert_called_once_with()
+
+    def test_get_next_sequence_transaction(self):
+        """ It should create a new transaction """
+        with mock.patch.object(self.carepoint, 'dbs') as dbs:
+            self.carepoint.get_next_sequence(None)
+            dbs['cph'].connect().begin.assert_called_once_with()
+
+    @mock.patch('carepoint.db.carepoint.text')
+    def test_get_next_sequence_execute(self, text):
+        """ It should execute stored procedure on connection """
+        expect = 'expect'
+        with mock.patch.object(self.carepoint, 'dbs') as dbs:
+            self.carepoint.get_next_sequence(expect)
+            dbs['cph'].connect().execute.assert_called_once_with(
+                text(), seq_name=expect,
+            )
+
+    def test_get_next_sequence_fetch(self):
+        """ It should return result of fetch """
+        with mock.patch.object(self.carepoint, 'dbs') as dbs:
+            res = self.carepoint.get_next_sequence(None)
+            expect = dbs['cph'].connect().execute().fetchall()[0][0]
+            self.assertEqual(
+                expect, res,
+            )
+
+    def test_get_next_sequence_commit(self):
+        """ It should commit the transaction """
+        with mock.patch.object(self.carepoint, 'dbs') as dbs:
+            self.carepoint.get_next_sequence(None)
+            dbs['cph'].connect().begin().commit.assert_called_once_with()
+
+    def test_get_next_sequence_transaction(self):
+        """ It should create a new transaction """
+        with mock.patch.object(self.carepoint, 'dbs') as dbs:
+            self.carepoint.get_next_sequence(None)
+            dbs['cph'].connect().begin.assert_called_once_with()
+
+    def test_get_next_sequence_rollback(self):
+        """ It should rollback transaction and raise on error """
+        with mock.patch.object(self.carepoint, 'dbs') as dbs:
+            conn = dbs['cph'].connect()
+            conn.execute.side_effect = EndTestException
+            with self.assertRaises(EndTestException):
+                self.carepoint.get_next_sequence(None)
+            conn.begin().rollback.assert_called_once_with()
+
+    def test_get_next_sequence_close(self):
+        """ It should close the connection """
+        with mock.patch.object(self.carepoint, 'dbs') as dbs:
+            self.carepoint.get_next_sequence(None)
+            dbs['cph'].connect().close.assert_called_once_with()
 
     # Create
     def test_create_calls__get_session_with_model_obj(self):
