@@ -12,4 +12,8 @@ from sqlalchemy import (Column,
 class PatientPhone(PhoneMixin, Carepoint.BASE):
     __dbname__ = 'cph'
     __tablename__ = 'cppat_phone'
-    pat_id = Column(Integer, primary_key=True)
+    pat_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )

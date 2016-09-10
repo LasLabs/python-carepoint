@@ -12,4 +12,8 @@ from sqlalchemy import (Column,
 class StorePhone(PhoneMixin, Carepoint.BASE):
     __dbname__ = 'cph'
     __tablename__ = 'csstore_phone'
-    store_id = Column(Integer, primary_key=True)
+    store_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )

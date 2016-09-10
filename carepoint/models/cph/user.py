@@ -16,7 +16,11 @@ class User(Carepoint.BASE):
     __tablename__ = 'csuser'
     __dbname__ = 'cph'
 
-    user_id = Column(Integer, primary_key=True)
+    user_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     user_type_cd = Column(String)
     login_name = Column(String)
     lname = Column(String)

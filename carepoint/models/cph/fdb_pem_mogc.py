@@ -14,7 +14,11 @@ class FdbPemMogc(Carepoint.BASE):
     __tablename__ = 'fdrpemogc'
     __dbname__ = 'cph'
 
-    gcn_seqno = Column(Integer, primary_key=True)
+    gcn_seqno = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     pemono = Column(
         Integer,
         ForeignKey('fdrpemmoe.pemono'),

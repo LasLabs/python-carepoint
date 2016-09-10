@@ -16,7 +16,11 @@ class AccountActivity(Carepoint.BASE):
     __tablename__ = 'CsSArActivity'
     __dbname__ = 'cph'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(
+        Integer,
+        primary_key=True,
+        autoincrement=False,
+    )
     acct_id = Column(
         Integer,
         ForeignKey('cp_acct.ID'),

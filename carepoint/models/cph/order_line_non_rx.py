@@ -16,7 +16,11 @@ class OrderLineNonRx(Carepoint.BASE):
     __tablename__ = 'CsOmNonRxLine'
     __dbname__ = 'cph'
 
-    line_id = Column(Integer, primary_key=True)
+    line_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     order_id = Column(
         Integer,
         ForeignKey('CsOm.order_id'),

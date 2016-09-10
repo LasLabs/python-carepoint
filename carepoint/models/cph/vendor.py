@@ -15,7 +15,11 @@ class Vendor(Carepoint.BASE):
     __dbname__ = 'cph'
     __tablename__ = 'VEND'
 
-    ID = Column(Integer, primary_key=True)
+    ID = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     COMPANY = Column(String)
     ADDR1 = Column(String)
     ADDR2 = Column(String)

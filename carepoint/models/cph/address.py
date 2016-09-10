@@ -16,7 +16,11 @@ class Address(Carepoint.BASE):
     __tablename__ = 'csaddr'
     __dbname__ = 'cph'
 
-    addr_id = Column(Integer, primary_key=True)
+    addr_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     parent_addr_id = Column(
         Integer,
         ForeignKey('csaddr.addr_id'),

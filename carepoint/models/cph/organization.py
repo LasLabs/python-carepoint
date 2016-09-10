@@ -18,7 +18,11 @@ class Organization(Carepoint.BASE):
     __dbname__ = 'cph'
     __tablename__ = 'csorg'
 
-    org_id = Column(Integer, primary_key=True)
+    org_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     name = Column(String)
     name_sdx = Column(String)
     url = Column(String)

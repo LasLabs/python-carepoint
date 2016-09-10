@@ -15,7 +15,11 @@ class FdbGcnSeq(Carepoint.BASE):
     __tablename__ = 'fdrgcnseq'
     __dbname__ = 'cph'
 
-    gcn_seqno = Column(Integer, primary_key=True)
+    gcn_seqno = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     hic3 = Column(String)
     hicl_seqno = Column(Integer)
     gcdf = Column(

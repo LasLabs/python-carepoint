@@ -15,7 +15,11 @@ class PatientAllergy(Carepoint.BASE):
     __tablename__ = 'cppat_alr'
     __dbname__ = 'cph'
 
-    ptalr_id = Column(Integer, primary_key=True)
+    ptalr_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     pat_id = Column(
         Integer,
         ForeignKey('cppat.pat_id'),

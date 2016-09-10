@@ -17,7 +17,11 @@ class Doctor(Carepoint.BASE):
     __tablename__ = 'cpmd'
     __dbname__ = 'cph'
 
-    md_id = Column(Integer, primary_key=True)
+    md_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     lname = Column(String)
     lname_sdx = Column(String)
     fname = Column(String)
