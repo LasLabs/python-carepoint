@@ -1,5 +1,7 @@
 [![Build Status](https://api.travis-ci.org/laslabs/Python-Carepoint.svg?branch=release%2F0.1)](https://travis-ci.org/laslabs/Python-Carepoint)
-[![Coverage Status](https://coveralls.io/repos/laslabs/Python-Carepoint/badge.svg?branch=release%2F0.1)](https://coveralls.io/r/laslabs/Python-Carepoint?branch=release%2F0.1)
+[![Coveralls Status](https://coveralls.io/repos/laslabs/Python-Carepoint/badge.svg?branch=release%2F0.1)](https://coveralls.io/r/laslabs/Python-Carepoint?branch=release%2F0.1)
+[![Codecov Status](https://codecov.io/gh/laslabs/Python-Carepoint/branch/release%2F0.1/graph/badge.svg)](https://codecov.io/gh/laslabs/Python-Carepoint)
+
 
 Python CarePoint Library
 ========================
@@ -92,7 +94,6 @@ Known Issues / Road Map
 -----------------------
 
 * More usage samples
-* Test coverage is showing less than what it actually is (carepoint and db modules)
 * A decent amount of models are missing
 * Create documentation of models
 * Add some basic validations
@@ -106,7 +107,7 @@ Bug Tracker
 
 Bugs are tracked on [Github Issues](https://github.com/laslabs/python-carepoint/issues>).
 In case of trouble, please check there if your issue has already been reported.
-If you spotted it first, please help us to smash it by providing a detailed and welcomed feedback.
+If you spotted it first, please help us to smash it by providing detailed and welcomed feedback.
 
 
 Contributors

@@ -1,18 +1,25 @@
-# Config file .coveragerc
-# adapt the include for your project
+[run]
+
+branch = True
 
 [report]
-include =
-    carepoint/*
+
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if self.debug:
+    raise NotImplementedError
+    if __name__ == .__main__.:
+
+ignore_errors = True
 
 omit =
-    */tests/*
-    *__init__.py
+    */virtualenv/*
+    tests/*
+    setup.py
+    */__init__.py
+    tests.py
 
-# Regexes for lines to exclude from consideration
-exclude_lines =
-    # Have to re-enable the standard pragma
-    pragma: no cover
+[xml]
 
-    # Don't complain about null context checking
-    if context is None:
+output = coverage.xml

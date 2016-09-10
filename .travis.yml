@@ -13,6 +13,7 @@ virtualenv:
 
 install:
   - pip install coveralls
+  - pip install codecov --user
   - pip install -r test_requirements.txt
   - pip install .
 
@@ -22,3 +23,4 @@ script:
   
 after_success:
   - coveralls
+  - codecov
