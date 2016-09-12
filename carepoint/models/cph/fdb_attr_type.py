@@ -13,5 +13,9 @@ class FdbAttrType(Carepoint.BASE):
     __tablename__ = 'fdbriptcat'
     __dbname__ = 'cph'
 
-    IPTCATID = Column(Integer, primary_key=True)
+    IPTCATID = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     IPTCATDESC = Column(String)

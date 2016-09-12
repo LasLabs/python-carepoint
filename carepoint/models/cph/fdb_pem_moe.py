@@ -15,8 +15,16 @@ class FdbPemMoe(Carepoint.BASE):
     __tablename__ = 'fdrpemmoe'
     __dbname__ = 'cph'
 
-    pemono = Column(Integer, primary_key=True)
-    pemono_sn = Column(Integer, primary_key=True)
+    pemono = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
+    pemono_sn = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     pemtxtei = Column(String)
     pemtxte = Column(String)
     pemgndr = Column(String)

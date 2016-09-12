@@ -16,7 +16,11 @@ class Phone(Carepoint.BASE):
     __tablename__ = 'csphone'
     __dbname__ = 'cph'
 
-    phone_id = Column(Integer, primary_key=True)
+    phone_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     parent_phone_id = Column(
         Integer,
         ForeignKey('csphone.phone_id'),

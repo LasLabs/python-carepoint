@@ -18,7 +18,11 @@ class Prescription(Carepoint.BASE):
     __tablename__ = 'cprx'
     __dbname__ = 'cph'
 
-    rx_id = Column(Integer, primary_key=True)
+    rx_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     script_no = Column(String)
     old_script_no = Column(String)
     pat_id = Column(

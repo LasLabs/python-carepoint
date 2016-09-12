@@ -13,7 +13,11 @@ class OrderShip(Carepoint.BASE):
     __tablename__ = 'csom_ship'
     __dbname__ = 'cph'
 
-    order_id = Column(Integer, primary_key=True)
+    order_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     processing_flag = Column(Integer)
     tracking_code = Column(String)
     Bill_Name = Column(String)

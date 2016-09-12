@@ -12,4 +12,8 @@ from sqlalchemy import (Column,
 class StoreAddress(AddressMixin, Carepoint.BASE):
     __dbname__ = 'cph'
     __tablename__ = 'csstore_addr'
-    store_id = Column(Integer, primary_key=True)
+    store_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )

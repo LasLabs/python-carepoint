@@ -16,7 +16,11 @@ class OrderStatus(Carepoint.BASE):
     __tablename__ = 'CsOmStatus'
     __dbname__ = 'cph'
 
-    OmStatus = Column(Integer, primary_key=True)
+    OmStatus = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     state_cn = Column(
         Enum(EnumOrderState)
     )

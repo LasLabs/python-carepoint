@@ -17,7 +17,11 @@ class Patient(Carepoint.BASE):
     __dbname__ = 'cph'
     __tablename__ = 'cppat'
 
-    pat_id = Column(Integer, primary_key=True)
+    pat_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     cmt_id = Column(Integer)
     pat_status_cn = Column(Integer)
     pat_type_cn = Column(Integer)

@@ -20,7 +20,11 @@ class Order(Carepoint.BASE):
     __tablename__ = 'CsOm'
     __dbname__ = 'cph'
 
-    order_id = Column(Integer, primary_key=True)
+    order_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     acct_id = Column(Integer)
     invoice_nbr = Column(Integer)
     order_state_cn = Column(

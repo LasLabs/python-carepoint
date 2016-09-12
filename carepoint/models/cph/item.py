@@ -52,7 +52,11 @@ class Item(Carepoint.BASE):
     ACTIVE_YN = Column(Integer)
     AVG_UNIT_COST = Column(Numeric)
     location = Column(String)
-    item_id = Column(Integer, primary_key=True)
+    item_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     store_id = Column(
         Integer,
         ForeignKey('csstore.store_id'),

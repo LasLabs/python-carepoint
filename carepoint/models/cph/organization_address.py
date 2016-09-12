@@ -12,4 +12,8 @@ from sqlalchemy import (Column,
 class OrganizationAddress(AddressMixin, Carepoint.BASE):
     __dbname__ = 'cph'
     __tablename__ = 'csorg_addr'
-    org_id = Column(Integer, primary_key=True)
+    org_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )

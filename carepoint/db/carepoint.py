@@ -6,6 +6,7 @@ import os
 import imp
 import operator
 import urllib2
+from sqlalchemy import text, bindparam
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.inspection import inspect
@@ -320,6 +321,36 @@ class Carepoint(dict):
         :rtype: tuple
         """
         return tuple(k.name for k in inspect(model_obj).primary_key)
+
+    def get_next_sequence(self, sequence_name):
+        """ It generates and returns the next int in sequence
+        Params:
+            sequence_name: ``str`` Name of the sequence in Carepoint DB
+        Return:
+            Integer to use as pk
+        """
+        conn = self.dbs['cph'].connect()
+        trans = conn.begin()
+        try:    
+            res = conn.execute(
+                text(
+                    "SET NOCOUNT ON;"
+                    "DECLARE @out int = 0;"
+                    "EXEC CsGenerateIntId :seq_name, @out output;"
+                    "SELECT @out;"
+                    "SET NOCOUNT OFF;",
+                    bindparams=[bindparam('seq_name')],
+                ),
+                seq_name=sequence_name,
+            )
+            id_int = res.fetchall()[0][0]
+            trans.commit()
+        except:
+            trans.rollback()
+            raise
+        finally:
+            conn.close()
+        return id_int
 
     def __getattr__(self, key):
         """ Re-implement __getattr__ to use __getitem__ if attr not found """

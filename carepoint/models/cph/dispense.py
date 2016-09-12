@@ -17,7 +17,11 @@ class Dispense(Carepoint.BASE):
     __tablename__ = 'cprx_disp'
     __dbname__ = 'cph'
 
-    rxdisp_id = Column(Integer, primary_key=True)
+    rxdisp_id = Column(
+        Integer, 
+        primary_key=True,
+        autoincrement=False,
+    )
     rx_id = Column(
         Integer,
         ForeignKey('cprx.rx_id'),
