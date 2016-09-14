@@ -13,14 +13,14 @@ class Account(Carepoint.BASE):
     __tablename__ = 'cp_acct'
     __dbname__ = 'cph'
 
-    ID = Column(
-        Integer,
-        primary_key=True,
-        autoincrement=False,
-    )
     pat_id = Column(
         Integer,
         ForeignKey('cppat.pat_id'),
+        primary_key=True,
+    )
+    ID = Column(
+        Integer,
+        primary_key=True,
     )
     acct_type_cn = Column(Integer)
     resp_pty_yn = Column(Integer)
