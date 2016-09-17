@@ -2,21 +2,31 @@
 # Copyright 2016-TODAY LasLabs Inc.
 # License MIT (https://opensource.org/licenses/MIT).
 
-import os
 import imp
 import operator
+import os
 import urllib2
-from sqlalchemy import text, bindparam
+
+from contextlib import contextmanager
+
+from sqlalchemy import bindparam
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.inspection import inspect
-from smb.SMBHandler import SMBHandler
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import text
+
+
 from .db import Db
+from smb.SMBHandler import SMBHandler
+
 
 Base = declarative_base()
 Base.get = lambda s, k, v=None: getattr(s, k, v)
 Base.__getitem__ = lambda s, k, v=None: getattr(s, k, v)
 Base.__setitem__ = lambda s, k, v: setattr(s, k, v)
+
+
+models, env, dbs = {}, {}, {}
 
 
 class Carepoint(dict):
@@ -37,11 +47,29 @@ class Carepoint(dict):
         '==': operator.eq,
     }
 
-    def __init__(self, server, user, passwd, smb_user=None, smb_passwd=None,
-                 db_args=None,
-                 ):
+    def __init__(
+        self, server, user, passwd, smb_user=None, smb_passwd=None,
+        db_args=None, **engine_args
+    ):
+        """ It initializes new Carepoint object
+
+        Args:
+            server (str): IP or Hostname to database
+            user (str): Username for database
+            passwd (str): Password for database
+            smb_user (str): Username to use for SMB connection, ``None`` to
+                use the database user
+            smd_passwd (str): Password to use for the SMB connection, ``None``
+                to use the database password
+            db_args (dict): Dictionary of arguments to send during initial
+                db creation
+            **engine_args (mixed): Kwargs to pass to ``create_engine``
+        """
 
         super(Carepoint, self).__init__()
+        global env, dbs
+        self.env = env
+        self.dbs = dbs
         self.iter_refresh = False
         params = {
             'user': user,
@@ -51,14 +79,13 @@ class Carepoint(dict):
         }
         if db_args is not None:
             params.update(db_args)
+        if engine_args:
+            params.update(engine_args)
         # @TODO: Lazy load, once other dbs needed
-        self.dbs = {
-            'cph': Db(**params),
-        }
-        self.env = {
-            'cph': sessionmaker(bind=self.dbs['cph']),
-        }
-        self.sessions = {}
+        if not self.dbs.get('cph'):
+            self.dbs['cph'] = Db(**params)
+        if not self.env.get('cph'):
+            self.env['cph'] = sessionmaker(bind=self.dbs['cph'])
         if smb_user is None:
             self.smb_creds = {
                 'user': user,
@@ -66,17 +93,21 @@ class Carepoint(dict):
             }
         else:
             self.smb_creds = {
-                'user': user,
-                'passwd': passwd,
+                'user': smb_user,
+                'passwd': smb_passwd,
             }
 
+    @contextmanager
     def _get_session(self, model_obj):
+        session = self.env[model_obj.__dbname__]()
         try:
-            return self.sessions[model_obj.__dbname__]
-        except KeyError:
-            session = self.env[model_obj.__dbname__]()
-            self.sessions[model_obj.__dbname__] = session
-            return session
+            yield session
+            session.commit()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
 
     @property
     def _smb_prefix(self):
@@ -181,30 +212,6 @@ class Carepoint(dict):
                 pass
         return out
 
-    def _do_queries(self, session, *queries, **kwargs):
-        """ Wrapper method for running any query against the DB safely
-        Will create a transaction, then loop and run `queries` methods
-        :param model_obj: Table class to search
-        :type model_obj: :class:`sqlalchemy.Table`
-        :param queries: Query method(s) to be run in context of transaction
-        :type queries: Methods to be run against db
-        :kwarg no_commit: True to not commit transaction
-        :returns: Query result(s)
-        :rtype: ResultProxy if singleton, else List of ResultProxies
-        """
-        res = []
-        try:
-            for query in queries:
-                res.append(query())
-            if not kwargs.get('no_commit'):
-                session.commit()
-        except:
-            session.rollback()
-            raise
-        if len(res) == 1:
-            return res[0]
-        return res
-
     def read(self, model_obj, record_id, with_entities=None):
         """ Get record by id and return the object
         :param model_obj: Table class to search
@@ -216,16 +223,12 @@ class Carepoint(dict):
         :type with_entities: list or None
         :rtype: :class:`sqlalchemy.engine.ResultProxy`
         """
-        session = self._get_session(model_obj)
-        res = self._do_queries(
-            session,
-            lambda: session.query(model_obj).get(record_id),
-            no_commit=True,
-        )
-        if with_entities:
-            res.with_entities(*self._create_entities(
-                model_obj, with_entities
-            ))
+        with self._get_session(model_obj) as session:
+            res = session.query(model_obj).get(record_id)
+            if with_entities:
+                res.with_entities(*self._create_entities(
+                    model_obj, with_entities
+                ))
         return res
 
     def search(self, model_obj, filters=None, with_entities=None):
@@ -238,18 +241,15 @@ class Carepoint(dict):
         :type with_entities: list or None
         :rtype: :class:`sqlalchemy.engine.ResultProxy`
         """
-        session = self._get_session(model_obj)
-        if filters is None:
-            filters = {}
-        filters = self._unwrap_filters(model_obj, filters)
-        res = self._do_queries(
-            session,
-            lambda: session.query(model_obj).filter(*filters),
-        )
-        if with_entities:
-            res.with_entities(*self._create_entities(
-                model_obj, with_entities
-            ))
+        with self._get_session(model_obj) as session:
+            if filters is None:
+                filters = {}
+            filters = self._unwrap_filters(model_obj, filters)
+            res =  session.query(model_obj).filter(*filters)
+            if with_entities:
+                res.with_entities(*self._create_entities(
+                    model_obj, with_entities
+                ))
         return res
 
     def create(self, model_obj, vals):
@@ -260,14 +260,10 @@ class Carepoint(dict):
         :type vals: dict
         :rtype: :class:`sqlalchemy.ext.declarative.Declarative`
         """
-        session = self._get_session(model_obj)
-
-        def __create():
+        with self._get_session(model_obj) as session:
             record = model_obj(**vals)
             session.add(record)
-            return record
-
-        return self._do_queries(session, __create)
+        return record
 
     def update(self, model_obj, record_id, vals):
         """ Wrapper to update a record in Carepoint
@@ -279,16 +275,11 @@ class Carepoint(dict):
         :type vals: dict
         :rtype: :class:`sqlalchemy.ext.declarative.Declarative`
         """
-
-        session = self._get_session(model_obj)
-
-        def __update():
+        with self._get_session(model_obj) as session:
             record = self.read(model_obj, record_id)
             for key, val in vals.items():
                 setattr(record, key, val)
-            return record
-
-        return self._do_queries(session, __update)
+        return record
 
     def delete(self, model_obj, record_id):
         """ Wrapper to delete a record in Carepoint
@@ -299,19 +290,14 @@ class Carepoint(dict):
         :return: Whether the record was found, and deleted
         :rtype: bool
         """
-
-        session = self._get_session(model_obj)
-
-        def __delete():
+        with self._get_session(model_obj) as session:
             record = self.read(model_obj, record_id)
             result_cnt = record.count()
             if result_cnt == 0:
                 return False
             assert result_cnt == 1
             session.delete(record)
-            return True
-
-        return self._do_queries(session, __delete)
+        return True
 
     def get_pks(self, model_obj):
         """ Return the Primary keys in the model
@@ -362,8 +348,18 @@ class Carepoint(dict):
             except KeyError:
                 raise AttributeError()
 
+    def __setitem__(self, key, val, __global=False, *args, **kwargs):
+        """ Re-implement __setitem__ to allow for global model sync """
+        super(Carepoint, self).__setitem__(key, val, *args, **kwargs)
+        if not __global:
+            global models
+            models[key] = val
+
     def __getitem__(self, key, retry=True, default=False):
         """ Re-implement __getitem__ to scan for models if key missing  """
+        global models
+        for k, v in models.iteritems():
+            self.__setitem__(k, v, True)
         try:
             return super(Carepoint, self).__getitem__(key)
         except KeyError:
