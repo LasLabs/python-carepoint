@@ -5,8 +5,6 @@
 import os
 import unittest
 import mock
-from contextlib import contextmanager
-
 from carepoint import Carepoint
 
 
@@ -35,15 +33,6 @@ class CarepointTest(unittest.TestCase):
         model_obj = self.carepoint['TestModel']
         return model_obj
 
-    @contextmanager
-    def __get_mock_session(self, unwrapped=True):
-        with mock.patch.object(self.carepoint, '_get_session') as mk:
-            enter, session = mock.MagicMock(), mock.MagicMock()
-            enter.return_value = enter
-            mk.return_value = session
-            session.__enter__.return_value = enter
-            yield enter if unwrapped else mk
-
     #
     # Test Initializations and other core stuff
     #
@@ -64,15 +53,17 @@ class CarepointTest(unittest.TestCase):
             self.carepoint.iter_refresh
         )
 
-    def test_carepoint_assigns_instance_env(self):
-        self.assertTrue(
-            self.carepoint.env['cph'],
+    @mock.patch('carepoint.db.carepoint.Db')
+    @mock.patch('carepoint.db.carepoint.sessionmaker')
+    def test_carepoint_assigns_instance_env(self, sess_mk, db_mk):
+        cp = Carepoint(**self.cp_args)
+        self.assertEqual(
+            sess_mk(), cp.env['cph'],
         )
 
     def test_cph_db_init(self):
-        self.assertTrue(
-            self.carepoint.dbs['cph']
-        )
+        self.cp_args['db'] = 'cph'
+        self.db_mock.assert_called_once_with(**self.cp_args)
 
     def test_cph_db_assign(self):
         self.carepoint.dbs['cph'] = self.db_mock
@@ -102,54 +93,6 @@ class CarepointTest(unittest.TestCase):
         self.carepoint.set_iter_refresh()
         model_obj = self.carepoint['TestModel']
         self.assertTrue(model_obj.run())  # < classmethods are exposed
-
-    #
-    # Test the session handler
-    #
-
-    def test_get_session_gets_session(self):
-        """ It should get session for the database """
-        model_obj = self.__get_model_obj()
-        with mock.patch.object(self.carepoint, 'env') as env:
-            with self.carepoint._get_session(model_obj):
-                pass
-            env[model_obj.__dbname__].assert_called_once_with()
-
-    def test_get_session_yields_session(self):
-        """ It should yield session for the database """
-        model_obj = self.__get_model_obj()
-        with mock.patch.object(self.carepoint, 'env') as env:
-            with self.carepoint._get_session(model_obj) as res:
-                self.assertEqual(
-                    env[model_obj.__dbname__](),
-                    res,
-                )
-
-    def test_get_session_commit(self):
-        """ It should commit session after yield """
-        model_obj = self.__get_model_obj()
-        with mock.patch.object(self.carepoint, 'env') as env:
-            with self.carepoint._get_session(model_obj):
-                pass
-            env[model_obj.__dbname__]().commit.assert_called_once_with()
-
-    def test_get_session_rollback(self):
-        """ It should roll session back on error """
-        model_obj = self.__get_model_obj()
-        with mock.patch.object(self.carepoint, 'env') as env:
-            env[model_obj.__dbname__]().commit.side_effect = EndTestException
-            with self.assertRaises(EndTestException):
-                with self.carepoint._get_session(model_obj):
-                    pass
-            env[model_obj.__dbname__]().rollback.assert_called_once_with()
-
-    def test_get_session_close(self):
-        """ It should always close session """
-        model_obj = self.__get_model_obj()
-        with mock.patch.object(self.carepoint, 'env') as env:
-            with self.carepoint._get_session(model_obj):
-                pass
-            env[model_obj.__dbname__]().close.assert_called_once_with()
 
     #
     # Test the SMB handlers
@@ -220,14 +163,16 @@ class CarepointTest(unittest.TestCase):
     def test_read_calls_query_with_model_obj(self):
         model_obj = self.__get_model_obj()
         record_id = 1
-        with self.__get_mock_session() as mk:
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
             self.carepoint.read(model_obj, record_id)
             mk.query.assert_called_once_with(model_obj)
 
     def test_read_calls_get_with_record_id(self):
         model_obj = self.__get_model_obj()
         record_id = 1
-        with self.__get_mock_session() as mk:
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
             mk.query.return_value = query_mk = mock.MagicMock()
             self.carepoint.read(model_obj, record_id)
             query_mk.get.assert_called_once_with(record_id)
@@ -236,7 +181,8 @@ class CarepointTest(unittest.TestCase):
         model_obj = self.__get_model_obj()
         record_id = 1
         expect = 'Response'
-        with self.__get_mock_session() as mk:
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
             mk.query.return_value = query_mk = mock.MagicMock()
             query_mk.get.return_value = expect
             response = self.carepoint.read(model_obj, record_id)
@@ -244,16 +190,18 @@ class CarepointTest(unittest.TestCase):
 
     # Search
     def test_search_calls_query_with_model_obj(self):
+        model_obj = self.__get_model_obj()
         filters = {'test_col': 'Test'}
-        with self.__get_mock_session() as mk:
-            model_obj = self.__get_model_obj()
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
             self.carepoint.search(model_obj, filters)
             mk.query.assert_called_once_with(model_obj)
 
     def test_search_calls_filter_with_filters(self):
         model_obj = self.__get_model_obj()
         filters = {'test_col': 'Test'}
-        with self.__get_mock_session() as mk:
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
             mk.query.return_value = query_mk = mock.MagicMock()
             self.carepoint.search(model_obj, filters)
             query_mk.filter.assert_called_once_with(
@@ -262,7 +210,8 @@ class CarepointTest(unittest.TestCase):
 
     def test_search_calls_filter_when_no_filters(self):
         model_obj = self.__get_model_obj()
-        with self.__get_mock_session() as mk:
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
             mk.query.return_value = query_mk = mock.MagicMock()
             self.carepoint.search(model_obj)
             query_mk.filter.assert_called_once_with(**{})
@@ -270,13 +219,13 @@ class CarepointTest(unittest.TestCase):
     def test_search_returns_response(self):
         model_obj = self.__get_model_obj()
         filters = {'test_col': 'Test'}
-        with self.__get_mock_session() as mk:
-            with mock.patch.object(self.carepoint, 'read') as read_mk:
-                response = self.carepoint.read(model_obj, filters)
-                self.assertEqual(
-                    read_mk(),
-                    response,
-                )
+        expect = 'Response'
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
+            mk.query.return_value = query_mk = mock.MagicMock()
+            query_mk.get.return_value = expect
+            response = self.carepoint.read(model_obj, filters)
+            self.assertEqual(response, expect)
 
     # Get Next Sequence
     def test_get_next_sequence_connect(self):
@@ -338,16 +287,18 @@ class CarepointTest(unittest.TestCase):
             dbs['cph'].connect().close.assert_called_once_with()
 
     # Create
-    def test_create_calls_get_session_with_model_obj(self):
-        model_obj = mock.MagicMock()
-        with self.__get_mock_session(False) as mk:
+    def test_create_calls__get_session_with_model_obj(self):
+        model_obj = self.__get_model_obj()
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
             self.carepoint.create(model_obj, {})
             mk.assert_called_once_with(model_obj)
 
     def test_create_initializes_new_model_obj_with_vals(self):
         model_obj = mock.MagicMock()
         vals = {'test_col': 'Test'}
-        with self.__get_mock_session() as mk:
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
             self.carepoint.create(model_obj, vals)
             model_obj.assert_called_once_with(**vals)
 
@@ -356,16 +307,26 @@ class CarepointTest(unittest.TestCase):
         response_expect = 'ResponseExpect'
         model_obj.return_value = response_expect
         vals = {'test_col': 'Test'}
-        with self.__get_mock_session() as mk:
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
             self.carepoint.create(model_obj, vals)
             mk.add.assert_called_once_with(response_expect)
+
+    def test_create_calls_commit_on_session(self):
+        model_obj = mock.MagicMock()
+        vals = {'test_col': 'Test'}
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
+            self.carepoint.create(model_obj, vals)
+            mk.commit.assert_called_once_with()
 
     def test_create_returns_new_record(self):
         model_obj = mock.MagicMock()
         response_expect = 'ResponseExpect'
         model_obj.return_value = response_expect
         vals = {'test_col': 'Test'}
-        with self.__get_mock_session() as mk:
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
             response = self.carepoint.create(model_obj, vals)
             self.assertEqual(response, response_expect)
 
@@ -373,7 +334,7 @@ class CarepointTest(unittest.TestCase):
     def test_update_calls_get_session_with_model_obj(self):
         model_obj = self.__get_model_obj()
         record_id = 1
-        with self.__get_mock_session(False) as mk:
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
             with mock.patch.object(self.carepoint, 'read'):
                 self.carepoint.update(model_obj, record_id, {})
                 mk.assert_called_once_with(model_obj)
@@ -382,7 +343,7 @@ class CarepointTest(unittest.TestCase):
         model_obj = self.__get_model_obj()
         record_id = 1
         vals = {'test_col': 'Test'}
-        with self.__get_mock_session():
+        with mock.patch.object(self.carepoint, '_get_session'):
             with mock.patch.object(self.carepoint, 'read') as read_mk:
                 self.carepoint.update(model_obj, record_id, vals)
                 read_mk.assert_called_once_with(model_obj, record_id)
@@ -391,32 +352,41 @@ class CarepointTest(unittest.TestCase):
         model_obj = self.__get_model_obj()
         record_id = 1
         vals = {'test_col': 'Test'}
-        with self.__get_mock_session() as mk:
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
             mk.query.return_value = query_mk = mock.MagicMock()
             query_mk.get.return_value = get_mk = mock.MagicMock()
             self.carepoint.update(model_obj, record_id, vals)
             self.assertEqual(
-                mk().query().get().test_col,
-                get_mk.test_col,
+                vals['test_col'], get_mk.test_col,
                 'Record attribute was not updated. Expect Test, Got %s' % (
                     get_mk.test_col,
                 )
             )
 
-    def test_update_returns_record(self):
-        model_obj = self.__get_model_obj()
+    def test_update_calls_commit_on_session(self):
+        model_obj = mock.MagicMock()
         record_id = 1
         vals = {'test_col': 'Test'}
-        with self.__get_mock_session() as mk:
-            with mock.patch.object(self.carepoint, 'read') as read:
-                response = self.carepoint.update(model_obj, record_id, vals)
-                self.assertEqual(read(), response)
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
+            self.carepoint.update(model_obj, record_id, vals)
+            mk.commit.assert_called_once_with()
+
+    def test_update_returns_record(self):
+        model_obj = mock.MagicMock()
+        record_id = 1
+        vals = {'test_col': 'Test'}
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
+            response = self.carepoint.update(model_obj, record_id, vals)
+            self.assertEqual(response, mk.query().get())
 
     # Delete
     def test_delete_calls_get_session_with_model_obj(self):
         model_obj = self.__get_model_obj()
         record_id = 1
-        with self.__get_mock_session(False) as mk:
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
             with mock.patch.object(self.carepoint, 'read') as read_mk:
                 read_mk.return_value = read_mk
                 read_mk.count.return_value = 0
@@ -426,7 +396,7 @@ class CarepointTest(unittest.TestCase):
     def test_delete_calls_read_with_model_and_record_id(self):
         model_obj = self.__get_model_obj()
         record_id = 1
-        with self.__get_mock_session():
+        with mock.patch.object(self.carepoint, '_get_session'):
             with mock.patch.object(self.carepoint, 'read') as read_mk:
                 read_mk.return_value = read_mk
                 read_mk.count.return_value = 0
@@ -436,7 +406,7 @@ class CarepointTest(unittest.TestCase):
     def test_delete_asserts_result_count_eq_1(self):
         model_obj = self.__get_model_obj()
         record_id = 1
-        with self.__get_mock_session():
+        with mock.patch.object(self.carepoint, '_get_session'):
             with mock.patch.object(self.carepoint, 'read') as read_mk:
                 read_mk.return_value = read_mk
                 read_mk.count.return_value = 2
@@ -447,17 +417,29 @@ class CarepointTest(unittest.TestCase):
         model_obj = self.__get_model_obj()
         record_id = 1
         expect_return = mock.MagicMock()
-        with self.__get_mock_session() as mk:
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
             with mock.patch.object(self.carepoint, 'read') as read_mk:
                 read_mk.return_value = expect_return
                 expect_return.count.return_value = 1
                 self.carepoint.delete(model_obj, record_id)
                 mk.delete.assert_called_once_with(expect_return)
 
+    def test_delete_calls_session_commit(self):
+        model_obj = self.__get_model_obj()
+        record_id = 1
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            mk.return_value = mk
+            with mock.patch.object(self.carepoint, 'read') as read_mk:
+                read_mk.return_value = read_mk
+                read_mk.count.return_value = 1
+                self.carepoint.delete(model_obj, record_id)
+                mk.commit.assert_called_once_with()
+
     def test_delete_returns_false_on_no_records(self):
         model_obj = self.__get_model_obj()
         record_id = 1
-        with self.__get_mock_session():
+        with mock.patch.object(self.carepoint, '_get_session'):
             with mock.patch.object(self.carepoint, 'read') as read_mk:
                 read_mk.return_value = read_mk
                 read_mk.count.return_value = 0
@@ -467,12 +449,23 @@ class CarepointTest(unittest.TestCase):
     def test_delete_returns_true_on_delete(self):
         model_obj = self.__get_model_obj()
         record_id = 1
-        with self.__get_mock_session():
+        with mock.patch.object(self.carepoint, '_get_session'):
             with mock.patch.object(self.carepoint, 'read') as read_mk:
                 read_mk.return_value = read_mk
                 read_mk.count.return_value = 1
                 response = self.carepoint.delete(model_obj, record_id)
                 self.assertTrue(response)
+
+    def test_delete_calls_commit_on_session(self):
+        model_obj = mock.MagicMock()
+        record_id = 1
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            with mock.patch.object(self.carepoint, 'read') as read_mk:
+                read_mk.return_value = read_mk
+                read_mk.count.return_value = 1
+                mk.return_value = mk
+                self.carepoint.delete(model_obj, record_id)
+                mk.commit.assert_called_once_with()
 
     #
     # Test filter criterion generators
