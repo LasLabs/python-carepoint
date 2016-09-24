@@ -5,7 +5,6 @@
 
 class TestModel(object):
     __tablename__ = '__test__'
-    __dbname__ = 'cph'
     test_col = 'Test'
 
     @classmethod
