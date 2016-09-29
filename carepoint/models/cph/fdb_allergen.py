@@ -7,31 +7,29 @@ from sqlalchemy import (Column,
                         String,
                         Integer,
                         Boolean,
+                        ForeignKey,
                         )
 
 
 class FdbAllergen(Carepoint.BASE):
-    __tablename__ = 'fdrhicd'
+    __tablename__ = 'fdrhicl'
     __dbname__ = 'cph'
 
+    hicl_seqno = Column(
+        Integer,
+        ForeignKey('fdrhiclsq.hicl_seqno'),
+        primary_key=True,
+    )
     hic_seqn = Column(
+        Integer,
+        ForeignKey('fdrhicd.hic_seqn'),
+        primary_key=True,
+    )
+    hic_rel_no = Column(
         Integer,
     )
     hic = Column(
         String(6),
-        primary_key=True,
-    )
-    hic_desc = Column(
-        String(50),
-    )
-    hic_root = Column(
-        Integer,
-    )
-    potentially_inactive = Column(
-        Integer,
-    )
-    ing_status = Column(
-        Integer,
     )
     update_yn = Column(
         Boolean,
