@@ -15,7 +15,7 @@ ignore_errors = True
 
 omit =
     */virtualenv/*
-    tests/*
+    */tests/*
     setup.py
     */__init__.py
     tests.py
