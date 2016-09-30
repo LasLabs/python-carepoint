@@ -30,6 +30,7 @@ class FdbAllergen(Carepoint.BASE):
     )
     hic = Column(
         String(6),
+        ForeignKey('fdrhicd.hic'),
     )
     update_yn = Column(
         Boolean,
