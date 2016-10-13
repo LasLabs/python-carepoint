@@ -2,19 +2,36 @@
 # Copyright 2016 LasLabs Inc.
 # License MIT (https://opensource.org/licenses/MIT).
 
+import enum
+
 from sqlalchemy import (Column,
                         Integer,
                         DateTime,
-                        ForeignKey
+                        ForeignKey,
+                        Enum,
                         )
 from sqlalchemy.ext.declarative import declared_attr
+
+
+class EnumAddressType(enum.Enum):
+    """ It provides PEP-0435 compliant Carepoint Address Type Enumerable """
+
+    business = 1
+    home = 2
+    school = 3
+    vacation = 4
+    other = 5
+    billing = 6
+    shipping = 7
 
 
 class AddressMixin(object):
     """ This is a mixin for Address Many2Many bindings """
 
     priority = Column(Integer)
-    addr_type_cn = Column(Integer)
+    addr_type_cn = Column(
+        Enum(EnumAddressType),
+    )
     app_flags = Column(Integer)
     timestmp = Column(DateTime)
 

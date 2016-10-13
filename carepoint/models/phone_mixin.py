@@ -2,19 +2,40 @@
 # Copyright 2016 LasLabs Inc.
 # License MIT (https://opensource.org/licenses/MIT).
 
+import enum
+
 from sqlalchemy import (Column,
                         Integer,
                         DateTime,
-                        ForeignKey
+                        ForeignKey,
+                        Enum,
                         )
 from sqlalchemy.ext.declarative import declared_attr
+
+
+class EnumPhoneType(enum.Enum):
+    """ It provides PEP-0435 compliant Carepoint Phone Type Enumerable """
+
+    assistant = 1
+    business = 2
+    business_2 = 3
+    business_fax = 4
+    car = 5
+    home = 6
+    home_2 = 7
+    home_fax = 8
+    mobile = 9
+    beeper = 10
+    other_fax = 11
 
 
 class PhoneMixin(object):
     """ This is a mixin for Phone Many2Many bindings """
 
     priority = Column(Integer)
-    phone_type_cn = Column(Integer)
+    phone_type_cn = Column(
+        Enum(EnumPhoneType),
+    )
     app_flags = Column(Integer)
     timestmp = Column(DateTime)
 
