@@ -1,4 +1,4 @@
-SQLAlchemy>=1.1.0b3
+SQLAlchemy>=1.1.1
 pyodbc>=3.0.10
 pysmb>=1.1.18
 enum34>=1.1.6
