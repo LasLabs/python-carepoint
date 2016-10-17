@@ -7,23 +7,39 @@ from setuptools import find_packages
 from tests import Tests
 
 
-PACKAGE_NAME = 'carepoint'
-VERSION = '0.1.2'
+setup_vals = {
+    'name': 'carepoint',
+    'version': '0.1.3',
+    'author': 'LasLabs Inc.',
+    'author_email': 'support@laslabs.com',
+    'description': 'This library will allow you to interact with CarePoint'
+                   'using Python.',
+    'url': 'https://github.com/laslabs/python-carepoint',
+    'license': 'MIT',
+    'classifiers': [
+        'Development Status :: 4 - Beta',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Healthcare Industry',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: POSIX :: Linux',
+        'Programming Language :: Python',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+    ],
+}
 
 
 setup(
-    name=PACKAGE_NAME,
-    version=VERSION,
-    packages=find_packages(exclude=('tests', )),
+    packages=find_packages(exclude=('tests')),
     cmdclass={'test': Tests},
     tests_require=[
-        'pysqlite',
         'sqlalchemy',
         'xmlrunner',
         'mock',
     ],
     install_requires=[
-        # 'pyodbc',
+        'pyodbc',
         'pysmb',
-    ]
+    ],
+    **setup_vals
 )
