@@ -13,6 +13,9 @@ exclude_lines =
 
 ignore_errors = True
 
+include =
+    */carepoint/*
+
 omit =
     */virtualenv/*
     */tests/*
