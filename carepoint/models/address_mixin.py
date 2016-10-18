@@ -8,8 +8,8 @@ from sqlalchemy import (Column,
                         Integer,
                         DateTime,
                         ForeignKey,
-                        Enum,
                         )
+from sqlalchemy.types import Enum
 from sqlalchemy.ext.declarative import declared_attr
 
 
@@ -29,9 +29,7 @@ class AddressMixin(object):
     """ This is a mixin for Address Many2Many bindings """
 
     priority = Column(Integer)
-    addr_type_cn = Column(
-        Enum(EnumAddressType),
-    )
+    addr_type_cn = Column(Integer)
     app_flags = Column(Integer)
     timestmp = Column(DateTime)
 
@@ -42,3 +40,7 @@ class AddressMixin(object):
             ForeignKey('csaddr.addr_id'),
             primary_key=True,
         )
+
+    @property
+    def addr_type(self):
+        return EnumAddressType(self.addr_type_cn)

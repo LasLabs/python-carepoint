@@ -8,8 +8,8 @@ from sqlalchemy import (Column,
                         Integer,
                         DateTime,
                         ForeignKey,
-                        Enum,
                         )
+from sqlalchemy.types import Enum
 from sqlalchemy.ext.declarative import declared_attr
 
 
@@ -33,9 +33,7 @@ class PhoneMixin(object):
     """ This is a mixin for Phone Many2Many bindings """
 
     priority = Column(Integer)
-    phone_type_cn = Column(
-        Enum(EnumPhoneType),
-    )
+    phone_type_cn = Column(Integer)
     app_flags = Column(Integer)
     timestmp = Column(DateTime)
 
@@ -46,3 +44,7 @@ class PhoneMixin(object):
             ForeignKey('csphone.phone_id'),
             primary_key=True,
         )
+
+    @property
+    def phone_type(self):
+        return EnumPhoneType(self.phone_type_cn)
