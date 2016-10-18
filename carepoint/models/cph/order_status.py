@@ -22,6 +22,10 @@ class OrderStatus(Carepoint.BASE):
         autoincrement=False,
     )
     state_cn = Column(
-        Enum(EnumOrderState)
+        Integer,
     )
     descr = Column(String)
+
+    @property
+    def state(self):
+        return EnumOrderState(self.state_cn)

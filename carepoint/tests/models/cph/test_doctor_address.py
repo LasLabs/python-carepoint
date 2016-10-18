@@ -18,5 +18,6 @@ class TestModelsCphDoctorAddress(DatabaseTest):
             hasattr(DoctorAddress, 'addr_id')
         )
 
+
 if __name__ == '__main__':
     unittest.main()

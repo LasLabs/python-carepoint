@@ -28,7 +28,7 @@ class Order(Carepoint.BASE):
     acct_id = Column(Integer)
     invoice_nbr = Column(Integer)
     order_state_cn = Column(
-        Enum(EnumOrderState),
+        Integer,
         ForeignKey('CsOmStatus.state_cn')
     )
     order_status_cn = Column(
@@ -88,3 +88,7 @@ class Order(Carepoint.BASE):
         ForeignKey('csuser.user_id'),
     )
     chg_date = Column(DateTime)
+
+    @property
+    def order_state(self):
+        return EnumOrderState(self.order_state_cn)
