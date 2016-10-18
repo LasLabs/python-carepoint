@@ -37,7 +37,7 @@ class CarepointTest(unittest.TestCase):
 
     @contextmanager
     def __get_mock_session(self, unwrapped=True):
-        with mock.patch.object(self.carepoint, '_get_session') as mk:
+        with mock.patch.object(self.carepoint, '_get_model_session') as mk:
             enter, session = mock.MagicMock(), mock.MagicMock()
             enter.return_value = enter
             mk.return_value = session
@@ -107,47 +107,47 @@ class CarepointTest(unittest.TestCase):
     # Test the session handler
     #
 
-    def test_get_session_gets_session(self):
+    def test_get_model_session_gets_session(self):
         """ It should get session for the database """
         model_obj = self.__get_model_obj()
         with mock.patch.object(self.carepoint, 'env') as env:
-            with self.carepoint._get_session(model_obj):
+            with self.carepoint._get_model_session(model_obj):
                 pass
             env[model_obj.__dbname__].assert_called_once_with()
 
-    def test_get_session_yields_session(self):
+    def test_get_model_session_yields_session(self):
         """ It should yield session for the database """
         model_obj = self.__get_model_obj()
         with mock.patch.object(self.carepoint, 'env') as env:
-            with self.carepoint._get_session(model_obj) as res:
+            with self.carepoint._get_model_session(model_obj) as res:
                 self.assertEqual(
                     env[model_obj.__dbname__](),
                     res,
                 )
 
-    def test_get_session_commit(self):
+    def test_get_model_session_commit(self):
         """ It should commit session after yield """
         model_obj = self.__get_model_obj()
         with mock.patch.object(self.carepoint, 'env') as env:
-            with self.carepoint._get_session(model_obj):
+            with self.carepoint._get_model_session(model_obj):
                 pass
             env[model_obj.__dbname__]().commit.assert_called_once_with()
 
-    def test_get_session_rollback(self):
+    def test_get_model_session_rollback(self):
         """ It should roll session back on error """
         model_obj = self.__get_model_obj()
         with mock.patch.object(self.carepoint, 'env') as env:
             env[model_obj.__dbname__]().commit.side_effect = EndTestException
             with self.assertRaises(EndTestException):
-                with self.carepoint._get_session(model_obj):
+                with self.carepoint._get_model_session(model_obj):
                     pass
             env[model_obj.__dbname__]().rollback.assert_called_once_with()
 
-    def test_get_session_close(self):
+    def test_get_model_session_close(self):
         """ It should always close session """
         model_obj = self.__get_model_obj()
         with mock.patch.object(self.carepoint, 'env') as env:
-            with self.carepoint._get_session(model_obj):
+            with self.carepoint._get_model_session(model_obj):
                 pass
             env[model_obj.__dbname__]().close.assert_called_once_with()
 
@@ -279,66 +279,35 @@ class CarepointTest(unittest.TestCase):
                 )
 
     # Get Next Sequence
-    def test_get_next_sequence_connect(self):
-        """ It should establish connection to underlying DB """
-        with mock.patch.object(self.carepoint, 'dbs') as dbs:
-            self.carepoint.get_next_sequence(None)
-            dbs['cph'].connect.assert_called_once_with()
 
-    def test_get_next_sequence_transaction(self):
-        """ It should create a new transaction """
-        with mock.patch.object(self.carepoint, 'dbs') as dbs:
-            self.carepoint.get_next_sequence(None)
-            dbs['cph'].connect().begin.assert_called_once_with()
+    def test_get_next_sequence_session(self):
+        """ It should get session for db """
+        expect = 'expect'
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
+            res = self.carepoint.get_next_sequence(None, expect)
+            mk.assert_called_once_with(expect)
 
     @mock.patch('carepoint.db.carepoint.text')
     def test_get_next_sequence_execute(self, text):
         """ It should execute stored procedure on connection """
         expect = 'expect'
-        with mock.patch.object(self.carepoint, 'dbs') as dbs:
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
             self.carepoint.get_next_sequence(expect)
-            dbs['cph'].connect().execute.assert_called_once_with(
+            mk().__enter__().execute.assert_called_once_with(
                 text(), seq_name=expect,
             )
 
     def test_get_next_sequence_fetch(self):
         """ It should return result of fetch """
-        with mock.patch.object(self.carepoint, 'dbs') as dbs:
+        with mock.patch.object(self.carepoint, '_get_session') as mk:
             res = self.carepoint.get_next_sequence(None)
-            expect = dbs['cph'].connect().execute().fetchall()[0][0]
+            expect = mk().__enter__().execute().fetchall()[0][0]
             self.assertEqual(
                 expect, res,
             )
 
-    def test_get_next_sequence_commit(self):
-        """ It should commit the transaction """
-        with mock.patch.object(self.carepoint, 'dbs') as dbs:
-            self.carepoint.get_next_sequence(None)
-            dbs['cph'].connect().begin().commit.assert_called_once_with()
-
-    def test_get_next_sequence_transaction(self):
-        """ It should create a new transaction """
-        with mock.patch.object(self.carepoint, 'dbs') as dbs:
-            self.carepoint.get_next_sequence(None)
-            dbs['cph'].connect().begin.assert_called_once_with()
-
-    def test_get_next_sequence_rollback(self):
-        """ It should rollback transaction and raise on error """
-        with mock.patch.object(self.carepoint, 'dbs') as dbs:
-            conn = dbs['cph'].connect()
-            conn.execute.side_effect = EndTestException
-            with self.assertRaises(EndTestException):
-                self.carepoint.get_next_sequence(None)
-            conn.begin().rollback.assert_called_once_with()
-
-    def test_get_next_sequence_close(self):
-        """ It should close the connection """
-        with mock.patch.object(self.carepoint, 'dbs') as dbs:
-            self.carepoint.get_next_sequence(None)
-            dbs['cph'].connect().close.assert_called_once_with()
-
     # Create
-    def test_create_calls_get_session_with_model_obj(self):
+    def test_create_calls_get_model_session_with_model_obj(self):
         model_obj = mock.MagicMock()
         with self.__get_mock_session(False) as mk:
             self.carepoint.create(model_obj, {})
@@ -370,7 +339,7 @@ class CarepointTest(unittest.TestCase):
             self.assertEqual(response, response_expect)
 
     # Update
-    def test_update_calls_get_session_with_model_obj(self):
+    def test_update_calls_get_model_session_with_model_obj(self):
         model_obj = self.__get_model_obj()
         record_id = 1
         with self.__get_mock_session(False) as mk:
@@ -413,7 +382,7 @@ class CarepointTest(unittest.TestCase):
                 self.assertEqual(read(), response)
 
     # Delete
-    def test_delete_calls_get_session_with_model_obj(self):
+    def test_delete_calls_get_model_session_with_model_obj(self):
         model_obj = self.__get_model_obj()
         record_id = 1
         with self.__get_mock_session(False) as mk:
