@@ -9,10 +9,10 @@ from tests import Tests
 
 setup_vals = {
     'name': 'carepoint',
-    'version': '0.1.3',
+    'version': '0.1.4',
     'author': 'LasLabs Inc.',
     'author_email': 'support@laslabs.com',
-    'description': 'This library will allow you to interact with CarePoint'
+    'description': 'This library will allow you to interact with CarePoint '
                    'using Python.',
     'url': 'https://github.com/laslabs/python-carepoint',
     'license': 'MIT',

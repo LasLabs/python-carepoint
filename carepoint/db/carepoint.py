@@ -67,8 +67,8 @@ class Carepoint(dict):
         """
 
         super(Carepoint, self).__init__()
-        global env, dbs
-        self.env = env
+        global dbs
+        self.env = {}
         self.dbs = dbs
         self.iter_refresh = False
         params = {
@@ -85,7 +85,12 @@ class Carepoint(dict):
         if not self.dbs.get('cph'):
             self.dbs['cph'] = Db(**params)
         if not self.env.get('cph'):
-            self.env['cph'] = sessionmaker(bind=self.dbs['cph'])
+            self.env['cph'] = sessionmaker(
+                autocommit=False,
+                autoflush=False,
+                bind=self.dbs['cph'],
+                expire_on_commit=True,
+            )
         if smb_user is None:
             self.smb_creds = {
                 'user': user,
@@ -97,9 +102,13 @@ class Carepoint(dict):
                 'passwd': smb_passwd,
             }
 
+    def _get_model_session(self, model_obj):
+        """ It yields a session for the model_obj """
+        return self._get_session(model_obj.__dbname__)
+
     @contextmanager
-    def _get_session(self, model_obj):
-        session = self.env[model_obj.__dbname__]()
+    def _get_session(self, db_name):
+        session = self.env[db_name]()
         try:
             yield session
             session.commit()
@@ -223,13 +232,13 @@ class Carepoint(dict):
         :type with_entities: list or None
         :rtype: :class:`sqlalchemy.engine.ResultProxy`
         """
-        with self._get_session(model_obj) as session:
+        with self._get_model_session(model_obj) as session:
             res = session.query(model_obj).get(record_id)
             if with_entities:
                 res.with_entities(*self._create_entities(
                     model_obj, with_entities
                 ))
-        return res
+            return res
 
     def search(self, model_obj, filters=None, with_entities=None):
         """ Search table by filters and return records
@@ -241,7 +250,7 @@ class Carepoint(dict):
         :type with_entities: list or None
         :rtype: :class:`sqlalchemy.engine.ResultProxy`
         """
-        with self._get_session(model_obj) as session:
+        with self._get_model_session(model_obj) as session:
             if filters is None:
                 filters = {}
             filters = self._unwrap_filters(model_obj, filters)
@@ -250,7 +259,7 @@ class Carepoint(dict):
                 res.with_entities(*self._create_entities(
                     model_obj, with_entities
                 ))
-        return res
+            return res
 
     def create(self, model_obj, vals):
         """ Wrapper to create a record in Carepoint
@@ -260,10 +269,10 @@ class Carepoint(dict):
         :type vals: dict
         :rtype: :class:`sqlalchemy.ext.declarative.Declarative`
         """
-        with self._get_session(model_obj) as session:
+        with self._get_model_session(model_obj) as session:
             record = model_obj(**vals)
             session.add(record)
-        return record
+            return record
 
     def update(self, model_obj, record_id, vals):
         """ Wrapper to update a record in Carepoint
@@ -275,11 +284,11 @@ class Carepoint(dict):
         :type vals: dict
         :rtype: :class:`sqlalchemy.ext.declarative.Declarative`
         """
-        with self._get_session(model_obj) as session:
+        with self._get_model_session(model_obj) as session:
             record = self.read(model_obj, record_id)
             for key, val in vals.items():
                 setattr(record, key, val)
-        return record
+            return record
 
     def delete(self, model_obj, record_id):
         """ Wrapper to delete a record in Carepoint
@@ -290,7 +299,7 @@ class Carepoint(dict):
         :return: Whether the record was found, and deleted
         :rtype: bool
         """
-        with self._get_session(model_obj) as session:
+        with self._get_model_session(model_obj) as session:
             record = self.read(model_obj, record_id)
             result_cnt = record.count()
             if result_cnt == 0:
@@ -308,17 +317,16 @@ class Carepoint(dict):
         """
         return tuple(k.name for k in inspect(model_obj).primary_key)
 
-    def get_next_sequence(self, sequence_name):
+    def get_next_sequence(self, sequence_name, db_name='cph'):
         """ It generates and returns the next int in sequence
         Params:
             sequence_name: ``str`` Name of the sequence in Carepoint DB
+            db_name: ``str`` Name of DB containing sequence stored proc
         Return:
             Integer to use as pk
         """
-        conn = self.dbs['cph'].connect()
-        trans = conn.begin()
-        try:    
-            res = conn.execute(
+        with self._get_session(db_name) as session:  
+            res = session.execute(
                 text(
                     "SET NOCOUNT ON;"
                     "DECLARE @out int = 0;"
@@ -330,13 +338,7 @@ class Carepoint(dict):
                 seq_name=sequence_name,
             )
             id_int = res.fetchall()[0][0]
-            trans.commit()
-        except:
-            trans.rollback()
-            raise
-        finally:
-            conn.close()
-        return id_int
+            return id_int
 
     def __getattr__(self, key):
         """ Re-implement __getattr__ to use __getitem__ if attr not found """
