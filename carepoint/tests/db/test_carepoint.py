@@ -293,7 +293,7 @@ class CarepointTest(unittest.TestCase):
         expect = 'expect'
         with mock.patch.object(self.carepoint, '_get_session') as mk:
             self.carepoint.get_next_sequence(expect)
-            mk().__enter__().execute.assert_called_once_with(
+            mk().__enter__().connection().execute.assert_called_once_with(
                 text(), seq_name=expect,
             )
 
@@ -301,7 +301,7 @@ class CarepointTest(unittest.TestCase):
         """ It should return result of fetch """
         with mock.patch.object(self.carepoint, '_get_session') as mk:
             res = self.carepoint.get_next_sequence(None)
-            expect = mk().__enter__().execute().fetchall()[0][0]
+            expect = mk().__enter__().connection().execute().fetchall()[0][0]
             self.assertEqual(
                 expect, res,
             )
