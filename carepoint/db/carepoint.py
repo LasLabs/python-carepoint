@@ -326,7 +326,7 @@ class Carepoint(dict):
             Integer to use as pk
         """
         with self._get_session(db_name) as session:  
-            res = session.execute(
+            res = session.connection().execute(
                 text(
                     "SET NOCOUNT ON;"
                     "DECLARE @out int = 0;"
