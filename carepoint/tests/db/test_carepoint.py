@@ -54,11 +54,6 @@ class CarepointTest(unittest.TestCase):
         cp = Carepoint(**self.cp_args)
         sup_mk.assert_called_once_with(Carepoint, cp)
 
-    def test_carepoint_assigns_instance_dbs(self):
-        self.assertEqual(
-            self.db_mock(), self.carepoint.dbs['cph'],
-        )
-
     def test_carepoint_initial_iter_refresh(self):
         self.assertFalse(
             self.carepoint.iter_refresh
@@ -76,6 +71,10 @@ class CarepointTest(unittest.TestCase):
 
     def test_cph_db_assign(self):
         self.carepoint.dbs['cph'] = self.db_mock
+
+    def test_carepoint_assigns_db_params(self):
+        """ It should assign the database params as an instance var """
+        self.assertIsInstance(self.carepoint.db_params, dict)
 
     def test_non_dir(self):
         '''
@@ -102,6 +101,13 @@ class CarepointTest(unittest.TestCase):
         self.carepoint.set_iter_refresh()
         model_obj = self.carepoint['TestModel']
         self.assertTrue(model_obj.run())  # < classmethods are exposed
+
+    def test_init_env_clear(self):
+        """ It should clear the global environment when True """
+        with mock.patch.object(self.carepoint, 'dbs') as dbs:
+            dbs.clear.side_effect = EndTestException
+            with self.assertRaises(EndTestException):
+                self.carepoint._init_env(True)
 
     #
     # Test the session handler
