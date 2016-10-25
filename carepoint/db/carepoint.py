@@ -81,16 +81,6 @@ class Carepoint(dict):
             params.update(db_args)
         if engine_args:
             params.update(engine_args)
-        # @TODO: Lazy load, once other dbs needed
-        if not self.dbs.get('cph'):
-            self.dbs['cph'] = Db(**params)
-        if not self.env.get('cph'):
-            self.env['cph'] = sessionmaker(
-                autocommit=False,
-                autoflush=False,
-                bind=self.dbs['cph'],
-                expire_on_commit=True,
-            )
         if smb_user is None:
             self.smb_creds = {
                 'user': user,
@@ -101,6 +91,27 @@ class Carepoint(dict):
                 'user': smb_user,
                 'passwd': smb_passwd,
             }
+        self.db_params = params
+        self._init_env(False)
+
+    def _init_env(self, clear=False):
+        """ It initializes the global db and environments
+
+        Params:
+            clear: (bool) True to clear the global session
+        """
+        if clear:
+            self.dbs.clear()
+        # @TODO: Lazy load, once other dbs needed
+        if not self.dbs.get('cph'):
+            self.dbs['cph'] = Db(**self.db_params)
+        if not self.env.get('cph'):
+            self.env['cph'] = sessionmaker(
+                autocommit=False,
+                autoflush=False,
+                bind=self.dbs['cph'],
+                expire_on_commit=True,
+            )
 
     def _get_model_session(self, model_obj):
         """ It yields a session for the model_obj """
