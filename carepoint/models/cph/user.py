@@ -2,6 +2,8 @@
 # Copyright 2015-TODAY LasLabs Inc.
 # License MIT (https://opensource.org/licenses/MIT).
 
+import enum
+
 from carepoint import Carepoint
 from sqlalchemy import (Column,
                         Integer,
@@ -10,6 +12,14 @@ from sqlalchemy import (Column,
                         ForeignKey,
                         Text,
                         )
+
+
+class EnumUserType(enum.Enum):
+    """ It provides PEP-0435 compliant Carepoint User Type Enumerable """
+
+    user = 'U'
+    group = 'G'
+    machine = 'M'
 
 
 class User(Carepoint.BASE):
@@ -57,3 +67,7 @@ class User(Carepoint.BASE):
         ForeignKey('csuser.user_id'),
     )
     chg_date = Column(DateTime)
+
+    @property
+    def user_type(self):
+        return EnumUserType(self.user_type_cd)

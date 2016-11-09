@@ -9,7 +9,7 @@ from tests import Tests
 
 setup_vals = {
     'name': 'carepoint',
-    'version': '0.1.7',
+    'version': '0.1.8',
     'author': 'LasLabs Inc.',
     'author_email': 'support@laslabs.com',
     'description': 'This library will allow you to interact with CarePoint '
