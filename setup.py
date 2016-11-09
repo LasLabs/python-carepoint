@@ -33,13 +33,14 @@ setup(
     packages=find_packages(exclude=('tests')),
     cmdclass={'test': Tests},
     tests_require=[
-        'sqlalchemy',
         'xmlrunner',
         'mock',
     ],
     install_requires=[
+        'enum34',
         'pyodbc',
         'pysmb',
+        'sqlalchemy',
     ],
     **setup_vals
 )
