@@ -1,6 +1,4 @@
-| |Build Status|
-| |Coveralls Status|
-| |Codecov Status|
+| |Build Status| | |Coveralls Status| | |Codecov Status| | |Code Climate|
 
 Python CarePoint Library
 ========================
@@ -122,3 +120,5 @@ Known Issues / Road Map
    :target: https://coveralls.io/r/laslabs/Python-Carepoint?branch=release%2F0.1
 .. |Codecov Status| image:: https://codecov.io/gh/laslabs/Python-Carepoint/branch/release%2F0.1/graph/badge.svg
    :target: https://codecov.io/gh/laslabs/Python-Carepoint
+.. |Code Climate| image:: https://codeclimate.com/github/laslabs/Python-Carepoint/badges/gpa.svg
+   :target: https://codeclimate.com/github/laslabs/Python-Carepoint
