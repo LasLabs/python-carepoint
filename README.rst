@@ -37,6 +37,8 @@ Setup
 Usage
 -----
 
+* `API Documentation <https://laslabs.github.io/python-carepoint>`_
+
 Connect to Database server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
