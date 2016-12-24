@@ -1,31 +1,41 @@
 addons:
-    apt:
-        packages:
-            - expect-dev  # provides unbuffer utility
-            - unixodbc-dev
+  apt:
+    packages:
+      - expect-dev  # provides unbuffer utility
+      - unixodbc-dev
 
 language: python
 
 python:
-    - "2.7"
+  - "2.7"
 
 virtualenv:
-    system_site_packages: true
+  system_site_packages: true
 
 env:
-    global:
-        - TESTS="0" LINT_CHECK="0" DOCS="0" VERSION="0.1.0" RELEASE="0.1.8" PROJECT="Python CarePoint" BRANCH_PROD="master" BRANCH_DOC="gh-pages"
-    matrix:
-        - TESTS="1"
-        - DOCS="1"
+  global:
+    - VERSION="0.1.0"
+    - RELEASE="0.1.8"
+    - PROJECT="Python CarePoint"
+    - BRANCH_PROD="master"
+    - BRANCH_DOC="gh-pages"
+    - TESTS="0"
+    - LINT_CHECK="0"
+    - DOCS="0"
+    - PYPI="0"
+    - secure: "Agq7rh2FbYpV5u1WhpEcfjx/V9dwB04NwWhQMGviVeTQgwszgoHZ6XzDCIoWRwBmxOHBPFw2FIBf7/QwQAOJrnB0C9Ijza1t9LmsUWextOBNGnZTYuMdM0sUigPhQ5mVgHEs5sWRPf8JyRS4n2v0bzlrIA3PGvUU3LBipJ6CsmgQLfEb9Xy16KTCcneRBCUZHEc4sNNPOnLrXC+DhnKKBzFhdQKeQlDj1SOsvYsFDRIRe1Y2A2lgXgIYXO6mfdBz51G3AcRI3dZTQoOawtXHz00IOeNMkgv4AtaywlcDd4Io+Z0z0O+p6CJRW6DvJo4Ldi9lh2/nLbPcm+1Gqv4qAaIACCTI34mO+K3u/Yrh1baS+QfI9V03k5hmV2MtiEeSjA0TwDJj24Pmczesccn4iVrlcn+XFSDz8BDLRhp1RMjSP8YQ3+7W5UFpEuVpyPFwpYJsbVHfHDBL94zcyyhoitriI9DRV4IgqiQ59TGfINLBh8ssZtDuNhLPjEvDMMQwEdOyFnkakEA83eGebVyEXHCAREL8G/XKqr2WJV7UMHpDtc0DmVlwuH4ZBYKCA9L2+sYg9s5d2Z+tJrDucXwBan1W7ov9wqer8DotyxgC5eht8KVS2WuTjsgxErevVDV+PGn9Wnfwlqxw/Rih6CKdT+W1/rEVr3ufcTJrYD3jm6U="
+  matrix:
+    - TESTS="1"
+    - PYPI="1"
+    - DOCS="1"
 
 install:
-    - git clone --depth=1 https://github.com/LasLabs/python-quality-tools.git ${HOME}/python-quality-tools
-    - export PATH=${HOME}/python-quality-tools/travis:${PATH}
-    - travis_install
+  - git clone --depth=1 https://github.com/LasLabs/python-quality-tools.git ${HOME}/python-quality-tools
+  - export PATH=${HOME}/python-quality-tools/travis:${PATH}
+  - travis_install
 
 script:
-    - travis_run
+  - travis_run
 
 after_success:
-    - travis_after_success
+  - travis_after_success
