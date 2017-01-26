@@ -9,7 +9,7 @@ import urllib2
 
 from contextlib import contextmanager
 
-from sqlalchemy import bindparam
+from sqlalchemy import bindparam, or_
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.inspection import inspect
 from sqlalchemy.orm import sessionmaker
@@ -208,6 +208,16 @@ class Carepoint(dict):
                     new_filters.append(self._create_criterion(
                         model_obj, col_name, _operator, _filter
                     ))
+
+            elif isinstance(col_filter, (list, tuple)):
+                query = []
+                for _filter in col_filter:
+                    query.append(
+                        self._create_criterion(
+                            model_obj, col_name, '==', _filter,
+                        ),
+                    )
+                new_filters.append(or_(*query))
 
             else:
                 new_filters.append(self._create_criterion(
