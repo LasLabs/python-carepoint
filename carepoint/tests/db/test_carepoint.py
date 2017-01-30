@@ -550,6 +550,26 @@ class CarepointTest(unittest.TestCase):
             self.carepoint._unwrap_filters(model_obj, filters)
             mk.assert_has_calls(expect, any_order=True)
 
+    @mock.patch('carepoint.db.carepoint.or_')
+    def test_unwrap_filters_list(self, or_):
+        """ It should create a proper or query for lists. """
+        model_obj = self.__get_model_obj()
+        col_expect = 'test_col'
+        query_expect = ['test_1', 'test_2']
+        filters = {
+            col_expect: query_expect
+        }
+        expect = [
+            mock.call(model_obj, col_expect, '==', query_expect[0]),
+            mock.call(model_obj, col_expect, '==', query_expect[1]),
+        ]
+        criterion_return = 'Criterion'
+        with mock.patch.object(self.carepoint, '_create_criterion') as mk:
+            mk.return_value = criterion_return
+            self.carepoint._unwrap_filters(model_obj, filters)
+            mk.assert_has_calls(expect, any_order=True)
+            or_.assert_called_once_with(criterion_return, criterion_return)
+
     def test_unwrap_filters_str(self):
         model_obj = self.__get_model_obj()
         col_expect = 'test_col'

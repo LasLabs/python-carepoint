@@ -64,6 +64,18 @@ Perform a search for a patient with the last name Smith
     for row in res:
         print row.fname
 
+Perform a search for a patient with the last name Smith or Jones
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+    res = cp.search(
+        cp['Patient'],
+        {'lname': ['Smith', 'Jones']},
+    )
+    for row in res:
+        print row.fname
+
 Perform a patient search, but only return the ``mname`` column
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
