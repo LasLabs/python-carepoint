@@ -259,7 +259,7 @@ class Carepoint(dict):
                 res.with_entities(*self._create_entities(
                     model_obj, with_entities
                 ))
-            return res
+        return res
 
     def search(self, model_obj, filters=None, with_entities=None):
         """ Search table by filters and return records
@@ -280,7 +280,7 @@ class Carepoint(dict):
                 res.with_entities(*self._create_entities(
                     model_obj, with_entities
                 ))
-            return res
+        return res
 
     def create(self, model_obj, vals):
         """ Wrapper to create a record in Carepoint
@@ -293,7 +293,7 @@ class Carepoint(dict):
         with self._get_model_session(model_obj) as session:
             record = model_obj(**vals)
             session.add(record)
-            return record
+        return record
 
     def update(self, model_obj, record_id, vals):
         """ Wrapper to update a record in Carepoint
@@ -305,11 +305,11 @@ class Carepoint(dict):
         :type vals: dict
         :rtype: :class:`sqlalchemy.ext.declarative.Declarative`
         """
-        with self._get_model_session(model_obj) as session:
+        with self._get_model_session(model_obj):
             record = self.read(model_obj, record_id)
             for key, val in vals.items():
                 setattr(record, key, val)
-            return record
+        return record
 
     def delete(self, model_obj, record_id):
         """ Wrapper to delete a record in Carepoint
@@ -359,7 +359,7 @@ class Carepoint(dict):
                 seq_name=sequence_name,
             )
             id_int = res.fetchall()[0][0]
-            return id_int
+        return id_int
 
     def __getattr__(self, key):
         """ Re-implement __getattr__ to use __getitem__ if attr not found """
