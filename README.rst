@@ -128,8 +128,8 @@ Known Issues / Road Map
 -  FDB images only serve from store ID 1’s net share
 -  Having to pass the model to the Carepoint object is annoying, object
 
-.. |Build Status| image:: https://api.travis-ci.org/laslabs/Python-Carepoint.svg?branch=release%2F0.1
-   :target: https://travis-ci.org/laslabs/Python-Carepoint
+.. |Build Status| image:: https://api.travis-ci.org/LasLabs/python-carepoint.svg?branch=release%2F0.1
+   :target: https://travis-ci.org/LasLabs/python-carepoint
 .. |Coveralls Status| image:: https://coveralls.io/repos/laslabs/Python-Carepoint/badge.svg?branch=release%2F0.1
    :target: https://coveralls.io/r/laslabs/Python-Carepoint?branch=release%2F0.1
 .. |Codecov Status| image:: https://codecov.io/gh/laslabs/Python-Carepoint/branch/release%2F0.1/graph/badge.svg
