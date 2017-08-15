@@ -21,7 +21,7 @@ To install this module, you need to:
 -  This includes things like DNS entries for the NETBIOS names
 -  Setup UnixODBC - http://help.interfaceware.com/kb/904
 -  Install UnixODBC development headers -
-   ``apt-get install unixodbc-dev``
+   ``apt-get install unixodbc-dev`` or ``yum install unixODBC-devel``
 -  Install dependencies - ``pip install -r requirements.txt``
 -  Install library - ``pip install .``
 
