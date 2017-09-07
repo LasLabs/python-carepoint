@@ -1,0 +1,241 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>carepoint.tests.models.cph.fixtures.dispense &#8212; Python CarePoint 0.1.8b662 documentation</title>
+    <link rel="stylesheet" href="../../../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../../',
+        VERSION:     '0.1.8b662',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for carepoint.tests.models.cph.fixtures.dispense</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright 2015-TODAY LasLabs Inc.</span>
+<span class="c1"># License MIT (https://opensource.org/licenses/MIT).</span>
+
+<span class="kn">from</span> <span class="nn">mixer.backend.sqlalchemy</span> <span class="k">import</span> <span class="n">mixer</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+
+<span class="n">dt_now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="n">__model__</span> <span class="o">=</span> <span class="s1">&#39;carepoint.models.cph.dispense.Dispense&#39;</span>
+
+
+<span class="n">dispense_default</span> <span class="o">=</span> <span class="n">mixer</span><span class="o">.</span><span class="n">blend</span><span class="p">(</span>
+    <span class="n">__model__</span><span class="p">,</span>
+    <span class="n">rx_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">store_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">disp_ndc</span><span class="o">=</span><span class="s1">&#39;DispNdc&#39;</span><span class="p">,</span>
+    <span class="n">disp_drug_name</span><span class="o">=</span><span class="s1">&#39;DispDrugName&#39;</span><span class="p">,</span>
+    <span class="n">prod_expire_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">mfg</span><span class="o">=</span><span class="s1">&#39;Mfg&#39;</span><span class="p">,</span>
+    <span class="n">orig_mfg</span><span class="o">=</span><span class="s1">&#39;OrifMfg&#39;</span><span class="p">,</span>
+    <span class="n">pkg_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">rxdisp_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">fill_no</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">dispense_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">dispense_qty</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">disp_days_supply</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">sig_text</span><span class="o">=</span><span class="s1">&#39;SigText&#39;</span><span class="p">,</span>
+    <span class="n">sched_of_admin_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">freq_of_admin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">units_per_dose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">lot_number</span><span class="o">=</span><span class="s1">&#39;LotNumber&#39;</span><span class="p">,</span>
+    <span class="n">disp_awp</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">disp_aac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">disp_mac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">disp_ful</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">disp_udef</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">tech_initials</span><span class="o">=</span><span class="s1">&#39;TechInitials&#39;</span><span class="p">,</span>
+    <span class="n">rph_initials</span><span class="o">=</span><span class="s1">&#39;RphInitials&#39;</span><span class="p">,</span>
+    <span class="n">cnsl_initials</span><span class="o">=</span><span class="s1">&#39;CnslInitials&#39;</span><span class="p">,</span>
+    <span class="n">icd9</span><span class="o">=</span><span class="s1">&#39;Icd&#39;</span><span class="p">,</span>
+    <span class="n">daw_disp_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">level_of_service</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">cmt</span><span class="o">=</span><span class="s1">&#39;cmt&#39;</span><span class="p">,</span>
+    <span class="n">status_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">alt_pick_up_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">alt_pick_up_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">clarification_fill</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">trip_no</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">gpi_disp</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">label_3pty_yn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">reject_3pty_yn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">pay_type_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">price_differs_yn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">pat_loc_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">billing_units</span><span class="o">=</span><span class="s1">&#39;BillingUnits&#39;</span><span class="p">,</span>
+    <span class="n">price_table_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">app_flags</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">timestmp</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">price_meth_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">uu</span><span class="o">=</span><span class="s1">&#39;UU&#39;</span><span class="p">,</span>
+    <span class="n">p_tbl_override_yn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">label_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">billing_hold</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">post_bal_yn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">inv_no</span><span class="o">=</span><span class="s1">&#39;InvNo&#39;</span><span class="p">,</span>
+    <span class="n">disp_qty_delta</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">brand_med_nec_yn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">Other_coverage_cd</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">epsdt_yn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">exempt_cd</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">num_labels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">location</span><span class="o">=</span><span class="s1">&#39;Location&#39;</span><span class="p">,</span>
+    <span class="n">qty_override</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">dur_summary</span><span class="o">=</span><span class="s1">&#39;DurSummary&#39;</span><span class="p">,</span>
+    <span class="n">cov_overrides</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">use_secondary_ins_yn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">hp_blnRxExtr</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">item_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">ud_override</span><span class="o">=</span><span class="s1">&#39;UdOverride&#39;</span><span class="p">,</span>
+    <span class="n">disp_status_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">order_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">sig_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">counsel_yn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">processing_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">hcpcs_mod_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">acct_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">track_pat_resp_yn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">track_org_resp_yn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">label_fac_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">extern_process_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">price_ovr_user_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">price_ovr_reason_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">wf_status_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">verify_user_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">verify_timestamp</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">ar_hold</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">disp_type_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">own_use_pricing_yn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">pos_processed_yn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">prescriber_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">visit_nbr</span><span class="o">=</span><span class="s1">&#39;VisitNbr&#39;</span><span class="p">,</span>
+    <span class="n">disp_udef2</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">SecondaryICD9</span><span class="o">=</span><span class="s1">&#39;SecondaryIcd&#39;</span><span class="p">,</span>
+    <span class="n">uandc_pricing_used_yn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">special_pkg_ind_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">delay_reason_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">place_of_service_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">pat_residence_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">compound_type_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">pharmacy_service_type_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">admin_start_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">ClariFill_2</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">ClariFill_3</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">other_coverage_cd_2</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">pat_assign_ind_yn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">prov_assign_ind_yn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">route_of_admin_ovr</span><span class="o">=</span><span class="s1">&#39;RouteAdmin&#39;</span><span class="p">,</span>
+    <span class="n">csr_pickup_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">icd10</span><span class="o">=</span><span class="s1">&#39;icd&#39;</span><span class="p">,</span>
+    <span class="n">secondaryicd10</span><span class="o">=</span><span class="s1">&#39;secondaryicd&#39;</span><span class="p">,</span>
+    <span class="n">add_user_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">add_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">chg_user_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">chg_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="dispense_rnd"><a class="viewcode-back" href="../../../../../../carepoint.tests.models.cph.fixtures.html#carepoint.tests.models.cph.fixtures.dispense.dispense_rnd">[docs]</a><span class="k">def</span> <span class="nf">dispense_rnd</span><span class="p">(</span><span class="n">cnt</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">mixer</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">cnt</span><span class="p">)</span><span class="o">.</span><span class="n">blend</span><span class="p">(</span><span class="n">__model__</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../../../index.html">Python CarePoint</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=LasLabs&repo=python-carepoint&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a href="https://travis-ci.org/LasLabs/python-carepoint">
+    <img
+        alt="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+        src="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../carepoint.html">carepoint package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../setup.html">setup module</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017 LasLabs Inc..
+      
+    </div>
+
+    
+    <a href="https://github.com/LasLabs/python-carepoint" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

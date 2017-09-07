@@ -1,0 +1,231 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>carepoint.tests.models.cph.fixtures.prescription &#8212; Python CarePoint 0.1.8b662 documentation</title>
+    <link rel="stylesheet" href="../../../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../../',
+        VERSION:     '0.1.8b662',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for carepoint.tests.models.cph.fixtures.prescription</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright 2015-TODAY LasLabs Inc.</span>
+<span class="c1"># License MIT (https://opensource.org/licenses/MIT).</span>
+
+<span class="kn">from</span> <span class="nn">mixer.backend.sqlalchemy</span> <span class="k">import</span> <span class="n">mixer</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+
+
+<span class="n">dt_now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="n">__model__</span> <span class="o">=</span> <span class="s1">&#39;carepoint.models.cph.prescription.Prescription&#39;</span>
+
+
+<span class="n">presription_default</span> <span class="o">=</span> <span class="n">mixer</span><span class="o">.</span><span class="n">blend</span><span class="p">(</span>
+    <span class="n">__model__</span><span class="p">,</span>
+    <span class="n">rx_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">script_no</span><span class="o">=</span><span class="s1">&#39;ScriptNo&#39;</span><span class="p">,</span>
+    <span class="n">old_script_no</span><span class="o">=</span><span class="s1">&#39;OldScriptNo&#39;</span><span class="p">,</span>
+    <span class="n">pat_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">store_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">md_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">ndc</span><span class="o">=</span><span class="s1">&#39;Ndc&#39;</span><span class="p">,</span>
+    <span class="n">gcn_seqno</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">mfg</span><span class="o">=</span><span class="s1">&#39;Mfg&#39;</span><span class="p">,</span>
+    <span class="n">drug_name</span><span class="o">=</span><span class="s1">&#39;DrugName&#39;</span><span class="p">,</span>
+    <span class="n">input_src_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">src_pat_meds_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">start_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">expire_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">stop_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">sig_code</span><span class="o">=</span><span class="s1">&#39;SigCode&#39;</span><span class="p">,</span>
+    <span class="n">sig_text</span><span class="o">=</span><span class="s1">&#39;SigText&#39;</span><span class="p">,</span>
+    <span class="n">written_qty</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">starter_qty</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">days_supply</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">pkg_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">units_per_dose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">units_entered</span><span class="o">=</span><span class="s1">&#39;UnitsEntered&#39;</span><span class="p">,</span>
+    <span class="n">awp</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">udef</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">ful</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">mac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">aac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">freq_entered</span><span class="o">=</span><span class="s1">&#39;FreqEntered&#39;</span><span class="p">,</span>
+    <span class="n">freq_of_admin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">sched_of_admin_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">daw_yn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">refills_orig</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">refills_left</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">last_rxdisp_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">last_refill_qty</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">last_refill_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">refill_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">src_org_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">cmt</span><span class="o">=</span><span class="s1">&#39;Cmt&#39;</span><span class="p">,</span>
+    <span class="n">exit_state_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">script_status_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">sched_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">sched_time</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">scheduled_yn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">drug_dea_class</span><span class="o">=</span><span class="s1">&#39;DrugDeaClass&#39;</span><span class="p">,</span>
+    <span class="n">manual_add_yn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">status_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">life_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">self_prescribed_yn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">last_transfer_type_io</span><span class="o">=</span><span class="s1">&#39;LastTransferType&#39;</span><span class="p">,</span>
+    <span class="n">last_disp_prod</span><span class="o">=</span><span class="s1">&#39;LastDsipProd&#39;</span><span class="p">,</span>
+    <span class="n">transfer_cnt</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">wc_claim_id</span><span class="o">=</span><span class="s1">&#39;WcClaimId&#39;</span><span class="p">,</span>
+    <span class="n">injury_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">gpi_rx</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">auth_by</span><span class="o">=</span><span class="s1">&#39;AuthBy&#39;</span><span class="p">,</span>
+    <span class="n">orig_disp_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">short_term_yn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">orig_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">refills_used</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">wc_emp_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">dose_unit</span><span class="o">=</span><span class="s1">&#39;DoseUnit&#39;</span><span class="p">,</span>
+    <span class="n">dosage_multiplier</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">df</span><span class="o">=</span><span class="s1">&#39;Df&#39;</span><span class="p">,</span>
+    <span class="n">uu</span><span class="o">=</span><span class="s1">&#39;Uu&#39;</span><span class="p">,</span>
+    <span class="n">app_flags</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">timestmp</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">sched2_no</span><span class="o">=</span><span class="s1">&#39;SchedTwo&#39;</span><span class="p">,</span>
+    <span class="n">orig_expire_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">rxq_status_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">IVRCmt</span><span class="o">=</span><span class="s1">&#39;IVRCmt&#39;</span><span class="p">,</span>
+    <span class="n">wc_bodypart</span><span class="o">=</span><span class="s1">&#39;WcBodypart&#39;</span><span class="p">,</span>
+    <span class="n">comp_ndc</span><span class="o">=</span><span class="s1">&#39;CompNdc&#39;</span><span class="p">,</span>
+    <span class="n">treatment_yn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">ivr_callback</span><span class="o">=</span><span class="s1">&#39;IvrCallback&#39;</span><span class="p">,</span>
+    <span class="n">autofill_yn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">autofill_resume_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">workflow_status_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">extern_process_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">md_fac_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">owner_store_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">study_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">min_days_until_refill</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">sig_text_english</span><span class="o">=</span><span class="s1">&#39;SigTextEnglish&#39;</span><span class="p">,</span>
+    <span class="n">order_fullfillment_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">taxable</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">MAR_flag</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">FreeFormStrength</span><span class="o">=</span><span class="s1">&#39;FreeFormStrength&#39;</span><span class="p">,</span>
+    <span class="n">priority_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="c1"># ecs_yn=False,</span>
+    <span class="c1"># edit_locked_yn=False,</span>
+    <span class="c1"># locked_yn=False,</span>
+    <span class="c1"># locked_id=1,</span>
+    <span class="c1"># locked_user_id=1,</span>
+    <span class="n">daw_rx_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">add_user_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">add_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">chg_user_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">chg_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="prescription_rnd"><a class="viewcode-back" href="../../../../../../carepoint.tests.models.cph.fixtures.html#carepoint.tests.models.cph.fixtures.prescription.prescription_rnd">[docs]</a><span class="k">def</span> <span class="nf">prescription_rnd</span><span class="p">(</span><span class="n">cnt</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">mixer</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">cnt</span><span class="p">)</span><span class="o">.</span><span class="n">blend</span><span class="p">(</span><span class="n">__model__</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../../../index.html">Python CarePoint</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=LasLabs&repo=python-carepoint&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a href="https://travis-ci.org/LasLabs/python-carepoint">
+    <img
+        alt="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+        src="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../carepoint.html">carepoint package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../setup.html">setup module</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017 LasLabs Inc..
+      
+    </div>
+
+    
+    <a href="https://github.com/LasLabs/python-carepoint" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

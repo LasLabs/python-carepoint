@@ -1,0 +1,177 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>carepoint.tests.models.cph.fixtures.fdb_ndc_cs_ext &#8212; Python CarePoint 0.1.8b662 documentation</title>
+    <link rel="stylesheet" href="../../../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../../',
+        VERSION:     '0.1.8b662',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for carepoint.tests.models.cph.fixtures.fdb_ndc_cs_ext</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright 2015-TODAY LasLabs Inc.</span>
+<span class="c1"># License MIT (https://opensource.org/licenses/MIT).</span>
+
+<span class="kn">from</span> <span class="nn">mixer.backend.sqlalchemy</span> <span class="k">import</span> <span class="n">mixer</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+
+
+<span class="n">dt_now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="n">__model__</span> <span class="o">=</span> <span class="s1">&#39;carepoint.models.cph.fdb_ndc_cs_ext.FdbNdcCsExt&#39;</span>
+
+
+<span class="n">fdb_ndc_cs_ext_default</span> <span class="o">=</span> <span class="n">mixer</span><span class="o">.</span><span class="n">blend</span><span class="p">(</span>
+    <span class="n">__model__</span><span class="p">,</span>
+    <span class="n">ndc</span><span class="o">=</span><span class="s1">&#39;0002032902&#39;</span><span class="p">,</span>
+    <span class="n">short_name</span><span class="o">=</span><span class="s1">&#39;An item&#39;</span><span class="p">,</span>
+    <span class="n">lot_no</span><span class="o">=</span><span class="s1">&#39;A lot&#39;</span><span class="p">,</span>
+    <span class="n">orig_mfg</span><span class="o">=</span><span class="s1">&#39;Orig Mfg&#39;</span><span class="p">,</span>
+    <span class="n">pref_gen_yn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">active_yn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">drug_expire_days</span><span class="o">=</span><span class="s1">&#39;Drug Expire Days&#39;</span><span class="p">,</span>
+    <span class="n">formulary_yn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">compound_yn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">sup_upd_gen_yn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">sup_upd_phys_yn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">sup_upd_clin_yn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">sup_upd_fin_yn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">sup_upd_med_yn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">dn_form</span><span class="o">=</span><span class="s1">&#39;TABLET&#39;</span><span class="p">,</span>
+    <span class="n">dn_str</span><span class="o">=</span><span class="s1">&#39;250 MG&#39;</span><span class="p">,</span>
+    <span class="n">dn_route</span><span class="o">=</span><span class="s1">&#39;ORAL&#39;</span><span class="p">,</span>
+    <span class="n">rx_only_yn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">manual_yn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">brand_ndc</span><span class="o">=</span><span class="s1">&#39;0002032902&#39;</span><span class="p">,</span>
+    <span class="n">add_user_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">add_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">chg_user_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">app_flags</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">timestmp</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">comp_yn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">dea</span><span class="o">=</span><span class="s1">&#39;Dea Num&#39;</span><span class="p">,</span>
+    <span class="n">dea_chg_user</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">dea_chg_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">ln</span><span class="o">=</span><span class="s1">&#39;Ln &#39;</span><span class="p">,</span>
+    <span class="n">ln_chg_user</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">ln_chg_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">fdb_chg_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">ud_svc_code</span><span class="o">=</span><span class="s1">&#39;Ud Svc Code&#39;</span><span class="p">,</span>
+    <span class="n">gpi</span><span class="o">=</span><span class="s1">&#39;Gpi&#39;</span><span class="p">,</span>
+    <span class="n">gpi_chg_user</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">gpi_chg_date</span><span class="o">=</span><span class="n">dt_now</span><span class="p">,</span>
+    <span class="n">bill_increment</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">formula_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">alt_iptside1</span><span class="o">=</span><span class="s1">&#39;Alt IptSide1&#39;</span><span class="p">,</span>
+    <span class="n">alt_iptside2</span><span class="o">=</span><span class="s1">&#39;Alt IptSide2&#39;</span><span class="p">,</span>
+    <span class="n">dose_multiplier</span><span class="o">=</span><span class="s1">&#39;Dose Multiplier&#39;</span><span class="p">,</span>
+    <span class="n">default_daw_override</span><span class="o">=</span><span class="s1">&#39;Daw Override&#39;</span><span class="p">,</span>
+    <span class="n">manual_price_yn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">compound_type_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">refrig_cn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="fdb_ndc_cs_ext_rnd"><a class="viewcode-back" href="../../../../../../carepoint.tests.models.cph.fixtures.html#carepoint.tests.models.cph.fixtures.fdb_ndc_cs_ext.fdb_ndc_cs_ext_rnd">[docs]</a><span class="k">def</span> <span class="nf">fdb_ndc_cs_ext_rnd</span><span class="p">(</span><span class="n">cnt</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">mixer</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">cnt</span><span class="p">)</span><span class="o">.</span><span class="n">blend</span><span class="p">(</span><span class="n">__model__</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../../../index.html">Python CarePoint</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=LasLabs&repo=python-carepoint&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a href="https://travis-ci.org/LasLabs/python-carepoint">
+    <img
+        alt="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+        src="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../carepoint.html">carepoint package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../setup.html">setup module</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017 LasLabs Inc..
+      
+    </div>
+
+    
+    <a href="https://github.com/LasLabs/python-carepoint" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

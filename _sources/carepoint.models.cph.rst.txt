@@ -252,6 +252,14 @@ carepoint\.models\.cph\.fdb\_unit module
     :undoc-members:
     :show-inheritance:
 
+carepoint\.models\.cph\.image\_data module
+------------------------------------------
+
+.. automodule:: carepoint.models.cph.image_data
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 carepoint\.models\.cph\.item module
 -----------------------------------
 

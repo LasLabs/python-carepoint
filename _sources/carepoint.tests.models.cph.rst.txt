@@ -259,6 +259,14 @@ carepoint\.tests\.models\.cph\.test\_fdb\_unit module
     :undoc-members:
     :show-inheritance:
 
+carepoint\.tests\.models\.cph\.test\_image\_data module
+-------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_image_data
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 carepoint\.tests\.models\.cph\.test\_item module
 ------------------------------------------------
 
