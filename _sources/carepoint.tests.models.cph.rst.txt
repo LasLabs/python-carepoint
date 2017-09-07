@@ -1,0 +1,453 @@
+carepoint\.tests\.models\.cph package
+=====================================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    carepoint.tests.models.cph.fixtures
+
+Submodules
+----------
+
+carepoint\.tests\.models\.cph\.test\_account module
+---------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_account
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_account\_activity module
+-------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_account_activity
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_address module
+---------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_address
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_dispense module
+----------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_dispense
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_dispense\_price module
+-----------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_dispense_price
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_doctor module
+--------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_doctor
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_doctor\_address module
+-----------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_doctor_address
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_doctor\_phone module
+---------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_doctor_phone
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_allergen module
+---------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_allergen
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_allergen\_desc module
+---------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_allergen_desc
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_allergen\_group module
+----------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_allergen_group
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_allergen\_rel module
+--------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_allergen_rel
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_attr module
+-----------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_attr
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_attr\_base module
+-----------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_attr_base
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_attr\_type module
+-----------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_attr_type
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_form module
+-----------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_form
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_gcn module
+----------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_gcn
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_gcn\_seq module
+---------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_gcn_seq
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_img module
+----------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_img
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_img\_date module
+----------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_img_date
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_img\_id module
+--------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_img_id
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_img\_mfg module
+---------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_img_mfg
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_lbl\_rid module
+---------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_lbl_rid
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_ndc module
+----------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_ndc
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_ndc\_cs\_ext module
+-------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_ndc_cs_ext
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_pem\_moe module
+---------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_pem_moe
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_pem\_mogc module
+----------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_pem_mogc
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_price module
+------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_price
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_price\_type module
+------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_price_type
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_route module
+------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_route
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_fdb\_unit module
+-----------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_fdb_unit
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_item module
+------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_item
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_order module
+-------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_order
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_order\_line module
+-------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_order_line
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_order\_line\_non\_rx module
+----------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_order_line_non_rx
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_order\_ship module
+-------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_order_ship
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_order\_status module
+---------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_order_status
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_organization module
+--------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_organization
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_organization\_address module
+-----------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_organization_address
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_pathology module
+-----------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_pathology
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_pathology\_code\_type module
+-----------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_pathology_code_type
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_patient module
+---------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_patient
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_patient\_address module
+------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_patient_address
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_patient\_allergy module
+------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_patient_allergy
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_patient\_disease module
+------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_patient_disease
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_patient\_phone module
+----------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_patient_phone
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_phone module
+-------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_phone
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_prescription module
+--------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_prescription
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_store module
+-------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_store
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_store\_address module
+----------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_store_address
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_store\_param module
+--------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_store_param
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_store\_phone module
+--------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_store_phone
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_user module
+------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_user
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.test\_vendor module
+--------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.test_vendor
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: carepoint.tests.models.cph
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,613 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>carepoint.db.carepoint &#8212; Python CarePoint 0.1.8b658 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.8b658',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for carepoint.db.carepoint</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright 2016-TODAY LasLabs Inc.</span>
+<span class="c1"># License MIT (https://opensource.org/licenses/MIT).</span>
+
+<span class="kn">import</span> <span class="nn">imp</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">urllib2</span>
+
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">contextmanager</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="k">import</span> <span class="n">bindparam</span><span class="p">,</span> <span class="n">or_</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.ext.declarative</span> <span class="k">import</span> <span class="n">declarative_base</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.inspection</span> <span class="k">import</span> <span class="n">inspect</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="k">import</span> <span class="n">sessionmaker</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="k">import</span> <span class="n">text</span>
+
+
+<span class="kn">from</span> <span class="nn">.db</span> <span class="k">import</span> <span class="n">Db</span>
+<span class="kn">from</span> <span class="nn">smb.SMBHandler</span> <span class="k">import</span> <span class="n">SMBHandler</span>
+
+
+<span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
+<span class="n">Base</span><span class="o">.</span><span class="n">get</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="kc">None</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<span class="n">Base</span><span class="o">.</span><span class="fm">__getitem__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="kc">None</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<span class="n">Base</span><span class="o">.</span><span class="fm">__setitem__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">setattr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+
+<span class="n">models</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">dbs</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{},</span> <span class="p">{}</span>
+
+
+<div class="viewcode-block" id="Carepoint"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint">[docs]</a><span class="k">class</span> <span class="nc">Carepoint</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Base CarePoint db connector object &quot;&quot;&quot;</span>
+
+    <span class="n">BASE</span> <span class="o">=</span> <span class="n">Base</span>
+    <span class="n">DEFAULT_DB</span> <span class="o">=</span> <span class="s1">&#39;cph&#39;</span>
+
+    <span class="c1"># Default path to search for models - change with register_model_dir</span>
+    <span class="n">model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;..&#39;</span><span class="p">,</span> <span class="s1">&#39;models&#39;</span><span class="p">)</span>
+
+    <span class="n">FILTERS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;&gt;=&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">ge</span><span class="p">,</span>
+        <span class="s1">&#39;&gt;&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">gt</span><span class="p">,</span>
+        <span class="s1">&#39;&lt;=&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">le</span><span class="p">,</span>
+        <span class="s1">&#39;&lt;&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">lt</span><span class="p">,</span>
+        <span class="s1">&#39;=&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">eq</span><span class="p">,</span>
+        <span class="s1">&#39;==&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">eq</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">passwd</span><span class="p">,</span> <span class="n">smb_user</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">smb_passwd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">db_args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">engine_args</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; It initializes new Carepoint object</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            server (str): IP or Hostname to database</span>
+<span class="sd">            user (str): Username for database</span>
+<span class="sd">            passwd (str): Password for database</span>
+<span class="sd">            smb_user (str): Username to use for SMB connection, ``None`` to</span>
+<span class="sd">                use the database user</span>
+<span class="sd">            smd_passwd (str): Password to use for the SMB connection, ``None``</span>
+<span class="sd">                to use the database password</span>
+<span class="sd">            db_args (dict): Dictionary of arguments to send during initial</span>
+<span class="sd">                db creation</span>
+<span class="sd">            **engine_args (mixed): Kwargs to pass to ``create_engine``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">Carepoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">global</span> <span class="n">dbs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dbs</span> <span class="o">=</span> <span class="n">dbs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iter_refresh</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span>
+            <span class="s1">&#39;passwd&#39;</span><span class="p">:</span> <span class="n">passwd</span><span class="p">,</span>
+            <span class="s1">&#39;server&#39;</span><span class="p">:</span> <span class="n">server</span><span class="p">,</span>
+            <span class="s1">&#39;db&#39;</span><span class="p">:</span> <span class="s1">&#39;cph&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">db_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">db_args</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">engine_args</span><span class="p">:</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">engine_args</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">smb_user</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">smb_creds</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span>
+                <span class="s1">&#39;passwd&#39;</span><span class="p">:</span> <span class="n">passwd</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">smb_creds</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">smb_user</span><span class="p">,</span>
+                <span class="s1">&#39;passwd&#39;</span><span class="p">:</span> <span class="n">smb_passwd</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db_params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_env</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_init_env</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clear</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; It initializes the global db and environments</span>
+
+<span class="sd">        Params:</span>
+<span class="sd">            clear: (bool) True to clear the global session</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">clear</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dbs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="c1"># @TODO: Lazy load, once other dbs needed</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dbs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cph&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dbs</span><span class="p">[</span><span class="s1">&#39;cph&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Db</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">db_params</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cph&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;cph&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span>
+                <span class="n">autocommit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">autoflush</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">bind</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dbs</span><span class="p">[</span><span class="s1">&#39;cph&#39;</span><span class="p">],</span>
+                <span class="n">expire_on_commit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_model_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; It yields a session for the model_obj &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_session</span><span class="p">(</span><span class="n">model_obj</span><span class="o">.</span><span class="n">__dbname__</span><span class="p">)</span>
+
+    <span class="nd">@contextmanager</span>
+    <span class="k">def</span> <span class="nf">_get_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="n">db_name</span><span class="p">]()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">session</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+            <span class="k">raise</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_smb_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return URI prefix for SMB share &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;smb://</span><span class="si">{user}</span><span class="s1">:</span><span class="si">{passwd}</span><span class="s1">@&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">smb_creds</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Carepoint.get_file"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.get_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return a file-like object for the SMB path</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path: :type:`str` SMB path to fetch</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :type:`file` File interface object representing remote resource</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">opener</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">SMBHandler</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">opener</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_smb_prefix</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Carepoint.send_file"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.send_file">[docs]</a>    <span class="k">def</span> <span class="nf">send_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">file_obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Send a file-like object to the SMB path</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path: :type:`str` SMB path to fetch</span>
+<span class="sd">            file_obj: :type:`file` File interface object to send to server</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :type:`bool` Success</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">SMBHandler</span><span class="p">)</span> <span class="k">as</span> <span class="n">opener</span><span class="p">:</span>
+            <span class="n">opener</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_smb_prefix</span><span class="p">,</span> <span class="n">path</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">file_obj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+    <span class="k">def</span> <span class="nf">_create_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_obj</span><span class="p">,</span> <span class="n">col_name</span><span class="p">,</span> <span class="n">operator</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create a SQLAlchemy criterion from filter parts</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model_obj: :class:`sqlalchemy.Table` Table class to search</span>
+<span class="sd">            col_name: :type:`str` Name of column to query</span>
+<span class="sd">            operator: :type:`str` Domain operator to use in query</span>
+<span class="sd">            query: :type:`str` Text to search for</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SQLAlchemy criterion representing a single WHERE clause</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            NotImplementedError: When query operator is not implemented</span>
+<span class="sd">            AttributeError: When col_name does not exist in the model_obj</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">col_obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">col_name</span><span class="p">)</span>
+            <span class="n">operator_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FILTERS</span><span class="p">[</span><span class="n">operator</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">operator_obj</span><span class="p">(</span><span class="n">col_obj</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span>
+
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span>
+
+    <span class="k">def</span> <span class="nf">_unwrap_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_obj</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Unwrap a dictionary of filters into something usable by SQLAlchemy</span>
+<span class="sd">        :param model_obj: Table class to search</span>
+<span class="sd">        :type model_obj: :class:`sqlalchemy.Table`</span>
+<span class="sd">        :param filters: Filters, keyed by col name</span>
+<span class="sd">        :type filters: dict</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">filters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filters</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">new_filters</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">col_name</span><span class="p">,</span> <span class="n">col_filter</span> <span class="ow">in</span> <span class="n">filters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">col_filter</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">_operator</span><span class="p">,</span> <span class="n">_filter</span> <span class="ow">in</span> <span class="n">col_filter</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">new_filters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_criterion</span><span class="p">(</span>
+                        <span class="n">model_obj</span><span class="p">,</span> <span class="n">col_name</span><span class="p">,</span> <span class="n">_operator</span><span class="p">,</span> <span class="n">_filter</span>
+                    <span class="p">))</span>
+
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">col_filter</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+                <span class="n">query</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">_filter</span> <span class="ow">in</span> <span class="n">col_filter</span><span class="p">:</span>
+                    <span class="n">query</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_create_criterion</span><span class="p">(</span>
+                            <span class="n">model_obj</span><span class="p">,</span> <span class="n">col_name</span><span class="p">,</span> <span class="s1">&#39;==&#39;</span><span class="p">,</span> <span class="n">_filter</span><span class="p">,</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
+                <span class="n">new_filters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">or_</span><span class="p">(</span><span class="o">*</span><span class="n">query</span><span class="p">))</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_filters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_criterion</span><span class="p">(</span>
+                    <span class="n">model_obj</span><span class="p">,</span> <span class="n">col_name</span><span class="p">,</span> <span class="s1">&#39;==&#39;</span><span class="p">,</span> <span class="n">col_filter</span>
+                <span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">new_filters</span>
+
+    <span class="k">def</span> <span class="nf">_create_entities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_obj</span><span class="p">,</span> <span class="n">cols</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return list of entities matching cols</span>
+<span class="sd">        :param model_obj: Table class to search</span>
+<span class="sd">        :type model_obj: :class:`sqlalchemy.Table`</span>
+<span class="sd">        :param cols: List of col names</span>
+<span class="sd">        :type cols: list</span>
+<span class="sd">        :rtype: :type:`list` of :class:`sqlalchemy.Column`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">col</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+<div class="viewcode-block" id="Carepoint.read"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">,</span> <span class="n">with_entities</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get record by id and return the object</span>
+<span class="sd">        :param model_obj: Table class to search</span>
+<span class="sd">        :type model_obj: :class:`sqlalchemy.Table`</span>
+<span class="sd">        :param record_id: Id of record to manipulate</span>
+<span class="sd">        :param with_entities: Attributes to rcv from db. None for *</span>
+<span class="sd">        :type with_entities: list or None</span>
+<span class="sd">        :param with_entities: List of col names to select, None for all</span>
+<span class="sd">        :type with_entities: list or None</span>
+<span class="sd">        :rtype: :class:`sqlalchemy.engine.ResultProxy`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_model_session</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">record_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">with_entities</span><span class="p">:</span>
+                <span class="n">res</span><span class="o">.</span><span class="n">with_entities</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_entities</span><span class="p">(</span>
+                    <span class="n">model_obj</span><span class="p">,</span> <span class="n">with_entities</span>
+                <span class="p">))</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+<div class="viewcode-block" id="Carepoint.search"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_obj</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">with_entities</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Search table by filters and return records</span>
+<span class="sd">        :param model_obj: Table class to search</span>
+<span class="sd">        :type model_obj: :class:`sqlalchemy.schema.Table`</span>
+<span class="sd">        :param filters: Filters to apply to search</span>
+<span class="sd">        :type filters: dict or None</span>
+<span class="sd">        :param with_entities: List of col names to select, None for all</span>
+<span class="sd">        :type with_entities: list or None</span>
+<span class="sd">        :rtype: :class:`sqlalchemy.engine.ResultProxy`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_model_session</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">filters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">filters</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">filters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unwrap_filters</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
+            <span class="n">res</span> <span class="o">=</span>  <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">*</span><span class="n">filters</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">with_entities</span><span class="p">:</span>
+                <span class="n">res</span><span class="o">.</span><span class="n">with_entities</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_entities</span><span class="p">(</span>
+                    <span class="n">model_obj</span><span class="p">,</span> <span class="n">with_entities</span>
+                <span class="p">))</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+<div class="viewcode-block" id="Carepoint.create"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_obj</span><span class="p">,</span> <span class="n">vals</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Wrapper to create a record in Carepoint</span>
+<span class="sd">        :param model_obj: Table class to create with</span>
+<span class="sd">        :type model_obj: :class:`sqlalchemy.schema.Table`</span>
+<span class="sd">        :param vals: Data to create record with</span>
+<span class="sd">        :type vals: dict</span>
+<span class="sd">        :rtype: :class:`sqlalchemy.ext.declarative.Declarative`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_model_session</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="n">record</span> <span class="o">=</span> <span class="n">model_obj</span><span class="p">(</span><span class="o">**</span><span class="n">vals</span><span class="p">)</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">record</span></div>
+
+<div class="viewcode-block" id="Carepoint.update"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">,</span> <span class="n">vals</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Wrapper to update a record in Carepoint</span>
+<span class="sd">        :param model_obj: Table class to update</span>
+<span class="sd">        :type model_obj: :class:`sqlalchemy.schema.Table`</span>
+<span class="sd">        :param record_id: Id of record to manipulate</span>
+<span class="sd">        :type record_id: int</span>
+<span class="sd">        :param vals: Data to create record with</span>
+<span class="sd">        :type vals: dict</span>
+<span class="sd">        :rtype: :class:`sqlalchemy.ext.declarative.Declarative`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_model_session</span><span class="p">(</span><span class="n">model_obj</span><span class="p">):</span>
+            <span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">vals</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">record</span></div>
+
+<div class="viewcode-block" id="Carepoint.delete"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Wrapper to delete a record in Carepoint</span>
+<span class="sd">        :param model_obj: Table class to update</span>
+<span class="sd">        :type model_obj: :class:`sqlalchemy.schema.Table`</span>
+<span class="sd">        :param record_id: Id of record to manipulate</span>
+<span class="sd">        :type record_id: int</span>
+<span class="sd">        :return: Whether the record was found, and deleted</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_model_session</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">)</span>
+            <span class="n">result_cnt</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">result_cnt</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">assert</span> <span class="n">result_cnt</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Carepoint.get_pks"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.get_pks">[docs]</a>    <span class="k">def</span> <span class="nf">get_pks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the Primary keys in the model</span>
+<span class="sd">        :param model_obj: Table class to update</span>
+<span class="sd">        :type model_obj: :class:`sqlalchemy.schema.Table`</span>
+<span class="sd">        :return: Tuple of primary key name strings</span>
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">inspect</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span><span class="o">.</span><span class="n">primary_key</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Carepoint.get_next_sequence"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.get_next_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sequence_name</span><span class="p">,</span> <span class="n">db_name</span><span class="o">=</span><span class="s1">&#39;cph&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; It generates and returns the next int in sequence</span>
+<span class="sd">        Params:</span>
+<span class="sd">            sequence_name: ``str`` Name of the sequence in Carepoint DB</span>
+<span class="sd">            db_name: ``str`` Name of DB containing sequence stored proc</span>
+<span class="sd">        Return:</span>
+<span class="sd">            Integer to use as pk</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_session</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>  
+            <span class="n">res</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">connection</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+                <span class="n">text</span><span class="p">(</span>
+                    <span class="s2">&quot;SET NOCOUNT ON;&quot;</span>
+                    <span class="s2">&quot;DECLARE @out int = 0;&quot;</span>
+                    <span class="s2">&quot;EXEC CsGenerateIntId :seq_name, @out output;&quot;</span>
+                    <span class="s2">&quot;SELECT @out;&quot;</span>
+                    <span class="s2">&quot;SET NOCOUNT OFF;&quot;</span><span class="p">,</span>
+                    <span class="n">bindparams</span><span class="o">=</span><span class="p">[</span><span class="n">bindparam</span><span class="p">(</span><span class="s1">&#39;seq_name&#39;</span><span class="p">)],</span>
+                <span class="p">),</span>
+                <span class="n">seq_name</span><span class="o">=</span><span class="n">sequence_name</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">id_int</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">id_int</span></div>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Re-implement __getattr__ to use __getitem__ if attr not found &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Carepoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__getattr__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">__global</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Re-implement __setitem__ to allow for global model sync &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Carepoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">__global</span><span class="p">:</span>
+            <span class="k">global</span> <span class="n">models</span>
+            <span class="n">models</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">retry</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Re-implement __getitem__ to scan for models if key missing  &quot;&quot;&quot;</span>
+        <span class="k">global</span> <span class="n">models</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Carepoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">default</span>
+            <span class="k">elif</span> <span class="n">retry</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">find_models</span><span class="p">()</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                    <span class="s1">&#39;Plugin &quot;</span><span class="si">%s</span><span class="s1">&quot; not found in model_dir &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_path</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+<div class="viewcode-block" id="Carepoint.set_iter_refresh"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.set_iter_refresh">[docs]</a>    <span class="k">def</span> <span class="nf">set_iter_refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">refresh</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Toggle flag to search for new models before iteration</span>
+<span class="sd">        :param refresh: Whether to refresh before iteration</span>
+<span class="sd">        :type refresh: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iter_refresh</span> <span class="o">=</span> <span class="n">refresh</span></div>
+
+    <span class="k">def</span> <span class="nf">__refresh_models__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_refresh</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">find_models</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reimplement __iter__ to allow for optional model refresh &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_models__</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Carepoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Carepoint.values"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.values">[docs]</a>    <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reimplement values to allow for optional model refresh &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_models__</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Carepoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Carepoint.keys"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.keys">[docs]</a>    <span class="k">def</span> <span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reimplement keys to allow for optional model refresh &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_models__</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Carepoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Carepoint.items"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.items">[docs]</a>    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reimplement items to allow for optional model refresh &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_models__</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Carepoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Carepoint.itervalues"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.itervalues">[docs]</a>    <span class="k">def</span> <span class="nf">itervalues</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reimplement itervalues to allow for optional model refresh &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_models__</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Carepoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">itervalues</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Carepoint.iterkeys"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.iterkeys">[docs]</a>    <span class="k">def</span> <span class="nf">iterkeys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reimplement iterkeys to allow for optional model refresh &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_models__</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Carepoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Carepoint.iteritems"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.iteritems">[docs]</a>    <span class="k">def</span> <span class="nf">iteritems</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reimplement iteritems to allow for optional model refresh &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__refresh_models__</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Carepoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Carepoint.register_model"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.register_model">[docs]</a>    <span class="k">def</span> <span class="nf">register_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Registration logic + append to models struct</span>
+<span class="sd">        :param model_obj: Model object to register</span>
+<span class="sd">        :type model_obj: :class:`sqlalchemy.ext.declarative.Declarative`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">model_obj</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_obj</span></div>
+
+<div class="viewcode-block" id="Carepoint.register_model_dir"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.register_model_dir">[docs]</a>    <span class="k">def</span> <span class="nf">register_model_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; This function sets the model path to be searched</span>
+<span class="sd">        :param model_path: Path of models</span>
+<span class="sd">        :type model_path: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">model_path</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model_path</span> <span class="o">=</span> <span class="n">model_path</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">EnvironmentError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> is not a directory&#39;</span> <span class="o">%</span> <span class="n">model_path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Carepoint.find_models"><a class="viewcode-back" href="../../../carepoint.db.html#carepoint.db.carepoint.Carepoint.find_models">[docs]</a>    <span class="k">def</span> <span class="nf">find_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Traverse registered model directory and import non-loaded modules</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">model_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">model_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_path</span>
+
+        <span class="k">if</span> <span class="n">model_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">model_path</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">EnvironmentError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> is not a directory&#39;</span> <span class="o">%</span> <span class="n">model_path</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">dir_name</span><span class="p">,</span> <span class="n">subdirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">model_path</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="n">dir_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">dir_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+            <span class="n">parent_module</span> <span class="o">=</span> <span class="n">dir_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">parent_module</span> <span class="o">=</span> <span class="n">parent_module</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">file_</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">file_</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.py&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">file_</span> <span class="o">!=</span> <span class="s1">&#39;__init__.py&#39;</span><span class="p">:</span>
+                    <span class="n">module</span> <span class="o">=</span> <span class="n">file_</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="n">mod_obj</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">mod_obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">f</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span>
+                            <span class="n">module</span><span class="p">,</span> <span class="p">[</span><span class="n">dir_name</span><span class="p">]</span>
+                        <span class="p">)</span>
+                        <span class="n">mod_obj</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span>
+                            <span class="n">module</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">desc</span>
+                        <span class="p">)</span>
+                        <span class="bp">cls</span> <span class="o">=</span> <span class="p">[</span>
+                            <span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">mod_obj</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">m</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)</span>
+                        <span class="p">]</span>
+                        <span class="k">for</span> <span class="n">model_cls</span> <span class="ow">in</span> <span class="bp">cls</span><span class="p">:</span>
+                            <span class="n">model_obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mod_obj</span><span class="p">,</span> <span class="n">model_cls</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="s1">&#39;__tablename__&#39;</span><span class="p">):</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="s1">&#39;__dbname__&#39;</span><span class="p">):</span>
+                                    <span class="n">model_obj</span><span class="o">.</span><span class="n">__dbname__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_DB</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Python CarePoint</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=LasLabs&repo=python-carepoint&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a href="https://travis-ci.org/LasLabs/python-carepoint">
+    <img
+        alt="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+        src="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../carepoint.html">carepoint package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../setup.html">setup module</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017 LasLabs Inc..
+      
+    </div>
+
+    
+    <a href="https://github.com/LasLabs/python-carepoint" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

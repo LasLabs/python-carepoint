@@ -1,0 +1,170 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>carepoint.tests.db.test_db &#8212; Python CarePoint 0.1.8b658 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.1.8b658',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for carepoint.tests.db.test_db</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright 2015-TODAY LasLabs Inc.</span>
+<span class="c1"># License MIT (https://opensource.org/licenses/MIT).</span>
+
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">mock</span>
+<span class="kn">from</span> <span class="nn">urllib</span> <span class="k">import</span> <span class="n">quote_plus</span> <span class="k">as</span> <span class="n">urlquote</span>
+<span class="kn">from</span> <span class="nn">carepoint.db</span> <span class="k">import</span> <span class="n">Db</span>
+
+
+<div class="viewcode-block" id="TestDb"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_db.TestDb">[docs]</a><span class="k">class</span> <span class="nc">TestDb</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TestDb.setUp"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_db.TestDb.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;usr&#39;</span><span class="p">:</span> <span class="s1">&#39;This is a user&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;pass&#39;</span><span class="p">:</span> <span class="s1">&#39;23243dsc dxcsdkc ewr239Copyright&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;srv&#39;</span><span class="p">:</span> <span class="s1">&#39;server&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;drv&#39;</span><span class="p">:</span> <span class="s1">&#39;drv&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;db&#39;</span><span class="p">:</span> <span class="s1">&#39;db&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;prt&#39;</span><span class="p">:</span> <span class="s1">&#39;port&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dsn</span> <span class="o">=</span> <span class="s1">&#39;mssql+pyodbc://</span><span class="si">{usr}</span><span class="s1">:</span><span class="si">{pass}</span><span class="s1">@</span><span class="si">{srv}</span><span class="s1">:</span><span class="si">{prt}</span><span class="s1">/</span><span class="si">{db}</span><span class="s1">?driver=</span><span class="si">{drv}</span><span class="s1">&#39;</span></div>
+
+<div class="viewcode-block" id="TestDb.test_mssql_dsn"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_db.TestDb.test_mssql_dsn">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.db.create_engine&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_mssql_dsn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mk</span><span class="p">):</span>
+        <span class="n">Db</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;srv&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;usr&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;pass&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;db&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;prt&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;drv&#39;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;usr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">urlquote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;usr&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;pass&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">urlquote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;pass&#39;</span><span class="p">])</span>
+        <span class="n">mk</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TestDb.test_mssql_dsn_return"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_db.TestDb.test_mssql_dsn_return">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.db.create_engine&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_mssql_dsn_return</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mk</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">Db</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;srv&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;usr&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;pass&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;db&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;prt&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;drv&#39;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">mk</span><span class="p">(),</span> <span class="n">res</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestDb.test_sqlite_dsn"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_db.TestDb.test_sqlite_dsn">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.db.create_engine&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_sqlite_dsn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mk</span><span class="p">):</span>
+        <span class="n">Db</span><span class="p">(</span><span class="n">drv</span><span class="o">=</span><span class="s1">&#39;sqlite&#39;</span><span class="p">)</span>
+        <span class="n">mk</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s1">&#39;sqlite://&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestDb.test_sqlite_dsn_return"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_db.TestDb.test_sqlite_dsn_return">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.db.create_engine&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_sqlite_dsn_return</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mk</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">Db</span><span class="p">(</span><span class="n">drv</span><span class="o">=</span><span class="s1">&#39;sqlite&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">mk</span><span class="p">(),</span> <span class="n">res</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">Python CarePoint</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=LasLabs&repo=python-carepoint&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a href="https://travis-ci.org/LasLabs/python-carepoint">
+    <img
+        alt="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+        src="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../carepoint.html">carepoint package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../setup.html">setup module</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017 LasLabs Inc..
+      
+    </div>
+
+    
+    <a href="https://github.com/LasLabs/python-carepoint" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

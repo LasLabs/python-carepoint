@@ -1,0 +1,37 @@
+carepoint\.tests\.models package
+================================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    carepoint.tests.models.cph
+
+Submodules
+----------
+
+carepoint\.tests\.models\.test\_address\_mixin module
+-----------------------------------------------------
+
+.. automodule:: carepoint.tests.models.test_address_mixin
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.test\_phone\_mixin module
+---------------------------------------------------
+
+.. automodule:: carepoint.tests.models.test_phone_mixin
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: carepoint.tests.models
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,773 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>carepoint.tests.db.test_carepoint &#8212; Python CarePoint 0.1.8b658 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.1.8b658',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for carepoint.tests.db.test_carepoint</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright 2015-TODAY LasLabs Inc.</span>
+<span class="c1"># License MIT (https://opensource.org/licenses/MIT).</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">mock</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">contextmanager</span>
+
+<span class="kn">from</span> <span class="nn">carepoint</span> <span class="k">import</span> <span class="n">Carepoint</span>
+
+
+<div class="viewcode-block" id="EndTestException"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.EndTestException">[docs]</a><span class="k">class</span> <span class="nc">EndTestException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="CarepointTest"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest">[docs]</a><span class="k">class</span> <span class="nc">CarepointTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="n">MODEL_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;test_models&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CarepointTest.setUp"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.setUp">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.Db&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_mock</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cp_args</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;User&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;passwd&#39;</span><span class="p">:</span> <span class="s1">&#39;Passwd&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;server&#39;</span><span class="p">:</span> <span class="s1">&#39;Server&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">cp</span> <span class="o">=</span> <span class="n">Carepoint</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">cp_args</span><span class="p">)</span>
+        <span class="n">cp</span><span class="o">.</span><span class="n">register_model_dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MODEL_DIR</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span> <span class="o">=</span> <span class="n">cp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db_mock</span> <span class="o">=</span> <span class="n">db_mock</span></div>
+
+    <span class="k">def</span> <span class="nf">__get_model_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">find_models</span><span class="p">()</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">[</span><span class="s1">&#39;TestModel&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">model_obj</span>
+
+    <span class="nd">@contextmanager</span>
+    <span class="k">def</span> <span class="nf">__get_mock_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unwrapped</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;_get_model_session&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="n">enter</span><span class="p">,</span> <span class="n">session</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">(),</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">()</span>
+            <span class="n">enter</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">enter</span>
+            <span class="n">mk</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">session</span>
+            <span class="n">session</span><span class="o">.</span><span class="fm">__enter__</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">enter</span>
+            <span class="k">yield</span> <span class="n">enter</span> <span class="k">if</span> <span class="n">unwrapped</span> <span class="k">else</span> <span class="n">mk</span>
+
+    <span class="c1">#</span>
+    <span class="c1"># Test Initializations and other core stuff</span>
+    <span class="c1">#</span>
+
+<div class="viewcode-block" id="CarepointTest.test_carepoint_init"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_carepoint_init">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.Db&#39;</span><span class="p">)</span>
+    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.super&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_carepoint_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sup_mk</span><span class="p">,</span> <span class="n">db_mk</span><span class="p">):</span>
+        <span class="n">cp</span> <span class="o">=</span> <span class="n">Carepoint</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">cp_args</span><span class="p">)</span>
+        <span class="n">sup_mk</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">Carepoint</span><span class="p">,</span> <span class="n">cp</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_carepoint_initial_iter_refresh"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_carepoint_initial_iter_refresh">[docs]</a>    <span class="k">def</span> <span class="nf">test_carepoint_initial_iter_refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">iter_refresh</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_carepoint_assigns_instance_env"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_carepoint_assigns_instance_env">[docs]</a>    <span class="k">def</span> <span class="nf">test_carepoint_assigns_instance_env</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;cph&#39;</span><span class="p">],</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_cph_db_init"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_cph_db_init">[docs]</a>    <span class="k">def</span> <span class="nf">test_cph_db_init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">dbs</span><span class="p">[</span><span class="s1">&#39;cph&#39;</span><span class="p">]</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_cph_db_assign"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_cph_db_assign">[docs]</a>    <span class="k">def</span> <span class="nf">test_cph_db_assign</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">dbs</span><span class="p">[</span><span class="s1">&#39;cph&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_mock</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_carepoint_assigns_db_params"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_carepoint_assigns_db_params">[docs]</a>    <span class="k">def</span> <span class="nf">test_carepoint_assigns_db_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; It should assign the database params as an instance var &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">db_params</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_non_dir"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_non_dir">[docs]</a>    <span class="k">def</span> <span class="nf">test_non_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Test to make sure that an EnvironmentError is raised with an</span>
+<span class="sd">        invalid model dir</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">EnvironmentError</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">register_model_dir</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MODEL_DIR</span><span class="p">,</span> <span class="s1">&#39;not_a_dir&#39;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_model_import_getitem"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_model_import_getitem">[docs]</a>    <span class="k">def</span> <span class="nf">test_model_import_getitem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Test if model is correctly initialized &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">find_models</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;TestModel&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_model_import_getattr"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_model_import_getattr">[docs]</a>    <span class="k">def</span> <span class="nf">test_model_import_getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Test if model is correctly initialized &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">find_models</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;TestModel&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_model_methods"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_model_methods">[docs]</a>    <span class="k">def</span> <span class="nf">test_model_methods</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Test if model is correctly initialized &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">set_iter_refresh</span><span class="p">()</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">[</span><span class="s1">&#39;TestModel&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">model_obj</span><span class="o">.</span><span class="n">run</span><span class="p">())</span>  <span class="c1"># &lt; classmethods are exposed</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_init_env_clear"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_init_env_clear">[docs]</a>    <span class="k">def</span> <span class="nf">test_init_env_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; It should clear the global environment when True &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;dbs&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">dbs</span><span class="p">:</span>
+            <span class="n">dbs</span><span class="o">.</span><span class="n">clear</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">EndTestException</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">EndTestException</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_init_env</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
+
+    <span class="c1">#</span>
+    <span class="c1"># Test the session handler</span>
+    <span class="c1">#</span>
+
+<div class="viewcode-block" id="CarepointTest.test_get_model_session_gets_session"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_get_model_session_gets_session">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_model_session_gets_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; It should get session for the database &quot;&quot;&quot;</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;env&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">env</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_get_model_session</span><span class="p">(</span><span class="n">model_obj</span><span class="p">):</span>
+                <span class="k">pass</span>
+            <span class="n">env</span><span class="p">[</span><span class="n">model_obj</span><span class="o">.</span><span class="n">__dbname__</span><span class="p">]</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_get_model_session_yields_session"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_get_model_session_yields_session">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_model_session_yields_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; It should yield session for the database &quot;&quot;&quot;</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;env&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">env</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_get_model_session</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span> <span class="k">as</span> <span class="n">res</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                    <span class="n">env</span><span class="p">[</span><span class="n">model_obj</span><span class="o">.</span><span class="n">__dbname__</span><span class="p">](),</span>
+                    <span class="n">res</span><span class="p">,</span>
+                <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_get_model_session_commit"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_get_model_session_commit">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_model_session_commit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; It should commit session after yield &quot;&quot;&quot;</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;env&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">env</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_get_model_session</span><span class="p">(</span><span class="n">model_obj</span><span class="p">):</span>
+                <span class="k">pass</span>
+            <span class="n">env</span><span class="p">[</span><span class="n">model_obj</span><span class="o">.</span><span class="n">__dbname__</span><span class="p">]()</span><span class="o">.</span><span class="n">commit</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_get_model_session_rollback"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_get_model_session_rollback">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_model_session_rollback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; It should roll session back on error &quot;&quot;&quot;</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;env&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">env</span><span class="p">:</span>
+            <span class="n">env</span><span class="p">[</span><span class="n">model_obj</span><span class="o">.</span><span class="n">__dbname__</span><span class="p">]()</span><span class="o">.</span><span class="n">commit</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">EndTestException</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">EndTestException</span><span class="p">):</span>
+                <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_get_model_session</span><span class="p">(</span><span class="n">model_obj</span><span class="p">):</span>
+                    <span class="k">pass</span>
+            <span class="n">env</span><span class="p">[</span><span class="n">model_obj</span><span class="o">.</span><span class="n">__dbname__</span><span class="p">]()</span><span class="o">.</span><span class="n">rollback</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_get_model_session_close"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_get_model_session_close">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_model_session_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; It should always close session &quot;&quot;&quot;</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;env&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">env</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_get_model_session</span><span class="p">(</span><span class="n">model_obj</span><span class="p">):</span>
+                <span class="k">pass</span>
+            <span class="n">env</span><span class="p">[</span><span class="n">model_obj</span><span class="o">.</span><span class="n">__dbname__</span><span class="p">]()</span><span class="o">.</span><span class="n">close</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span></div>
+
+    <span class="c1">#</span>
+    <span class="c1"># Test the SMB handlers</span>
+    <span class="c1">#</span>
+
+<div class="viewcode-block" id="CarepointTest.test_smb_prefix"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_smb_prefix">[docs]</a>    <span class="k">def</span> <span class="nf">test_smb_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">expect</span> <span class="o">=</span> <span class="s1">&#39;smb://</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">@&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cp_args</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">],</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">cp_args</span><span class="p">[</span><span class="s1">&#39;passwd&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="n">expect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_smb_prefix</span><span class="p">,</span>
+            <span class="s1">&#39;SMB prefix not correct. Expect </span><span class="si">%s</span><span class="s1"> - Got </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">expect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_smb_prefix</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_get_file_builds_opener"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_get_file_builds_opener">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.urllib2&#39;</span><span class="p">)</span>
+    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.SMBHandler&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_get_file_builds_opener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">smb_mk</span><span class="p">,</span> <span class="n">url_mk</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span><span class="s1">&#39;expect&#39;</span><span class="p">)</span>
+        <span class="n">url_mk</span><span class="o">.</span><span class="n">build_opener</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">smb_mk</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_get_file_opens_uri"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_get_file_opens_uri">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.urllib2&#39;</span><span class="p">)</span>
+    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.SMBHandler&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_get_file_opens_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">smb_mk</span><span class="p">,</span> <span class="n">url_mk</span><span class="p">):</span>
+        <span class="n">expect</span> <span class="o">=</span> <span class="s1">&#39;Test&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span><span class="n">expect</span><span class="p">)</span>
+        <span class="n">url_mk</span><span class="o">.</span><span class="n">build_opener</span><span class="p">()</span><span class="o">.</span><span class="n">open</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span>
+            <span class="s1">&#39;</span><span class="si">%s%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_smb_prefix</span><span class="p">,</span> <span class="n">expect</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_get_file_returns_opened_handler"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_get_file_returns_opened_handler">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.urllib2&#39;</span><span class="p">)</span>
+    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.SMBHandler&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_get_file_returns_opened_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">smb_mk</span><span class="p">,</span> <span class="n">url_mk</span><span class="p">):</span>
+        <span class="n">expect</span> <span class="o">=</span> <span class="s1">&#39;Test&#39;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span><span class="n">expect</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="n">url_mk</span><span class="o">.</span><span class="n">build_opener</span><span class="p">()</span><span class="o">.</span><span class="n">open</span><span class="p">(),</span> <span class="n">res</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_send_file_builds_opener"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_send_file_builds_opener">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.urllib2&#39;</span><span class="p">)</span>
+    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.SMBHandler&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_send_file_builds_opener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">smb_mk</span><span class="p">,</span> <span class="n">url_mk</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">send_file</span><span class="p">(</span><span class="s1">&#39;expect&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">url_mk</span><span class="o">.</span><span class="n">build_opener</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">smb_mk</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_send_file_sends_file"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_send_file_sends_file">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.urllib2&#39;</span><span class="p">)</span>
+    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.SMBHandler&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_send_file_sends_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">smb_mk</span><span class="p">,</span> <span class="n">url_mk</span><span class="p">):</span>
+        <span class="n">expect</span> <span class="o">=</span> <span class="s1">&#39;Test&#39;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;data&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">send_file</span><span class="p">(</span><span class="n">expect</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="n">url_mk</span><span class="o">.</span><span class="n">build_opener</span><span class="p">()</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">()</span><span class="o">.</span><span class="n">open</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span>
+            <span class="s1">&#39;</span><span class="si">%s%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_smb_prefix</span><span class="p">,</span> <span class="n">expect</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_send_file_returns_true"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_send_file_returns_true">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.urllib2&#39;</span><span class="p">)</span>
+    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.SMBHandler&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_send_file_returns_true</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">smb_mk</span><span class="p">,</span> <span class="n">url_mk</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">send_file</span><span class="p">(</span><span class="s1">&#39;expect&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
+
+    <span class="c1">#</span>
+    <span class="c1"># Test the database convenience handlers</span>
+    <span class="c1">#</span>
+
+    <span class="c1"># Read</span>
+
+<div class="viewcode-block" id="CarepointTest.test_read_calls_query_with_model_obj"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_read_calls_query_with_model_obj">[docs]</a>    <span class="k">def</span> <span class="nf">test_read_calls_query_with_model_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">record_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">)</span>
+            <span class="n">mk</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_read_calls_get_with_record_id"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_read_calls_get_with_record_id">[docs]</a>    <span class="k">def</span> <span class="nf">test_read_calls_get_with_record_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">record_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="n">mk</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">query_mk</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">)</span>
+            <span class="n">query_mk</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">record_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_read_returns_response"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_read_returns_response">[docs]</a>    <span class="k">def</span> <span class="nf">test_read_returns_response</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">record_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">expect</span> <span class="o">=</span> <span class="s1">&#39;Response&#39;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="n">mk</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">query_mk</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">()</span>
+            <span class="n">query_mk</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">expect</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">expect</span><span class="p">)</span></div>
+
+    <span class="c1"># Search</span>
+<div class="viewcode-block" id="CarepointTest.test_search_calls_query_with_model_obj"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_search_calls_query_with_model_obj">[docs]</a>    <span class="k">def</span> <span class="nf">test_search_calls_query_with_model_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;test_col&#39;</span><span class="p">:</span> <span class="s1">&#39;Test&#39;</span><span class="p">}</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
+            <span class="n">mk</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_search_calls_filter_with_filters"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_search_calls_filter_with_filters">[docs]</a>    <span class="k">def</span> <span class="nf">test_search_calls_filter_with_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;test_col&#39;</span><span class="p">:</span> <span class="s1">&#39;Test&#39;</span><span class="p">}</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="n">mk</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">query_mk</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
+            <span class="n">query_mk</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span>
+                <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_unwrap_filters</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_search_calls_filter_when_no_filters"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_search_calls_filter_when_no_filters">[docs]</a>    <span class="k">def</span> <span class="nf">test_search_calls_filter_when_no_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="n">mk</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">query_mk</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span>
+            <span class="n">query_mk</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="o">**</span><span class="p">{})</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_search_returns_response"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_search_returns_response">[docs]</a>    <span class="k">def</span> <span class="nf">test_search_returns_response</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;test_col&#39;</span><span class="p">:</span> <span class="s1">&#39;Test&#39;</span><span class="p">}</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">read_mk</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                    <span class="n">read_mk</span><span class="p">(),</span>
+                    <span class="n">response</span><span class="p">,</span>
+                <span class="p">)</span></div>
+
+    <span class="c1"># Get Next Sequence</span>
+
+<div class="viewcode-block" id="CarepointTest.test_get_next_sequence_session"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_get_next_sequence_session">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_next_sequence_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; It should get session for db &quot;&quot;&quot;</span>
+        <span class="n">expect</span> <span class="o">=</span> <span class="s1">&#39;expect&#39;</span>
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;_get_session&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">get_next_sequence</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">expect</span><span class="p">)</span>
+            <span class="n">mk</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">expect</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_get_next_sequence_execute"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_get_next_sequence_execute">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.text&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_get_next_sequence_execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; It should execute stored procedure on connection &quot;&quot;&quot;</span>
+        <span class="n">expect</span> <span class="o">=</span> <span class="s1">&#39;expect&#39;</span>
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;_get_session&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">get_next_sequence</span><span class="p">(</span><span class="n">expect</span><span class="p">)</span>
+            <span class="n">mk</span><span class="p">()</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">()</span><span class="o">.</span><span class="n">connection</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span>
+                <span class="n">text</span><span class="p">(),</span> <span class="n">seq_name</span><span class="o">=</span><span class="n">expect</span><span class="p">,</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_get_next_sequence_fetch"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_get_next_sequence_fetch">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_next_sequence_fetch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; It should return result of fetch &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;_get_session&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">get_next_sequence</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">expect</span> <span class="o">=</span> <span class="n">mk</span><span class="p">()</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">()</span><span class="o">.</span><span class="n">connection</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="n">expect</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span>
+            <span class="p">)</span></div>
+
+    <span class="c1"># Create</span>
+<div class="viewcode-block" id="CarepointTest.test_create_calls_get_model_session_with_model_obj"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_create_calls_get_model_session_with_model_obj">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_calls_get_model_session_with_model_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">()</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="n">mk</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_create_initializes_new_model_obj_with_vals"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_create_initializes_new_model_obj_with_vals">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_initializes_new_model_obj_with_vals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;test_col&#39;</span><span class="p">:</span> <span class="s1">&#39;Test&#39;</span><span class="p">}</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">vals</span><span class="p">)</span>
+            <span class="n">model_obj</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="o">**</span><span class="n">vals</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_create_adds_new_record_to_session"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_create_adds_new_record_to_session">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_adds_new_record_to_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">response_expect</span> <span class="o">=</span> <span class="s1">&#39;ResponseExpect&#39;</span>
+        <span class="n">model_obj</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">response_expect</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;test_col&#39;</span><span class="p">:</span> <span class="s1">&#39;Test&#39;</span><span class="p">}</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">vals</span><span class="p">)</span>
+            <span class="n">mk</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">response_expect</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_create_returns_new_record"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_create_returns_new_record">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_returns_new_record</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">response_expect</span> <span class="o">=</span> <span class="s1">&#39;ResponseExpect&#39;</span>
+        <span class="n">model_obj</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">response_expect</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;test_col&#39;</span><span class="p">:</span> <span class="s1">&#39;Test&#39;</span><span class="p">}</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">vals</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">response_expect</span><span class="p">)</span></div>
+
+    <span class="c1"># Update</span>
+<div class="viewcode-block" id="CarepointTest.test_update_calls_get_model_session_with_model_obj"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_update_calls_get_model_session_with_model_obj">[docs]</a>    <span class="k">def</span> <span class="nf">test_update_calls_get_model_session_with_model_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">record_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">,</span> <span class="p">{})</span>
+                <span class="n">mk</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_update_calls_read_with_model_and_record_id"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_update_calls_read_with_model_and_record_id">[docs]</a>    <span class="k">def</span> <span class="nf">test_update_calls_read_with_model_and_record_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">record_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;test_col&#39;</span><span class="p">:</span> <span class="s1">&#39;Test&#39;</span><span class="p">}</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">():</span>
+            <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">read_mk</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">,</span> <span class="n">vals</span><span class="p">)</span>
+                <span class="n">read_mk</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_update_calls_update_with_vals"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_update_calls_update_with_vals">[docs]</a>    <span class="k">def</span> <span class="nf">test_update_calls_update_with_vals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">record_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;test_col&#39;</span><span class="p">:</span> <span class="s1">&#39;Test&#39;</span><span class="p">}</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="n">mk</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">query_mk</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">()</span>
+            <span class="n">query_mk</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">get_mk</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">,</span> <span class="n">vals</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="n">mk</span><span class="p">()</span><span class="o">.</span><span class="n">query</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">test_col</span><span class="p">,</span>
+                <span class="n">get_mk</span><span class="o">.</span><span class="n">test_col</span><span class="p">,</span>
+                <span class="s1">&#39;Record attribute was not updated. Expect Test, Got </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="n">get_mk</span><span class="o">.</span><span class="n">test_col</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_update_returns_record"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_update_returns_record">[docs]</a>    <span class="k">def</span> <span class="nf">test_update_returns_record</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">record_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;test_col&#39;</span><span class="p">:</span> <span class="s1">&#39;Test&#39;</span><span class="p">}</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">read</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">,</span> <span class="n">vals</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">read</span><span class="p">(),</span> <span class="n">response</span><span class="p">)</span></div>
+
+    <span class="c1"># Delete</span>
+<div class="viewcode-block" id="CarepointTest.test_delete_calls_get_model_session_with_model_obj"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_delete_calls_get_model_session_with_model_obj">[docs]</a>    <span class="k">def</span> <span class="nf">test_delete_calls_get_model_session_with_model_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">record_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">read_mk</span><span class="p">:</span>
+                <span class="n">read_mk</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">read_mk</span>
+                <span class="n">read_mk</span><span class="o">.</span><span class="n">count</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">)</span>
+                <span class="n">mk</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_delete_calls_read_with_model_and_record_id"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_delete_calls_read_with_model_and_record_id">[docs]</a>    <span class="k">def</span> <span class="nf">test_delete_calls_read_with_model_and_record_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">record_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">():</span>
+            <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">read_mk</span><span class="p">:</span>
+                <span class="n">read_mk</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">read_mk</span>
+                <span class="n">read_mk</span><span class="o">.</span><span class="n">count</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">)</span>
+                <span class="n">read_mk</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_delete_asserts_result_count_eq_1"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_delete_asserts_result_count_eq_1">[docs]</a>    <span class="k">def</span> <span class="nf">test_delete_asserts_result_count_eq_1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">record_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">():</span>
+            <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">read_mk</span><span class="p">:</span>
+                <span class="n">read_mk</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">read_mk</span>
+                <span class="n">read_mk</span><span class="o">.</span><span class="n">count</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">2</span>
+                <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">AssertionError</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_delete_calls_session_delete_with_record_result"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_delete_calls_session_delete_with_record_result">[docs]</a>    <span class="k">def</span> <span class="nf">test_delete_calls_session_delete_with_record_result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">record_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">expect_return</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">MagicMock</span><span class="p">()</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">read_mk</span><span class="p">:</span>
+                <span class="n">read_mk</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">expect_return</span>
+                <span class="n">expect_return</span><span class="o">.</span><span class="n">count</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">)</span>
+                <span class="n">mk</span><span class="o">.</span><span class="n">delete</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">expect_return</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_delete_returns_false_on_no_records"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_delete_returns_false_on_no_records">[docs]</a>    <span class="k">def</span> <span class="nf">test_delete_returns_false_on_no_records</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">record_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">():</span>
+            <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">read_mk</span><span class="p">:</span>
+                <span class="n">read_mk</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">read_mk</span>
+                <span class="n">read_mk</span><span class="o">.</span><span class="n">count</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">response</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_delete_returns_true_on_delete"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_delete_returns_true_on_delete">[docs]</a>    <span class="k">def</span> <span class="nf">test_delete_returns_true_on_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">record_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_mock_session</span><span class="p">():</span>
+            <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">read_mk</span><span class="p">:</span>
+                <span class="n">read_mk</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">read_mk</span>
+                <span class="n">read_mk</span><span class="o">.</span><span class="n">count</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">record_id</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">response</span><span class="p">)</span></div>
+
+    <span class="c1">#</span>
+    <span class="c1"># Test filter criterion generators</span>
+    <span class="c1">#</span>
+
+    <span class="k">def</span> <span class="nf">__setup_criterion_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operator</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;Query&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">find_models</span><span class="p">()</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">[</span><span class="s1">&#39;TestModel&#39;</span><span class="p">]</span>
+        <span class="n">attr_name</span> <span class="o">=</span> <span class="s1">&#39;test_col&#39;</span>
+        <span class="n">col_obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">col_obj</span><span class="p">,</span> <span class="n">model_obj</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">operator</span><span class="p">,</span> <span class="n">query</span><span class="p">]</span>
+
+<div class="viewcode-block" id="CarepointTest.test_create_criterion_returns_correct_double_eq"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_create_criterion_returns_correct_double_eq">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_criterion_returns_correct_double_eq</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__setup_criterion_test</span><span class="p">(</span><span class="s1">&#39;==&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_create_criterion</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]),</span>
+            <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_create_criterion_returns_correct_eq"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_create_criterion_returns_correct_eq">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_criterion_returns_correct_eq</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__setup_criterion_test</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_create_criterion</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]),</span>
+            <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_create_criterion_returns_correct_lt"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_create_criterion_returns_correct_lt">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_criterion_returns_correct_lt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__setup_criterion_test</span><span class="p">(</span><span class="s1">&#39;&lt;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_create_criterion</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]),</span>
+            <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_create_criterion_returns_correct_le"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_create_criterion_returns_correct_le">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_criterion_returns_correct_le</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__setup_criterion_test</span><span class="p">(</span><span class="s1">&#39;&lt;=&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_create_criterion</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]),</span>
+            <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_create_criterion_returns_correct_gt"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_create_criterion_returns_correct_gt">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_criterion_returns_correct_gt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__setup_criterion_test</span><span class="p">(</span><span class="s1">&#39;&gt;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_create_criterion</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]),</span>
+            <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_create_criterion_returns_correct_ge"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_create_criterion_returns_correct_ge">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_criterion_returns_correct_ge</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__setup_criterion_test</span><span class="p">(</span><span class="s1">&#39;&gt;=&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_create_criterion</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]),</span>
+            <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_create_criterion_raises_not_implemented_error"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_create_criterion_raises_not_implemented_error">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_criterion_raises_not_implemented_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__setup_criterion_test</span><span class="p">(</span><span class="s1">&#39;===&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_create_criterion</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_create_criterion_raises_attribute_error"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_create_criterion_raises_attribute_error">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_criterion_raises_attribute_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__setup_criterion_test</span><span class="p">(</span><span class="s1">&#39;==&#39;</span><span class="p">)</span>
+        <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Nope&#39;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">AttributeError</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_create_criterion</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span></div>
+
+    <span class="c1">#</span>
+    <span class="c1"># Test filter dictionary unwrapping</span>
+    <span class="c1">#</span>
+
+<div class="viewcode-block" id="CarepointTest.test_unwrap_filters_empty"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_unwrap_filters_empty">[docs]</a>    <span class="k">def</span> <span class="nf">test_unwrap_filters_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">expect</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_unwrap_filters</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="p">{}),</span> <span class="n">expect</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_unwrap_filters_none"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_unwrap_filters_none">[docs]</a>    <span class="k">def</span> <span class="nf">test_unwrap_filters_none</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">expect</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_unwrap_filters</span><span class="p">(</span><span class="n">model_obj</span><span class="p">),</span> <span class="n">expect</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_unwrap_filters_dict"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_unwrap_filters_dict">[docs]</a>    <span class="k">def</span> <span class="nf">test_unwrap_filters_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">col_expect</span> <span class="o">=</span> <span class="s1">&#39;test_col&#39;</span>
+        <span class="n">query_expect</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;test_1&#39;</span><span class="p">,</span> <span class="s1">&#39;test_2&#39;</span><span class="p">,</span> <span class="p">]</span>
+        <span class="n">ops_expect</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&gt;=&#39;</span><span class="p">,</span> <span class="s1">&#39;==&#39;</span><span class="p">,</span> <span class="p">]</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">col_expect</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">ops_expect</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">query_expect</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">ops_expect</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">query_expect</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">expect</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">mock</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">col_expect</span><span class="p">,</span> <span class="n">ops_expect</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">query_expect</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="n">mock</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">col_expect</span><span class="p">,</span> <span class="n">ops_expect</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">query_expect</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+        <span class="p">]</span>
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;_create_criterion&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_unwrap_filters</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
+            <span class="n">mk</span><span class="o">.</span><span class="n">assert_has_calls</span><span class="p">(</span><span class="n">expect</span><span class="p">,</span> <span class="n">any_order</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_unwrap_filters_list"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_unwrap_filters_list">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;carepoint.db.carepoint.or_&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_unwrap_filters_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">or_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; It should create a proper or query for lists. &quot;&quot;&quot;</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">col_expect</span> <span class="o">=</span> <span class="s1">&#39;test_col&#39;</span>
+        <span class="n">query_expect</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;test_1&#39;</span><span class="p">,</span> <span class="s1">&#39;test_2&#39;</span><span class="p">]</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">col_expect</span><span class="p">:</span> <span class="n">query_expect</span>
+        <span class="p">}</span>
+        <span class="n">expect</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">mock</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">col_expect</span><span class="p">,</span> <span class="s1">&#39;==&#39;</span><span class="p">,</span> <span class="n">query_expect</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="n">mock</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">col_expect</span><span class="p">,</span> <span class="s1">&#39;==&#39;</span><span class="p">,</span> <span class="n">query_expect</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+        <span class="p">]</span>
+        <span class="n">criterion_return</span> <span class="o">=</span> <span class="s1">&#39;Criterion&#39;</span>
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;_create_criterion&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="n">mk</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">criterion_return</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_unwrap_filters</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
+            <span class="n">mk</span><span class="o">.</span><span class="n">assert_has_calls</span><span class="p">(</span><span class="n">expect</span><span class="p">,</span> <span class="n">any_order</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">or_</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">criterion_return</span><span class="p">,</span> <span class="n">criterion_return</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_unwrap_filters_str"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_unwrap_filters_str">[docs]</a>    <span class="k">def</span> <span class="nf">test_unwrap_filters_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="n">col_expect</span> <span class="o">=</span> <span class="s1">&#39;test_col&#39;</span>
+        <span class="n">query_expect</span> <span class="o">=</span> <span class="s1">&#39;test_1&#39;</span>
+        <span class="n">op_expect</span> <span class="o">=</span> <span class="s1">&#39;==&#39;</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="p">{</span><span class="n">col_expect</span><span class="p">:</span> <span class="n">query_expect</span><span class="p">}</span>
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">,</span> <span class="s1">&#39;_create_criterion&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mk</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_unwrap_filters</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
+            <span class="n">mk</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span>
+                <span class="n">model_obj</span><span class="p">,</span> <span class="n">col_expect</span><span class="p">,</span> <span class="n">op_expect</span><span class="p">,</span> <span class="n">query_expect</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_unwrap_filters_returns_list"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_unwrap_filters_returns_list">[docs]</a>    <span class="k">def</span> <span class="nf">test_unwrap_filters_returns_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_model_obj</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">_unwrap_filters</span><span class="p">(</span><span class="n">model_obj</span><span class="p">),</span> <span class="nb">list</span>
+        <span class="p">)</span></div>
+
+    <span class="c1">#</span>
+    <span class="c1"># Test dictionary overrides for model lookups</span>
+    <span class="c1">#</span>
+
+<div class="viewcode-block" id="CarepointTest.test_iter_init_empty"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_iter_init_empty">[docs]</a>    <span class="k">def</span> <span class="nf">test_iter_init_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">]),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_values_init_empty"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_values_init_empty">[docs]</a>    <span class="k">def</span> <span class="nf">test_values_init_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_keys_init_empty"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_keys_init_empty">[docs]</a>    <span class="k">def</span> <span class="nf">test_keys_init_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_items_init_empty"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_items_init_empty">[docs]</a>    <span class="k">def</span> <span class="nf">test_items_init_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_iteritems_init_empty"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_iteritems_init_empty">[docs]</a>    <span class="k">def</span> <span class="nf">test_iteritems_init_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()]),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_itervalues_init_empty"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_itervalues_init_empty">[docs]</a>    <span class="k">def</span> <span class="nf">test_itervalues_init_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">itervalues</span><span class="p">()]),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_iterkeys_init_empty"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_iterkeys_init_empty">[docs]</a>    <span class="k">def</span> <span class="nf">test_iterkeys_init_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">()]),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_set_iter_refresh"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_set_iter_refresh">[docs]</a>    <span class="k">def</span> <span class="nf">test_set_iter_refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">set_iter_refresh</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">iter_refresh</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_iter_after_refresh"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_iter_after_refresh">[docs]</a>    <span class="k">def</span> <span class="nf">test_iter_after_refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">set_iter_refresh</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_values_after_refresh"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_values_after_refresh">[docs]</a>    <span class="k">def</span> <span class="nf">test_values_after_refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">set_iter_refresh</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_keys_after_refresh"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_keys_after_refresh">[docs]</a>    <span class="k">def</span> <span class="nf">test_keys_after_refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">set_iter_refresh</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_items_after_refresh"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_items_after_refresh">[docs]</a>    <span class="k">def</span> <span class="nf">test_items_after_refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">set_iter_refresh</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_iteritems_after_refresh"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_iteritems_after_refresh">[docs]</a>    <span class="k">def</span> <span class="nf">test_iteritems_after_refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">set_iter_refresh</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()]),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_itervalues_after_refresh"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_itervalues_after_refresh">[docs]</a>    <span class="k">def</span> <span class="nf">test_itervalues_after_refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">set_iter_refresh</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">itervalues</span><span class="p">()]),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_iterkeys_after_refresh"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_iterkeys_after_refresh">[docs]</a>    <span class="k">def</span> <span class="nf">test_iterkeys_after_refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">set_iter_refresh</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">()]),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_wrong_model_getitem"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_wrong_model_getitem">[docs]</a>    <span class="k">def</span> <span class="nf">test_wrong_model_getitem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Test to verify that a KeyError is raised for invalid model name &#39;&#39;&#39;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">set_iter_refresh</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="p">[</span><span class="s1">&#39;ThisIsNotAModelThatExists&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="CarepointTest.test_wrong_model_getattr"><a class="viewcode-back" href="../../../../carepoint.tests.db.html#carepoint.tests.db.test_carepoint.CarepointTest.test_wrong_model_getattr">[docs]</a>    <span class="k">def</span> <span class="nf">test_wrong_model_getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Test to verify that a KeyError is raised for invalid model name &#39;&#39;&#39;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">AttributeError</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">set_iter_refresh</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carepoint</span><span class="o">.</span><span class="n">ThisIsNotAModelThatExists</span></div></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">Python CarePoint</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=LasLabs&repo=python-carepoint&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a href="https://travis-ci.org/LasLabs/python-carepoint">
+    <img
+        alt="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+        src="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../carepoint.html">carepoint package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../setup.html">setup module</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017 LasLabs Inc..
+      
+    </div>
+
+    
+    <a href="https://github.com/LasLabs/python-carepoint" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

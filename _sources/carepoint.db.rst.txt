@@ -1,0 +1,30 @@
+carepoint\.db package
+=====================
+
+Submodules
+----------
+
+carepoint\.db\.carepoint module
+-------------------------------
+
+.. automodule:: carepoint.db.carepoint
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.db\.db module
+------------------------
+
+.. automodule:: carepoint.db.db
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: carepoint.db
+    :members:
+    :undoc-members:
+    :show-inheritance:

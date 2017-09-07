@@ -1,0 +1,142 @@
+carepoint\.tests\.models\.cph\.fixtures package
+===============================================
+
+Submodules
+----------
+
+carepoint\.tests\.models\.cph\.fixtures\.address module
+-------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures.address
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.fixtures\.dispense module
+--------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures.dispense
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.fixtures\.doctor module
+------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures.doctor
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.fixtures\.fdb\_form module
+---------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures.fdb_form
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.fixtures\.fdb\_gcn module
+--------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures.fdb_gcn
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.fixtures\.fdb\_gcn\_seq module
+-------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures.fdb_gcn_seq
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.fixtures\.fdb\_lbl\_rid module
+-------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures.fdb_lbl_rid
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.fixtures\.fdb\_ndc module
+--------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures.fdb_ndc
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.fixtures\.fdb\_ndc\_cs\_ext module
+-----------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures.fdb_ndc_cs_ext
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.fixtures\.fdb\_route module
+----------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures.fdb_route
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.fixtures\.item module
+----------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures.item
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.fixtures\.patient module
+-------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures.patient
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.fixtures\.prescription module
+------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures.prescription
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.fixtures\.store module
+-----------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures.store
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.fixtures\.store\_param module
+------------------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures.store_param
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.models\.cph\.fixtures\.user module
+----------------------------------------------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures.user
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: carepoint.tests.models.cph.fixtures
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,990 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>carepoint.tests.models.cph package &#8212; Python CarePoint 0.1.8b658 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.8b658',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="carepoint.tests.models.cph.fixtures package" href="carepoint.tests.models.cph.fixtures.html" />
+    <link rel="prev" title="carepoint.tests.models package" href="carepoint.tests.models.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="carepoint-tests-models-cph-package">
+<h1>carepoint.tests.models.cph package<a class="headerlink" href="#carepoint-tests-models-cph-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html">carepoint.tests.models.cph.fixtures package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#carepoint-tests-models-cph-fixtures-address-module">carepoint.tests.models.cph.fixtures.address module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#carepoint-tests-models-cph-fixtures-dispense-module">carepoint.tests.models.cph.fixtures.dispense module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#carepoint-tests-models-cph-fixtures-doctor-module">carepoint.tests.models.cph.fixtures.doctor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#carepoint-tests-models-cph-fixtures-fdb-form-module">carepoint.tests.models.cph.fixtures.fdb_form module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#carepoint-tests-models-cph-fixtures-fdb-gcn-module">carepoint.tests.models.cph.fixtures.fdb_gcn module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#carepoint-tests-models-cph-fixtures-fdb-gcn-seq-module">carepoint.tests.models.cph.fixtures.fdb_gcn_seq module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#carepoint-tests-models-cph-fixtures-fdb-lbl-rid-module">carepoint.tests.models.cph.fixtures.fdb_lbl_rid module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#carepoint-tests-models-cph-fixtures-fdb-ndc-module">carepoint.tests.models.cph.fixtures.fdb_ndc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#carepoint-tests-models-cph-fixtures-fdb-ndc-cs-ext-module">carepoint.tests.models.cph.fixtures.fdb_ndc_cs_ext module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#carepoint-tests-models-cph-fixtures-fdb-route-module">carepoint.tests.models.cph.fixtures.fdb_route module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#carepoint-tests-models-cph-fixtures-item-module">carepoint.tests.models.cph.fixtures.item module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#carepoint-tests-models-cph-fixtures-patient-module">carepoint.tests.models.cph.fixtures.patient module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#carepoint-tests-models-cph-fixtures-prescription-module">carepoint.tests.models.cph.fixtures.prescription module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#carepoint-tests-models-cph-fixtures-store-module">carepoint.tests.models.cph.fixtures.store module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#carepoint-tests-models-cph-fixtures-store-param-module">carepoint.tests.models.cph.fixtures.store_param module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#carepoint-tests-models-cph-fixtures-user-module">carepoint.tests.models.cph.fixtures.user module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.tests.models.cph.fixtures.html#module-carepoint.tests.models.cph.fixtures">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_account">
+<span id="carepoint-tests-models-cph-test-account-module"></span><h2>carepoint.tests.models.cph.test_account module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_account" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_account.TestModelsCphAccount">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_account.</code><code class="descname">TestModelsCphAccount</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_account.html#TestModelsCphAccount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_account.TestModelsCphAccount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_account.TestModelsCphAccount.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_account.html#TestModelsCphAccount.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_account.TestModelsCphAccount.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_account_activity">
+<span id="carepoint-tests-models-cph-test-account-activity-module"></span><h2>carepoint.tests.models.cph.test_account_activity module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_account_activity" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_account_activity.TestModelsCphAccountActivity">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_account_activity.</code><code class="descname">TestModelsCphAccountActivity</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_account_activity.html#TestModelsCphAccountActivity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_account_activity.TestModelsCphAccountActivity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_account_activity.TestModelsCphAccountActivity.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_account_activity.html#TestModelsCphAccountActivity.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_account_activity.TestModelsCphAccountActivity.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_address">
+<span id="carepoint-tests-models-cph-test-address-module"></span><h2>carepoint.tests.models.cph.test_address module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_address" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_address.TestModelsCphAddress">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_address.</code><code class="descname">TestModelsCphAddress</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_address.html#TestModelsCphAddress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_address.TestModelsCphAddress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_address.TestModelsCphAddress.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_address.html#TestModelsCphAddress.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_address.TestModelsCphAddress.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_dispense">
+<span id="carepoint-tests-models-cph-test-dispense-module"></span><h2>carepoint.tests.models.cph.test_dispense module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_dispense" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_dispense.TestModelsCphDispense">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_dispense.</code><code class="descname">TestModelsCphDispense</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_dispense.html#TestModelsCphDispense"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_dispense.TestModelsCphDispense" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_dispense.TestModelsCphDispense.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_dispense.html#TestModelsCphDispense.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_dispense.TestModelsCphDispense.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_dispense_price">
+<span id="carepoint-tests-models-cph-test-dispense-price-module"></span><h2>carepoint.tests.models.cph.test_dispense_price module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_dispense_price" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_dispense_price.TestModelsCphDispensePrice">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_dispense_price.</code><code class="descname">TestModelsCphDispensePrice</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_dispense_price.html#TestModelsCphDispensePrice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_dispense_price.TestModelsCphDispensePrice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_dispense_price.TestModelsCphDispensePrice.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_dispense_price.html#TestModelsCphDispensePrice.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_dispense_price.TestModelsCphDispensePrice.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_doctor">
+<span id="carepoint-tests-models-cph-test-doctor-module"></span><h2>carepoint.tests.models.cph.test_doctor module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_doctor" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_doctor.TestModelsCphDoctor">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_doctor.</code><code class="descname">TestModelsCphDoctor</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_doctor.html#TestModelsCphDoctor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_doctor.TestModelsCphDoctor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_doctor.TestModelsCphDoctor.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_doctor.html#TestModelsCphDoctor.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_doctor.TestModelsCphDoctor.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_doctor_address">
+<span id="carepoint-tests-models-cph-test-doctor-address-module"></span><h2>carepoint.tests.models.cph.test_doctor_address module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_doctor_address" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_doctor_address.TestModelsCphDoctorAddress">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_doctor_address.</code><code class="descname">TestModelsCphDoctorAddress</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_doctor_address.html#TestModelsCphDoctorAddress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_doctor_address.TestModelsCphDoctorAddress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_doctor_address.TestModelsCphDoctorAddress.test_addr_mixin_col">
+<code class="descname">test_addr_mixin_col</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_doctor_address.html#TestModelsCphDoctorAddress.test_addr_mixin_col"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_doctor_address.TestModelsCphDoctorAddress.test_addr_mixin_col" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_doctor_address.TestModelsCphDoctorAddress.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_doctor_address.html#TestModelsCphDoctorAddress.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_doctor_address.TestModelsCphDoctorAddress.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_doctor_phone">
+<span id="carepoint-tests-models-cph-test-doctor-phone-module"></span><h2>carepoint.tests.models.cph.test_doctor_phone module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_doctor_phone" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_doctor_phone.TestModelsCphDoctorPhone">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_doctor_phone.</code><code class="descname">TestModelsCphDoctorPhone</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_doctor_phone.html#TestModelsCphDoctorPhone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_doctor_phone.TestModelsCphDoctorPhone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_doctor_phone.TestModelsCphDoctorPhone.test_phone_mixin_col">
+<code class="descname">test_phone_mixin_col</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_doctor_phone.html#TestModelsCphDoctorPhone.test_phone_mixin_col"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_doctor_phone.TestModelsCphDoctorPhone.test_phone_mixin_col" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_doctor_phone.TestModelsCphDoctorPhone.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_doctor_phone.html#TestModelsCphDoctorPhone.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_doctor_phone.TestModelsCphDoctorPhone.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_allergen">
+<span id="carepoint-tests-models-cph-test-fdb-allergen-module"></span><h2>carepoint.tests.models.cph.test_fdb_allergen module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_allergen" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_allergen.TestModelsCphFdbAllergen">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_allergen.</code><code class="descname">TestModelsCphFdbAllergen</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_allergen.html#TestModelsCphFdbAllergen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_allergen.TestModelsCphFdbAllergen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_allergen.TestModelsCphFdbAllergen.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_allergen.html#TestModelsCphFdbAllergen.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_allergen.TestModelsCphFdbAllergen.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_allergen_desc">
+<span id="carepoint-tests-models-cph-test-fdb-allergen-desc-module"></span><h2>carepoint.tests.models.cph.test_fdb_allergen_desc module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_allergen_desc" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_allergen_desc.TestModelsCphFdbAllergenDesc">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_allergen_desc.</code><code class="descname">TestModelsCphFdbAllergenDesc</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_allergen_desc.html#TestModelsCphFdbAllergenDesc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_allergen_desc.TestModelsCphFdbAllergenDesc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_allergen_desc.TestModelsCphFdbAllergenDesc.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_allergen_desc.html#TestModelsCphFdbAllergenDesc.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_allergen_desc.TestModelsCphFdbAllergenDesc.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_allergen_group">
+<span id="carepoint-tests-models-cph-test-fdb-allergen-group-module"></span><h2>carepoint.tests.models.cph.test_fdb_allergen_group module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_allergen_group" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_allergen_group.TestModelsCphFdbAllergenGroup">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_allergen_group.</code><code class="descname">TestModelsCphFdbAllergenGroup</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_allergen_group.html#TestModelsCphFdbAllergenGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_allergen_group.TestModelsCphFdbAllergenGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_allergen_group.TestModelsCphFdbAllergenGroup.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_allergen_group.html#TestModelsCphFdbAllergenGroup.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_allergen_group.TestModelsCphFdbAllergenGroup.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_allergen_rel">
+<span id="carepoint-tests-models-cph-test-fdb-allergen-rel-module"></span><h2>carepoint.tests.models.cph.test_fdb_allergen_rel module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_allergen_rel" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_allergen_rel.TestModelsCphFdbAllergenRel">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_allergen_rel.</code><code class="descname">TestModelsCphFdbAllergenRel</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_allergen_rel.html#TestModelsCphFdbAllergenRel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_allergen_rel.TestModelsCphFdbAllergenRel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_allergen_rel.TestModelsCphFdbAllergenRel.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_allergen_rel.html#TestModelsCphFdbAllergenRel.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_allergen_rel.TestModelsCphFdbAllergenRel.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_attr">
+<span id="carepoint-tests-models-cph-test-fdb-attr-module"></span><h2>carepoint.tests.models.cph.test_fdb_attr module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_attr" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_attr.TestModelsCphFdbAttr">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_attr.</code><code class="descname">TestModelsCphFdbAttr</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_attr.html#TestModelsCphFdbAttr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_attr.TestModelsCphFdbAttr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_attr.TestModelsCphFdbAttr.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_attr.html#TestModelsCphFdbAttr.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_attr.TestModelsCphFdbAttr.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_attr_base">
+<span id="carepoint-tests-models-cph-test-fdb-attr-base-module"></span><h2>carepoint.tests.models.cph.test_fdb_attr_base module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_attr_base" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_attr_base.TestModelsCphFdbAttrBase">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_attr_base.</code><code class="descname">TestModelsCphFdbAttrBase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_attr_base.html#TestModelsCphFdbAttrBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_attr_base.TestModelsCphFdbAttrBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_attr_base.TestModelsCphFdbAttrBase.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_attr_base.html#TestModelsCphFdbAttrBase.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_attr_base.TestModelsCphFdbAttrBase.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_attr_type">
+<span id="carepoint-tests-models-cph-test-fdb-attr-type-module"></span><h2>carepoint.tests.models.cph.test_fdb_attr_type module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_attr_type" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_attr_type.TestModelsCphFdbAttrType">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_attr_type.</code><code class="descname">TestModelsCphFdbAttrType</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_attr_type.html#TestModelsCphFdbAttrType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_attr_type.TestModelsCphFdbAttrType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_attr_type.TestModelsCphFdbAttrType.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_attr_type.html#TestModelsCphFdbAttrType.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_attr_type.TestModelsCphFdbAttrType.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_form">
+<span id="carepoint-tests-models-cph-test-fdb-form-module"></span><h2>carepoint.tests.models.cph.test_fdb_form module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_form" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_form.TestModelsCphFdbForm">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_form.</code><code class="descname">TestModelsCphFdbForm</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_form.html#TestModelsCphFdbForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_form.TestModelsCphFdbForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_form.TestModelsCphFdbForm.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_form.html#TestModelsCphFdbForm.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_form.TestModelsCphFdbForm.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_gcn">
+<span id="carepoint-tests-models-cph-test-fdb-gcn-module"></span><h2>carepoint.tests.models.cph.test_fdb_gcn module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_gcn" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_gcn.TestModelsCphFdbGcn">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_gcn.</code><code class="descname">TestModelsCphFdbGcn</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_gcn.html#TestModelsCphFdbGcn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_gcn.TestModelsCphFdbGcn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_gcn.TestModelsCphFdbGcn.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_gcn.html#TestModelsCphFdbGcn.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_gcn.TestModelsCphFdbGcn.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_gcn_seq">
+<span id="carepoint-tests-models-cph-test-fdb-gcn-seq-module"></span><h2>carepoint.tests.models.cph.test_fdb_gcn_seq module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_gcn_seq" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_gcn_seq.TestModelsCphFdbGcnSeq">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_gcn_seq.</code><code class="descname">TestModelsCphFdbGcnSeq</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_gcn_seq.html#TestModelsCphFdbGcnSeq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_gcn_seq.TestModelsCphFdbGcnSeq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_gcn_seq.TestModelsCphFdbGcnSeq.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_gcn_seq.html#TestModelsCphFdbGcnSeq.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_gcn_seq.TestModelsCphFdbGcnSeq.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_img">
+<span id="carepoint-tests-models-cph-test-fdb-img-module"></span><h2>carepoint.tests.models.cph.test_fdb_img module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_img" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_img.TestModelsCphFdbImg">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_img.</code><code class="descname">TestModelsCphFdbImg</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_img.html#TestModelsCphFdbImg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_img.TestModelsCphFdbImg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_img.TestModelsCphFdbImg.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_img.html#TestModelsCphFdbImg.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_img.TestModelsCphFdbImg.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_img_date">
+<span id="carepoint-tests-models-cph-test-fdb-img-date-module"></span><h2>carepoint.tests.models.cph.test_fdb_img_date module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_img_date" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_img_date.TestModelsCphFdbImgDate">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_img_date.</code><code class="descname">TestModelsCphFdbImgDate</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_img_date.html#TestModelsCphFdbImgDate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_img_date.TestModelsCphFdbImgDate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_img_date.TestModelsCphFdbImgDate.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_img_date.html#TestModelsCphFdbImgDate.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_img_date.TestModelsCphFdbImgDate.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_img_id">
+<span id="carepoint-tests-models-cph-test-fdb-img-id-module"></span><h2>carepoint.tests.models.cph.test_fdb_img_id module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_img_id" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_img_id.TestModelsCphFdbImgId">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_img_id.</code><code class="descname">TestModelsCphFdbImgId</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_img_id.html#TestModelsCphFdbImgId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_img_id.TestModelsCphFdbImgId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_img_id.TestModelsCphFdbImgId.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_img_id.html#TestModelsCphFdbImgId.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_img_id.TestModelsCphFdbImgId.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_img_mfg">
+<span id="carepoint-tests-models-cph-test-fdb-img-mfg-module"></span><h2>carepoint.tests.models.cph.test_fdb_img_mfg module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_img_mfg" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_img_mfg.TestModelsCphFdbImgMfg">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_img_mfg.</code><code class="descname">TestModelsCphFdbImgMfg</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_img_mfg.html#TestModelsCphFdbImgMfg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_img_mfg.TestModelsCphFdbImgMfg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_img_mfg.TestModelsCphFdbImgMfg.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_img_mfg.html#TestModelsCphFdbImgMfg.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_img_mfg.TestModelsCphFdbImgMfg.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_lbl_rid">
+<span id="carepoint-tests-models-cph-test-fdb-lbl-rid-module"></span><h2>carepoint.tests.models.cph.test_fdb_lbl_rid module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_lbl_rid" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_lbl_rid.TestModelsCphFdbLblRid">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_lbl_rid.</code><code class="descname">TestModelsCphFdbLblRid</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_lbl_rid.html#TestModelsCphFdbLblRid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_lbl_rid.TestModelsCphFdbLblRid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_lbl_rid.TestModelsCphFdbLblRid.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_lbl_rid.html#TestModelsCphFdbLblRid.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_lbl_rid.TestModelsCphFdbLblRid.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_ndc">
+<span id="carepoint-tests-models-cph-test-fdb-ndc-module"></span><h2>carepoint.tests.models.cph.test_fdb_ndc module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_ndc" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_ndc.TestModelsCphFdbNdc">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_ndc.</code><code class="descname">TestModelsCphFdbNdc</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_ndc.html#TestModelsCphFdbNdc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_ndc.TestModelsCphFdbNdc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_ndc.TestModelsCphFdbNdc.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_ndc.html#TestModelsCphFdbNdc.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_ndc.TestModelsCphFdbNdc.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_ndc_cs_ext">
+<span id="carepoint-tests-models-cph-test-fdb-ndc-cs-ext-module"></span><h2>carepoint.tests.models.cph.test_fdb_ndc_cs_ext module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_ndc_cs_ext" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_ndc_cs_ext.TestModelsCphFdbNdcCsExt">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_ndc_cs_ext.</code><code class="descname">TestModelsCphFdbNdcCsExt</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_ndc_cs_ext.html#TestModelsCphFdbNdcCsExt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_ndc_cs_ext.TestModelsCphFdbNdcCsExt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_ndc_cs_ext.TestModelsCphFdbNdcCsExt.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_ndc_cs_ext.html#TestModelsCphFdbNdcCsExt.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_ndc_cs_ext.TestModelsCphFdbNdcCsExt.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_pem_moe">
+<span id="carepoint-tests-models-cph-test-fdb-pem-moe-module"></span><h2>carepoint.tests.models.cph.test_fdb_pem_moe module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_pem_moe" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_pem_moe.TestModelsCphFdbPemMoe">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_pem_moe.</code><code class="descname">TestModelsCphFdbPemMoe</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_pem_moe.html#TestModelsCphFdbPemMoe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_pem_moe.TestModelsCphFdbPemMoe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_pem_moe.TestModelsCphFdbPemMoe.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_pem_moe.html#TestModelsCphFdbPemMoe.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_pem_moe.TestModelsCphFdbPemMoe.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_pem_mogc">
+<span id="carepoint-tests-models-cph-test-fdb-pem-mogc-module"></span><h2>carepoint.tests.models.cph.test_fdb_pem_mogc module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_pem_mogc" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_pem_mogc.TestModelsCphFdbPemMogc">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_pem_mogc.</code><code class="descname">TestModelsCphFdbPemMogc</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_pem_mogc.html#TestModelsCphFdbPemMogc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_pem_mogc.TestModelsCphFdbPemMogc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_pem_mogc.TestModelsCphFdbPemMogc.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_pem_mogc.html#TestModelsCphFdbPemMogc.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_pem_mogc.TestModelsCphFdbPemMogc.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_price">
+<span id="carepoint-tests-models-cph-test-fdb-price-module"></span><h2>carepoint.tests.models.cph.test_fdb_price module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_price" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_price.TestModelsCphFdbPrice">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_price.</code><code class="descname">TestModelsCphFdbPrice</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_price.html#TestModelsCphFdbPrice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_price.TestModelsCphFdbPrice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_price.TestModelsCphFdbPrice.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_price.html#TestModelsCphFdbPrice.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_price.TestModelsCphFdbPrice.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_price_type">
+<span id="carepoint-tests-models-cph-test-fdb-price-type-module"></span><h2>carepoint.tests.models.cph.test_fdb_price_type module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_price_type" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_price_type.TestModelsCphFdbPriceType">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_price_type.</code><code class="descname">TestModelsCphFdbPriceType</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_price_type.html#TestModelsCphFdbPriceType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_price_type.TestModelsCphFdbPriceType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_price_type.TestModelsCphFdbPriceType.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_price_type.html#TestModelsCphFdbPriceType.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_price_type.TestModelsCphFdbPriceType.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_route">
+<span id="carepoint-tests-models-cph-test-fdb-route-module"></span><h2>carepoint.tests.models.cph.test_fdb_route module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_route" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_route.TestModelsCphFdbRoute">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_route.</code><code class="descname">TestModelsCphFdbRoute</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_route.html#TestModelsCphFdbRoute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_route.TestModelsCphFdbRoute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_route.TestModelsCphFdbRoute.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_route.html#TestModelsCphFdbRoute.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_route.TestModelsCphFdbRoute.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_fdb_unit">
+<span id="carepoint-tests-models-cph-test-fdb-unit-module"></span><h2>carepoint.tests.models.cph.test_fdb_unit module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_fdb_unit" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_fdb_unit.TestModelsCphFdbUnit">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_fdb_unit.</code><code class="descname">TestModelsCphFdbUnit</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_unit.html#TestModelsCphFdbUnit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_unit.TestModelsCphFdbUnit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_fdb_unit.TestModelsCphFdbUnit.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_fdb_unit.html#TestModelsCphFdbUnit.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_fdb_unit.TestModelsCphFdbUnit.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_item">
+<span id="carepoint-tests-models-cph-test-item-module"></span><h2>carepoint.tests.models.cph.test_item module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_item" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_item.TestModelsCphItem">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_item.</code><code class="descname">TestModelsCphItem</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_item.html#TestModelsCphItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_item.TestModelsCphItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_item.TestModelsCphItem.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_item.html#TestModelsCphItem.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_item.TestModelsCphItem.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_order">
+<span id="carepoint-tests-models-cph-test-order-module"></span><h2>carepoint.tests.models.cph.test_order module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_order" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_order.TestModelsCphOrder">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_order.</code><code class="descname">TestModelsCphOrder</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_order.html#TestModelsCphOrder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_order.TestModelsCphOrder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_order.TestModelsCphOrder.new_record">
+<code class="descname">new_record</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_order.html#TestModelsCphOrder.new_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_order.TestModelsCphOrder.new_record" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_order.TestModelsCphOrder.test_order_state">
+<code class="descname">test_order_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_order.html#TestModelsCphOrder.test_order_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_order.TestModelsCphOrder.test_order_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>It should return proper Enum for state cn</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_order.TestModelsCphOrder.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_order.html#TestModelsCphOrder.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_order.TestModelsCphOrder.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_order_line">
+<span id="carepoint-tests-models-cph-test-order-line-module"></span><h2>carepoint.tests.models.cph.test_order_line module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_order_line" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_order_line.TestModelsCphOrderLine">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_order_line.</code><code class="descname">TestModelsCphOrderLine</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_order_line.html#TestModelsCphOrderLine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_order_line.TestModelsCphOrderLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_order_line.TestModelsCphOrderLine.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_order_line.html#TestModelsCphOrderLine.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_order_line.TestModelsCphOrderLine.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_order_line_non_rx">
+<span id="carepoint-tests-models-cph-test-order-line-non-rx-module"></span><h2>carepoint.tests.models.cph.test_order_line_non_rx module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_order_line_non_rx" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_order_line_non_rx.TestModelsCphOrderLineNonRx">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_order_line_non_rx.</code><code class="descname">TestModelsCphOrderLineNonRx</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_order_line_non_rx.html#TestModelsCphOrderLineNonRx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_order_line_non_rx.TestModelsCphOrderLineNonRx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_order_line_non_rx.TestModelsCphOrderLineNonRx.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_order_line_non_rx.html#TestModelsCphOrderLineNonRx.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_order_line_non_rx.TestModelsCphOrderLineNonRx.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_order_ship">
+<span id="carepoint-tests-models-cph-test-order-ship-module"></span><h2>carepoint.tests.models.cph.test_order_ship module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_order_ship" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_order_ship.TestModelsCphOrderShip">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_order_ship.</code><code class="descname">TestModelsCphOrderShip</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_order_ship.html#TestModelsCphOrderShip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_order_ship.TestModelsCphOrderShip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_order_ship.TestModelsCphOrderShip.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_order_ship.html#TestModelsCphOrderShip.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_order_ship.TestModelsCphOrderShip.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_order_status">
+<span id="carepoint-tests-models-cph-test-order-status-module"></span><h2>carepoint.tests.models.cph.test_order_status module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_order_status" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_order_status.TestModelsCphOrderStatus">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_order_status.</code><code class="descname">TestModelsCphOrderStatus</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_order_status.html#TestModelsCphOrderStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_order_status.TestModelsCphOrderStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_order_status.TestModelsCphOrderStatus.new_record">
+<code class="descname">new_record</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_order_status.html#TestModelsCphOrderStatus.new_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_order_status.TestModelsCphOrderStatus.new_record" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_order_status.TestModelsCphOrderStatus.test_state">
+<code class="descname">test_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_order_status.html#TestModelsCphOrderStatus.test_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_order_status.TestModelsCphOrderStatus.test_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>It should return proper Enum for state cn</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_order_status.TestModelsCphOrderStatus.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_order_status.html#TestModelsCphOrderStatus.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_order_status.TestModelsCphOrderStatus.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_organization">
+<span id="carepoint-tests-models-cph-test-organization-module"></span><h2>carepoint.tests.models.cph.test_organization module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_organization" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_organization.TestModelsCphOrganization">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_organization.</code><code class="descname">TestModelsCphOrganization</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_organization.html#TestModelsCphOrganization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_organization.TestModelsCphOrganization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_organization.TestModelsCphOrganization.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_organization.html#TestModelsCphOrganization.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_organization.TestModelsCphOrganization.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_organization_address">
+<span id="carepoint-tests-models-cph-test-organization-address-module"></span><h2>carepoint.tests.models.cph.test_organization_address module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_organization_address" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_organization_address.TestModelsCphOrganizationAddress">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_organization_address.</code><code class="descname">TestModelsCphOrganizationAddress</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_organization_address.html#TestModelsCphOrganizationAddress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_organization_address.TestModelsCphOrganizationAddress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_organization_address.TestModelsCphOrganizationAddress.test_addr_mixin_col">
+<code class="descname">test_addr_mixin_col</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_organization_address.html#TestModelsCphOrganizationAddress.test_addr_mixin_col"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_organization_address.TestModelsCphOrganizationAddress.test_addr_mixin_col" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_organization_address.TestModelsCphOrganizationAddress.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_organization_address.html#TestModelsCphOrganizationAddress.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_organization_address.TestModelsCphOrganizationAddress.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_pathology">
+<span id="carepoint-tests-models-cph-test-pathology-module"></span><h2>carepoint.tests.models.cph.test_pathology module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_pathology" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_pathology.TestModelsCphPathology">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_pathology.</code><code class="descname">TestModelsCphPathology</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_pathology.html#TestModelsCphPathology"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_pathology.TestModelsCphPathology" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_pathology.TestModelsCphPathology.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_pathology.html#TestModelsCphPathology.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_pathology.TestModelsCphPathology.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_pathology_code_type">
+<span id="carepoint-tests-models-cph-test-pathology-code-type-module"></span><h2>carepoint.tests.models.cph.test_pathology_code_type module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_pathology_code_type" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_pathology_code_type.TestModelsCphPathologyCodeType">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_pathology_code_type.</code><code class="descname">TestModelsCphPathologyCodeType</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_pathology_code_type.html#TestModelsCphPathologyCodeType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_pathology_code_type.TestModelsCphPathologyCodeType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_pathology_code_type.TestModelsCphPathologyCodeType.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_pathology_code_type.html#TestModelsCphPathologyCodeType.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_pathology_code_type.TestModelsCphPathologyCodeType.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_patient">
+<span id="carepoint-tests-models-cph-test-patient-module"></span><h2>carepoint.tests.models.cph.test_patient module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_patient" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_patient.TestModelsCphPatient">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_patient.</code><code class="descname">TestModelsCphPatient</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_patient.html#TestModelsCphPatient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_patient.TestModelsCphPatient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_patient.TestModelsCphPatient.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_patient.html#TestModelsCphPatient.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_patient.TestModelsCphPatient.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_patient_address">
+<span id="carepoint-tests-models-cph-test-patient-address-module"></span><h2>carepoint.tests.models.cph.test_patient_address module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_patient_address" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_patient_address.TestModelsCphPatientAddress">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_patient_address.</code><code class="descname">TestModelsCphPatientAddress</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_patient_address.html#TestModelsCphPatientAddress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_patient_address.TestModelsCphPatientAddress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_patient_address.TestModelsCphPatientAddress.test_addr_mixin_col">
+<code class="descname">test_addr_mixin_col</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_patient_address.html#TestModelsCphPatientAddress.test_addr_mixin_col"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_patient_address.TestModelsCphPatientAddress.test_addr_mixin_col" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_patient_address.TestModelsCphPatientAddress.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_patient_address.html#TestModelsCphPatientAddress.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_patient_address.TestModelsCphPatientAddress.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_patient_allergy">
+<span id="carepoint-tests-models-cph-test-patient-allergy-module"></span><h2>carepoint.tests.models.cph.test_patient_allergy module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_patient_allergy" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_patient_allergy.TestModelsCphPatientAllergy">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_patient_allergy.</code><code class="descname">TestModelsCphPatientAllergy</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_patient_allergy.html#TestModelsCphPatientAllergy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_patient_allergy.TestModelsCphPatientAllergy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_patient_allergy.TestModelsCphPatientAllergy.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_patient_allergy.html#TestModelsCphPatientAllergy.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_patient_allergy.TestModelsCphPatientAllergy.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_patient_disease">
+<span id="carepoint-tests-models-cph-test-patient-disease-module"></span><h2>carepoint.tests.models.cph.test_patient_disease module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_patient_disease" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_patient_disease.TestModelsCphPatientDisease">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_patient_disease.</code><code class="descname">TestModelsCphPatientDisease</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_patient_disease.html#TestModelsCphPatientDisease"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_patient_disease.TestModelsCphPatientDisease" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_patient_disease.TestModelsCphPatientDisease.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_patient_disease.html#TestModelsCphPatientDisease.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_patient_disease.TestModelsCphPatientDisease.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_patient_phone">
+<span id="carepoint-tests-models-cph-test-patient-phone-module"></span><h2>carepoint.tests.models.cph.test_patient_phone module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_patient_phone" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_patient_phone.TestModelsCphPatientPhone">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_patient_phone.</code><code class="descname">TestModelsCphPatientPhone</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_patient_phone.html#TestModelsCphPatientPhone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_patient_phone.TestModelsCphPatientPhone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_patient_phone.TestModelsCphPatientPhone.test_phone_mixin_col">
+<code class="descname">test_phone_mixin_col</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_patient_phone.html#TestModelsCphPatientPhone.test_phone_mixin_col"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_patient_phone.TestModelsCphPatientPhone.test_phone_mixin_col" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_patient_phone.TestModelsCphPatientPhone.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_patient_phone.html#TestModelsCphPatientPhone.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_patient_phone.TestModelsCphPatientPhone.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_phone">
+<span id="carepoint-tests-models-cph-test-phone-module"></span><h2>carepoint.tests.models.cph.test_phone module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_phone" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_phone.TestModelsCphPhone">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_phone.</code><code class="descname">TestModelsCphPhone</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_phone.html#TestModelsCphPhone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_phone.TestModelsCphPhone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_phone.TestModelsCphPhone.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_phone.html#TestModelsCphPhone.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_phone.TestModelsCphPhone.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_prescription">
+<span id="carepoint-tests-models-cph-test-prescription-module"></span><h2>carepoint.tests.models.cph.test_prescription module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_prescription" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_prescription.TestModelsCphPrescription">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_prescription.</code><code class="descname">TestModelsCphPrescription</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_prescription.html#TestModelsCphPrescription"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_prescription.TestModelsCphPrescription" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_prescription.TestModelsCphPrescription.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_prescription.html#TestModelsCphPrescription.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_prescription.TestModelsCphPrescription.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_store">
+<span id="carepoint-tests-models-cph-test-store-module"></span><h2>carepoint.tests.models.cph.test_store module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_store" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_store.TestModelsCphStore">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_store.</code><code class="descname">TestModelsCphStore</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_store.html#TestModelsCphStore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_store.TestModelsCphStore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_store.TestModelsCphStore.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_store.html#TestModelsCphStore.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_store.TestModelsCphStore.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_store_address">
+<span id="carepoint-tests-models-cph-test-store-address-module"></span><h2>carepoint.tests.models.cph.test_store_address module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_store_address" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_store_address.TestModelsCphStoreAddress">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_store_address.</code><code class="descname">TestModelsCphStoreAddress</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_store_address.html#TestModelsCphStoreAddress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_store_address.TestModelsCphStoreAddress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_store_address.TestModelsCphStoreAddress.test_addr_mixin_col">
+<code class="descname">test_addr_mixin_col</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_store_address.html#TestModelsCphStoreAddress.test_addr_mixin_col"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_store_address.TestModelsCphStoreAddress.test_addr_mixin_col" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_store_address.TestModelsCphStoreAddress.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_store_address.html#TestModelsCphStoreAddress.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_store_address.TestModelsCphStoreAddress.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_store_param">
+<span id="carepoint-tests-models-cph-test-store-param-module"></span><h2>carepoint.tests.models.cph.test_store_param module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_store_param" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_store_param.TestModelsCphStoreParam">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_store_param.</code><code class="descname">TestModelsCphStoreParam</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_store_param.html#TestModelsCphStoreParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_store_param.TestModelsCphStoreParam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_store_param.TestModelsCphStoreParam.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_store_param.html#TestModelsCphStoreParam.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_store_param.TestModelsCphStoreParam.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_store_phone">
+<span id="carepoint-tests-models-cph-test-store-phone-module"></span><h2>carepoint.tests.models.cph.test_store_phone module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_store_phone" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_store_phone.TestModelsCphStorePhone">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_store_phone.</code><code class="descname">TestModelsCphStorePhone</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_store_phone.html#TestModelsCphStorePhone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_store_phone.TestModelsCphStorePhone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_store_phone.TestModelsCphStorePhone.test_phone_mixin_col">
+<code class="descname">test_phone_mixin_col</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_store_phone.html#TestModelsCphStorePhone.test_phone_mixin_col"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_store_phone.TestModelsCphStorePhone.test_phone_mixin_col" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_store_phone.TestModelsCphStorePhone.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_store_phone.html#TestModelsCphStorePhone.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_store_phone.TestModelsCphStorePhone.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_user">
+<span id="carepoint-tests-models-cph-test-user-module"></span><h2>carepoint.tests.models.cph.test_user module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_user" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_user.TestModelsCphUser">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_user.</code><code class="descname">TestModelsCphUser</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_user.html#TestModelsCphUser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_user.TestModelsCphUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_user.TestModelsCphUser.new_record">
+<code class="descname">new_record</code><span class="sig-paren">(</span><em>type_cd='U'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_user.html#TestModelsCphUser.new_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_user.TestModelsCphUser.new_record" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_user.TestModelsCphUser.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_user.html#TestModelsCphUser.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_user.TestModelsCphUser.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_user.TestModelsCphUser.test_user_type">
+<code class="descname">test_user_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_user.html#TestModelsCphUser.test_user_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_user.TestModelsCphUser.test_user_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>It should return proper Enum for user type cd</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph.test_vendor">
+<span id="carepoint-tests-models-cph-test-vendor-module"></span><h2>carepoint.tests.models.cph.test_vendor module<a class="headerlink" href="#module-carepoint.tests.models.cph.test_vendor" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.tests.models.cph.test_vendor.TestModelsCphVendor">
+<em class="property">class </em><code class="descclassname">carepoint.tests.models.cph.test_vendor.</code><code class="descname">TestModelsCphVendor</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_vendor.html#TestModelsCphVendor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_vendor.TestModelsCphVendor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="carepoint.tests.db.html#carepoint.tests.db.db.DatabaseTest" title="carepoint.tests.db.db.DatabaseTest"><code class="xref py py-class docutils literal"><span class="pre">carepoint.tests.db.db.DatabaseTest</span></code></a></p>
+<dl class="method">
+<dt id="carepoint.tests.models.cph.test_vendor.TestModelsCphVendor.test_table_initialization">
+<code class="descname">test_table_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/tests/models/cph/test_vendor.html#TestModelsCphVendor.test_table_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.tests.models.cph.test_vendor.TestModelsCphVendor.test_table_initialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.tests.models.cph">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-carepoint.tests.models.cph" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Python CarePoint</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=LasLabs&repo=python-carepoint&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a href="https://travis-ci.org/LasLabs/python-carepoint">
+    <img
+        alt="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+        src="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="carepoint.html">carepoint package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="carepoint.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="carepoint.db.html">carepoint.db package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="carepoint.models.html">carepoint.models package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="carepoint.tests.html">carepoint.tests package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="carepoint.tests.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="carepoint.tests.html#module-carepoint.tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.html#module-carepoint">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">setup module</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017 LasLabs Inc..
+      
+      |
+      <a href="_sources/carepoint.tests.models.cph.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/LasLabs/python-carepoint" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

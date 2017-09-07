@@ -1,0 +1,19 @@
+carepoint package
+=================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    carepoint.db
+    carepoint.models
+    carepoint.tests
+
+Module contents
+---------------
+
+.. automodule:: carepoint
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,437 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>carepoint.models package &#8212; Python CarePoint 0.1.8b658 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.8b658',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="carepoint.models.cph package" href="carepoint.models.cph.html" />
+    <link rel="prev" title="carepoint.db package" href="carepoint.db.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="carepoint-models-package">
+<h1>carepoint.models package<a class="headerlink" href="#carepoint-models-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="carepoint.models.cph.html">carepoint.models.cph package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.account">carepoint.models.cph.account module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.account_activity">carepoint.models.cph.account_activity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.address">carepoint.models.cph.address module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.dispense">carepoint.models.cph.dispense module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.dispense_price">carepoint.models.cph.dispense_price module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.doctor">carepoint.models.cph.doctor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.doctor_address">carepoint.models.cph.doctor_address module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.doctor_phone">carepoint.models.cph.doctor_phone module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_allergen">carepoint.models.cph.fdb_allergen module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_allergen_desc">carepoint.models.cph.fdb_allergen_desc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_allergen_group">carepoint.models.cph.fdb_allergen_group module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_allergen_rel">carepoint.models.cph.fdb_allergen_rel module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_attr">carepoint.models.cph.fdb_attr module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_attr_base">carepoint.models.cph.fdb_attr_base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_attr_type">carepoint.models.cph.fdb_attr_type module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_form">carepoint.models.cph.fdb_form module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_gcn">carepoint.models.cph.fdb_gcn module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_gcn_seq">carepoint.models.cph.fdb_gcn_seq module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_img">carepoint.models.cph.fdb_img module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_img_date">carepoint.models.cph.fdb_img_date module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_img_id">carepoint.models.cph.fdb_img_id module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_img_mfg">carepoint.models.cph.fdb_img_mfg module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_lbl_rid">carepoint.models.cph.fdb_lbl_rid module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_ndc">carepoint.models.cph.fdb_ndc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_ndc_cs_ext">carepoint.models.cph.fdb_ndc_cs_ext module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_pem_moe">carepoint.models.cph.fdb_pem_moe module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_pem_mogc">carepoint.models.cph.fdb_pem_mogc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_price">carepoint.models.cph.fdb_price module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_price_type">carepoint.models.cph.fdb_price_type module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_route">carepoint.models.cph.fdb_route module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.fdb_unit">carepoint.models.cph.fdb_unit module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.item">carepoint.models.cph.item module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.order">carepoint.models.cph.order module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.order_line">carepoint.models.cph.order_line module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.order_line_non_rx">carepoint.models.cph.order_line_non_rx module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.order_ship">carepoint.models.cph.order_ship module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.order_status">carepoint.models.cph.order_status module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.organization">carepoint.models.cph.organization module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.organization_address">carepoint.models.cph.organization_address module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.pathology">carepoint.models.cph.pathology module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.pathology_code_type">carepoint.models.cph.pathology_code_type module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.patient">carepoint.models.cph.patient module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.patient_address">carepoint.models.cph.patient_address module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.patient_allergy">carepoint.models.cph.patient_allergy module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.patient_disease">carepoint.models.cph.patient_disease module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.patient_phone">carepoint.models.cph.patient_phone module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.phone">carepoint.models.cph.phone module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.prescription">carepoint.models.cph.prescription module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.store">carepoint.models.cph.store module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.store_address">carepoint.models.cph.store_address module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.store_param">carepoint.models.cph.store_param module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.store_phone">carepoint.models.cph.store_phone module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.user">carepoint.models.cph.user module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph.vendor">carepoint.models.cph.vendor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.models.cph.html#module-carepoint.models.cph">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-carepoint.models.address_mixin">
+<span id="carepoint-models-address-mixin-module"></span><h2>carepoint.models.address_mixin module<a class="headerlink" href="#module-carepoint.models.address_mixin" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.models.address_mixin.AddressMixin">
+<em class="property">class </em><code class="descclassname">carepoint.models.address_mixin.</code><code class="descname">AddressMixin</code><a class="reference internal" href="_modules/carepoint/models/address_mixin.html#AddressMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.models.address_mixin.AddressMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>This is a mixin for Address Many2Many bindings</p>
+<dl class="attribute">
+<dt id="carepoint.models.address_mixin.AddressMixin.addr_id">
+<code class="descname">addr_id</code><em class="property"> = Column(None, Integer(), ForeignKey('csaddr.addr_id'), table=None, primary_key=True, nullable=False)</em><a class="headerlink" href="#carepoint.models.address_mixin.AddressMixin.addr_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.address_mixin.AddressMixin.addr_type">
+<code class="descname">addr_type</code><a class="headerlink" href="#carepoint.models.address_mixin.AddressMixin.addr_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.address_mixin.AddressMixin.addr_type_cn">
+<code class="descname">addr_type_cn</code><em class="property"> = Column(None, Integer(), table=None)</em><a class="headerlink" href="#carepoint.models.address_mixin.AddressMixin.addr_type_cn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.address_mixin.AddressMixin.app_flags">
+<code class="descname">app_flags</code><em class="property"> = Column(None, Integer(), table=None)</em><a class="headerlink" href="#carepoint.models.address_mixin.AddressMixin.app_flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.address_mixin.AddressMixin.priority">
+<code class="descname">priority</code><em class="property"> = Column(None, Integer(), table=None)</em><a class="headerlink" href="#carepoint.models.address_mixin.AddressMixin.priority" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.address_mixin.AddressMixin.timestmp">
+<code class="descname">timestmp</code><em class="property"> = Column(None, DateTime(), table=None)</em><a class="headerlink" href="#carepoint.models.address_mixin.AddressMixin.timestmp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="carepoint.models.address_mixin.EnumAddressType">
+<em class="property">class </em><code class="descclassname">carepoint.models.address_mixin.</code><code class="descname">EnumAddressType</code><a class="reference internal" href="_modules/carepoint/models/address_mixin.html#EnumAddressType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.models.address_mixin.EnumAddressType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">enum.Enum</span></code></p>
+<p>It provides PEP-0435 compliant Carepoint Address Type Enumerable</p>
+<dl class="attribute">
+<dt id="carepoint.models.address_mixin.EnumAddressType.billing">
+<code class="descname">billing</code><em class="property"> = 6</em><a class="headerlink" href="#carepoint.models.address_mixin.EnumAddressType.billing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.address_mixin.EnumAddressType.business">
+<code class="descname">business</code><em class="property"> = 1</em><a class="headerlink" href="#carepoint.models.address_mixin.EnumAddressType.business" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.address_mixin.EnumAddressType.home">
+<code class="descname">home</code><em class="property"> = 2</em><a class="headerlink" href="#carepoint.models.address_mixin.EnumAddressType.home" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.address_mixin.EnumAddressType.other">
+<code class="descname">other</code><em class="property"> = 5</em><a class="headerlink" href="#carepoint.models.address_mixin.EnumAddressType.other" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.address_mixin.EnumAddressType.school">
+<code class="descname">school</code><em class="property"> = 3</em><a class="headerlink" href="#carepoint.models.address_mixin.EnumAddressType.school" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.address_mixin.EnumAddressType.shipping">
+<code class="descname">shipping</code><em class="property"> = 7</em><a class="headerlink" href="#carepoint.models.address_mixin.EnumAddressType.shipping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.address_mixin.EnumAddressType.vacation">
+<code class="descname">vacation</code><em class="property"> = 4</em><a class="headerlink" href="#carepoint.models.address_mixin.EnumAddressType.vacation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.models.phone_mixin">
+<span id="carepoint-models-phone-mixin-module"></span><h2>carepoint.models.phone_mixin module<a class="headerlink" href="#module-carepoint.models.phone_mixin" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.models.phone_mixin.EnumPhoneType">
+<em class="property">class </em><code class="descclassname">carepoint.models.phone_mixin.</code><code class="descname">EnumPhoneType</code><a class="reference internal" href="_modules/carepoint/models/phone_mixin.html#EnumPhoneType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.models.phone_mixin.EnumPhoneType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">enum.Enum</span></code></p>
+<p>It provides PEP-0435 compliant Carepoint Phone Type Enumerable</p>
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.EnumPhoneType.assistant">
+<code class="descname">assistant</code><em class="property"> = 1</em><a class="headerlink" href="#carepoint.models.phone_mixin.EnumPhoneType.assistant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.EnumPhoneType.beeper">
+<code class="descname">beeper</code><em class="property"> = 10</em><a class="headerlink" href="#carepoint.models.phone_mixin.EnumPhoneType.beeper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.EnumPhoneType.business">
+<code class="descname">business</code><em class="property"> = 2</em><a class="headerlink" href="#carepoint.models.phone_mixin.EnumPhoneType.business" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.EnumPhoneType.business_2">
+<code class="descname">business_2</code><em class="property"> = 3</em><a class="headerlink" href="#carepoint.models.phone_mixin.EnumPhoneType.business_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.EnumPhoneType.business_fax">
+<code class="descname">business_fax</code><em class="property"> = 4</em><a class="headerlink" href="#carepoint.models.phone_mixin.EnumPhoneType.business_fax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.EnumPhoneType.car">
+<code class="descname">car</code><em class="property"> = 5</em><a class="headerlink" href="#carepoint.models.phone_mixin.EnumPhoneType.car" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.EnumPhoneType.home">
+<code class="descname">home</code><em class="property"> = 6</em><a class="headerlink" href="#carepoint.models.phone_mixin.EnumPhoneType.home" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.EnumPhoneType.home_2">
+<code class="descname">home_2</code><em class="property"> = 7</em><a class="headerlink" href="#carepoint.models.phone_mixin.EnumPhoneType.home_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.EnumPhoneType.home_fax">
+<code class="descname">home_fax</code><em class="property"> = 8</em><a class="headerlink" href="#carepoint.models.phone_mixin.EnumPhoneType.home_fax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.EnumPhoneType.mobile">
+<code class="descname">mobile</code><em class="property"> = 9</em><a class="headerlink" href="#carepoint.models.phone_mixin.EnumPhoneType.mobile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.EnumPhoneType.other_fax">
+<code class="descname">other_fax</code><em class="property"> = 11</em><a class="headerlink" href="#carepoint.models.phone_mixin.EnumPhoneType.other_fax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="carepoint.models.phone_mixin.PhoneMixin">
+<em class="property">class </em><code class="descclassname">carepoint.models.phone_mixin.</code><code class="descname">PhoneMixin</code><a class="reference internal" href="_modules/carepoint/models/phone_mixin.html#PhoneMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.models.phone_mixin.PhoneMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>This is a mixin for Phone Many2Many bindings</p>
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.PhoneMixin.app_flags">
+<code class="descname">app_flags</code><em class="property"> = Column(None, Integer(), table=None)</em><a class="headerlink" href="#carepoint.models.phone_mixin.PhoneMixin.app_flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.PhoneMixin.phone_id">
+<code class="descname">phone_id</code><em class="property"> = Column(None, Integer(), ForeignKey('csphone.phone_id'), table=None, primary_key=True, nullable=False)</em><a class="headerlink" href="#carepoint.models.phone_mixin.PhoneMixin.phone_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.PhoneMixin.phone_type">
+<code class="descname">phone_type</code><a class="headerlink" href="#carepoint.models.phone_mixin.PhoneMixin.phone_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.PhoneMixin.phone_type_cn">
+<code class="descname">phone_type_cn</code><em class="property"> = Column(None, Integer(), table=None)</em><a class="headerlink" href="#carepoint.models.phone_mixin.PhoneMixin.phone_type_cn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.PhoneMixin.priority">
+<code class="descname">priority</code><em class="property"> = Column(None, Integer(), table=None)</em><a class="headerlink" href="#carepoint.models.phone_mixin.PhoneMixin.priority" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.phone_mixin.PhoneMixin.timestmp">
+<code class="descname">timestmp</code><em class="property"> = Column(None, DateTime(), table=None)</em><a class="headerlink" href="#carepoint.models.phone_mixin.PhoneMixin.timestmp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.models.state">
+<span id="carepoint-models-state-module"></span><h2>carepoint.models.state module<a class="headerlink" href="#module-carepoint.models.state" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.models.state.EnumOrderState">
+<em class="property">class </em><code class="descclassname">carepoint.models.state.</code><code class="descname">EnumOrderState</code><a class="reference internal" href="_modules/carepoint/models/state.html#EnumOrderState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.models.state.EnumOrderState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">enum.Enum</span></code></p>
+<p>It provides PEP-0435 compliant Carepoint State Enumerable</p>
+<dl class="attribute">
+<dt id="carepoint.models.state.EnumOrderState.adjudicated">
+<code class="descname">adjudicated</code><em class="property"> = 30</em><a class="headerlink" href="#carepoint.models.state.EnumOrderState.adjudicated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.state.EnumOrderState.approved">
+<code class="descname">approved</code><em class="property"> = 40</em><a class="headerlink" href="#carepoint.models.state.EnumOrderState.approved" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.state.EnumOrderState.entered">
+<code class="descname">entered</code><em class="property"> = 10</em><a class="headerlink" href="#carepoint.models.state.EnumOrderState.entered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.state.EnumOrderState.processed">
+<code class="descname">processed</code><em class="property"> = 35</em><a class="headerlink" href="#carepoint.models.state.EnumOrderState.processed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.state.EnumOrderState.returned">
+<code class="descname">returned</code><em class="property"> = 60</em><a class="headerlink" href="#carepoint.models.state.EnumOrderState.returned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.state.EnumOrderState.shipped">
+<code class="descname">shipped</code><em class="property"> = 50</em><a class="headerlink" href="#carepoint.models.state.EnumOrderState.shipped" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.models.state.EnumOrderState.verified">
+<code class="descname">verified</code><em class="property"> = 20</em><a class="headerlink" href="#carepoint.models.state.EnumOrderState.verified" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.models">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-carepoint.models" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Python CarePoint</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=LasLabs&repo=python-carepoint&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a href="https://travis-ci.org/LasLabs/python-carepoint">
+    <img
+        alt="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+        src="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="carepoint.html">carepoint package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="carepoint.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="carepoint.db.html">carepoint.db package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">carepoint.models package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-carepoint.models.address_mixin">carepoint.models.address_mixin module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-carepoint.models.phone_mixin">carepoint.models.phone_mixin module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-carepoint.models.state">carepoint.models.state module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-carepoint.models">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="carepoint.tests.html">carepoint.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.html#module-carepoint">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">setup module</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017 LasLabs Inc..
+      
+      |
+      <a href="_sources/carepoint.models.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/LasLabs/python-carepoint" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,45 @@
+carepoint\.models package
+=========================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    carepoint.models.cph
+
+Submodules
+----------
+
+carepoint\.models\.address\_mixin module
+----------------------------------------
+
+.. automodule:: carepoint.models.address_mixin
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.models\.phone\_mixin module
+--------------------------------------
+
+.. automodule:: carepoint.models.phone_mixin
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.models\.state module
+-------------------------------
+
+.. automodule:: carepoint.models.state
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: carepoint.models
+    :members:
+    :undoc-members:
+    :show-inheritance:

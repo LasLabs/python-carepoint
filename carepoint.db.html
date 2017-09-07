@@ -1,0 +1,385 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>carepoint.db package &#8212; Python CarePoint 0.1.8b658 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.8b658',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="carepoint.models package" href="carepoint.models.html" />
+    <link rel="prev" title="carepoint package" href="carepoint.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="carepoint-db-package">
+<h1>carepoint.db package<a class="headerlink" href="#carepoint-db-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-carepoint.db.carepoint">
+<span id="carepoint-db-carepoint-module"></span><h2>carepoint.db.carepoint module<a class="headerlink" href="#module-carepoint.db.carepoint" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.db.carepoint.Carepoint">
+<em class="property">class </em><code class="descclassname">carepoint.db.carepoint.</code><code class="descname">Carepoint</code><span class="sig-paren">(</span><em>server</em>, <em>user</em>, <em>passwd</em>, <em>smb_user=None</em>, <em>smb_passwd=None</em>, <em>db_args=None</em>, <em>**engine_args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a></p>
+<p>Base CarePoint db connector object</p>
+<dl class="attribute">
+<dt id="carepoint.db.carepoint.Carepoint.BASE">
+<code class="descname">BASE</code><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.BASE" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Base</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.db.carepoint.Carepoint.DEFAULT_DB">
+<code class="descname">DEFAULT_DB</code><em class="property"> = 'cph'</em><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.DEFAULT_DB" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.db.carepoint.Carepoint.FILTERS">
+<code class="descname">FILTERS</code><em class="property"> = {'&gt;=': &lt;built-in function ge&gt;, '==': &lt;built-in function eq&gt;, '&lt;=': &lt;built-in function le&gt;, '=': &lt;built-in function eq&gt;, '&lt;': &lt;built-in function lt&gt;, '&gt;': &lt;built-in function gt&gt;}</em><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.FILTERS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>model_obj</em>, <em>vals</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper to create a record in Carepoint
+:param model_obj: Table class to create with
+:type model_obj: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.schema.Table</span></code>
+:param vals: Data to create record with
+:type vals: dict
+:rtype: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.Declarative</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>model_obj</em>, <em>record_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper to delete a record in Carepoint
+:param model_obj: Table class to update
+:type model_obj: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.schema.Table</span></code>
+:param record_id: Id of record to manipulate
+:type record_id: int
+:return: Whether the record was found, and deleted
+:rtype: bool</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.find_models">
+<code class="descname">find_models</code><span class="sig-paren">(</span><em>model_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.find_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.find_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Traverse registered model directory and import non-loaded modules</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.get_file">
+<code class="descname">get_file</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.get_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.get_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a file-like object for the SMB path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – <a href="#id1"><span class="problematic" id="id2">:type:`str`</span></a> SMB path to fetch</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a href="#id3"><span class="problematic" id="id4">:type:`file`</span></a> File interface object representing remote resource</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.get_next_sequence">
+<code class="descname">get_next_sequence</code><span class="sig-paren">(</span><em>sequence_name</em>, <em>db_name='cph'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.get_next_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.get_next_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>It generates and returns the next int in sequence
+Params:</p>
+<blockquote>
+<div>sequence_name: <code class="docutils literal"><span class="pre">str</span></code> Name of the sequence in Carepoint DB
+db_name: <code class="docutils literal"><span class="pre">str</span></code> Name of DB containing sequence stored proc</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Integer to use as pk</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.get_pks">
+<code class="descname">get_pks</code><span class="sig-paren">(</span><em>model_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.get_pks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.get_pks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the Primary keys in the model
+:param model_obj: Table class to update
+:type model_obj: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.schema.Table</span></code>
+:return: Tuple of primary key name strings
+:rtype: tuple</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.items">
+<code class="descname">items</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reimplement items to allow for optional model refresh</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.iteritems">
+<code class="descname">iteritems</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.iteritems"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.iteritems" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reimplement iteritems to allow for optional model refresh</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.iterkeys">
+<code class="descname">iterkeys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.iterkeys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.iterkeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reimplement iterkeys to allow for optional model refresh</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.itervalues">
+<code class="descname">itervalues</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.itervalues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.itervalues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reimplement itervalues to allow for optional model refresh</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.keys">
+<code class="descname">keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.keys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reimplement keys to allow for optional model refresh</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.db.carepoint.Carepoint.model_path">
+<code class="descname">model_path</code><em class="property"> = '/home/travis/build/LasLabs/python-carepoint/carepoint/db/../models'</em><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.model_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>model_obj</em>, <em>record_id</em>, <em>with_entities=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get record by id and return the object
+:param model_obj: Table class to search
+:type model_obj: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.Table</span></code>
+:param record_id: Id of record to manipulate
+:param with_entities: Attributes to rcv from db. None for *
+:type with_entities: list or None
+:param with_entities: List of col names to select, None for all
+:type with_entities: list or None
+:rtype: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.engine.ResultProxy</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.register_model">
+<code class="descname">register_model</code><span class="sig-paren">(</span><em>model_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.register_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.register_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registration logic + append to models struct
+:param model_obj: Model object to register
+:type model_obj: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.Declarative</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.register_model_dir">
+<code class="descname">register_model_dir</code><span class="sig-paren">(</span><em>model_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.register_model_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.register_model_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function sets the model path to be searched
+:param model_path: Path of models
+:type model_path: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.search">
+<code class="descname">search</code><span class="sig-paren">(</span><em>model_obj</em>, <em>filters=None</em>, <em>with_entities=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search table by filters and return records
+:param model_obj: Table class to search
+:type model_obj: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.schema.Table</span></code>
+:param filters: Filters to apply to search
+:type filters: dict or None
+:param with_entities: List of col names to select, None for all
+:type with_entities: list or None
+:rtype: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.engine.ResultProxy</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.send_file">
+<code class="descname">send_file</code><span class="sig-paren">(</span><em>path</em>, <em>file_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.send_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.send_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a file-like object to the SMB path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> – <a href="#id5"><span class="problematic" id="id6">:type:`str`</span></a> SMB path to fetch</li>
+<li><strong>file_obj</strong> – <a href="#id7"><span class="problematic" id="id8">:type:`file`</span></a> File interface object to send to server</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><a href="#id9"><span class="problematic" id="id10">:type:`bool`</span></a> Success</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.set_iter_refresh">
+<code class="descname">set_iter_refresh</code><span class="sig-paren">(</span><em>refresh=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.set_iter_refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.set_iter_refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Toggle flag to search for new models before iteration
+:param refresh: Whether to refresh before iteration
+:type refresh: bool</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>model_obj</em>, <em>record_id</em>, <em>vals</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper to update a record in Carepoint
+:param model_obj: Table class to update
+:type model_obj: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.schema.Table</span></code>
+:param record_id: Id of record to manipulate
+:type record_id: int
+:param vals: Data to create record with
+:type vals: dict
+:rtype: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.Declarative</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="carepoint.db.carepoint.Carepoint.values">
+<code class="descname">values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/carepoint/db/carepoint.html#Carepoint.values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.carepoint.Carepoint.values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reimplement values to allow for optional model refresh</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.db.db">
+<span id="carepoint-db-db-module"></span><h2>carepoint.db.db module<a class="headerlink" href="#module-carepoint.db.db" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="carepoint.db.db.Db">
+<em class="property">class </em><code class="descclassname">carepoint.db.db.</code><code class="descname">Db</code><a class="reference internal" href="_modules/carepoint/db/db.html#Db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#carepoint.db.db.Db" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Base db connector object</p>
+<dl class="attribute">
+<dt id="carepoint.db.db.Db.ODBC_DRIVER">
+<code class="descname">ODBC_DRIVER</code><em class="property"> = 'FreeTDS&amp;TDS_VERSION=8.0'</em><a class="headerlink" href="#carepoint.db.db.Db.ODBC_DRIVER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="carepoint.db.db.Db.SQLITE">
+<code class="descname">SQLITE</code><em class="property"> = 'sqlite'</em><a class="headerlink" href="#carepoint.db.db.Db.SQLITE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-carepoint.db">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-carepoint.db" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Python CarePoint</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=LasLabs&repo=python-carepoint&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a href="https://travis-ci.org/LasLabs/python-carepoint">
+    <img
+        alt="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+        src="https://secure.travis-ci.org/LasLabs/python-carepoint.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="carepoint.html">carepoint package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="carepoint.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">carepoint.db package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-carepoint.db.carepoint">carepoint.db.carepoint module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-carepoint.db.db">carepoint.db.db module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-carepoint.db">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="carepoint.models.html">carepoint.models package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="carepoint.tests.html">carepoint.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="carepoint.html#module-carepoint">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">setup module</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017 LasLabs Inc..
+      
+      |
+      <a href="_sources/carepoint.db.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/LasLabs/python-carepoint" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

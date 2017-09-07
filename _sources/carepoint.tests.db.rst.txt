@@ -1,0 +1,45 @@
+carepoint\.tests\.db package
+============================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    carepoint.tests.db.test_models
+
+Submodules
+----------
+
+carepoint\.tests\.db\.db module
+-------------------------------
+
+.. automodule:: carepoint.tests.db.db
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.db\.test\_carepoint module
+--------------------------------------------
+
+.. automodule:: carepoint.tests.db.test_carepoint
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+carepoint\.tests\.db\.test\_db module
+-------------------------------------
+
+.. automodule:: carepoint.tests.db.test_db
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: carepoint.tests.db
+    :members:
+    :undoc-members:
+    :show-inheritance:
