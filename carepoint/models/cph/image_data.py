@@ -11,6 +11,8 @@ from sqlalchemy import (Column,
                         Numeric,
                         )
 
+from ..enum_image_type import EnumImageType
+
 
 class ImageData(Carepoint.BASE):
     __tablename__ = 'cpimage_data'
@@ -55,5 +57,11 @@ class ImageData(Carepoint.BASE):
     chg_date = Column(DateTime)
     image_path = property(lambda s: s._compute_image_path())
 
+    @property
+    def image_type(self):
+        """Return the canonical name for the image type."""
+        return EnumImageType(self.image_type_cn).name
+
     def _compute_image_path(self):
+        """Return the full network path for the image."""
         return '%s/%s' % (self.RootFolderName, self.FullFileName)
