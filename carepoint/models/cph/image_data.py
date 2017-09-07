@@ -18,11 +18,11 @@ class ImageData(Carepoint.BASE):
 
     image_id = Column(
         Integer,
-        # Column is not actually a primary key in DB.
-        primary_key=True,
     )
     image_type_cn = Column(
         Integer,
+        # Column is not actually a primary key in DB.
+        primary_key=True,
     )
     related_id = Column(
         Integer,
